@@ -1,6 +1,6 @@
 markdown:         rdiscount
 pygments:         true
-baseurl:          /sipdar.github.com
+baseurl:		  /sipdar.github.com
 title:            iOS dev
 author:
     name:         sipdar
