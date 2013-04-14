@@ -1,0 +1,16 @@
+auto:	          true
+
+markdown:         rdiscount
+pygments:         true
+paginate:         6
+permalink:        /:title
+baseurl:		  /sipdar.github.com
+title:            iOS dev
+url:              http://sipdar.github.com
+feed:             /atom.xml
+author:
+    name:         sipdar
+description:      "北漂的IT民工\'s Blog"
+
+copyright:
+    - Design by <a href="" title="sipdar" target="_blank">sipdar</a> &copy; 2013
