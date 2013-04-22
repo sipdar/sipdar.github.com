@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><meta name="exporter-version" content="Evernote Mac 5.0.7 (400993)"/><meta name="altitude" content="72.63230133056641"/><meta name="author" content="sipdar"/><meta name="created" content="2013-04-22 07:07:01 +0000"/><meta name="latitude" content="39.98217829399506"/><meta name="longitude" content="116.4858794007648"/><meta name="updated" content="2013-04-22 07:07:15 +0000"/><title>UIRequiredDeviceCapabilities</title></head><body style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space;">
+<h2 style="margin-top: 1.75em; font-size: 24px; font-weight: normal; color: rgb(60, 76, 108); padding-bottom: 2px;">UIRequiredDeviceCapabilities</h2>
+<p style="margin-top: 0em; margin-bottom: 0.833em; font-size: 13px; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">UIRequiredDeviceCapabilities</code> (<code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">Array</code> or <code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">Dictionary</code> - iOS) lets iTunes and the App Store know which device-related features an app requires in order to run. iTunes and the mobile App Store use this list to prevent customers from installing apps on a device that does not support the listed capabilities.</p>
+<p style="margin-top: 0em; margin-bottom: 0.833em; font-size: 13px; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">If you use an array, the presence of a given key indicates the corresponding feature is required. If you use a dictionary, you must specify a Boolean value for each key. If the value of this key is true, the feature is required. If the value of the key is false, the feature must not be present on the device. In both cases, omitting a key indicates that the feature is not required but that the app is able to run if the feature is present.</p>
+<p style="margin-top: 0em; margin-bottom: 0.833em; font-size: 13px; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><span style="margin-top: 0em; margin-bottom: 0.833em; padding-bottom: 0.833em; vertical-align: top;">Table 4</span> lists the keys that you can include in the array or dictionary associated with the <code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">UIRequiredDeviceCapabilities</code> key. You should include keys only for the features that your app absolutely requires. If your app can accommodate missing features by avoiding the code paths that use those features, do not include the corresponding key.</p>
+<a name="//apple_ref/doc/uid/TP40009252-SW58" title="Table 4Dictionary keys for the UIRequiredDeviceCapabilities key" style="color: rgb(51, 102, 204);"/>
+<div style="margin-top: 1.667em; margin-bottom: 1.667em;">
+<table border="0" cellspacing="0" cellpadding="5" style="border-top-width: 1px; border-top-style: solid; border-top-color: rgb(155, 179, 205); border-left-width: 1px; border-left-style: solid; border-left-color: rgb(155, 179, 205); margin-bottom: 4em;">
+<caption style="margin-bottom: 0.417em; text-align: left;"><strong style="font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif; font-size: 13px;">Table 4</strong>  Dictionary keys for the <code style="font-size: 13px; font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">UIRequiredDeviceCapabilities</code> key</caption>
+<tbody>
+<tr>
+<th style="text-align: left; background-color: rgb(147, 165, 187); padding: 0.3em 0.667em; font-size: 13px; color: rgb(255, 255, 255); border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0.33em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Key</p>
+</th>
+<th style="text-align: left; background-color: rgb(147, 165, 187); padding: 0.3em 0.667em; font-size: 13px; color: rgb(255, 255, 255); border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0.33em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Description</p>
+</th>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">telephony</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_62"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app requires (or specifically prohibits) the presence of the Phone app. You might require this feature if your app opens URLs with the <code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">tel</code> scheme.</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">wifi</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_63"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app requires (or specifically prohibits) access to the networking features of the device.</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">sms</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_64"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app requires (or specifically prohibits) the presence of the Messages app. You might require this feature if your app opens URLs with the <code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">sms</code> scheme.</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">still-camera</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_65"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app requires (or specifically prohibits) the presence of a camera on the device. Apps use the <code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);"><a href="http://developer.apple.com/library/ios/documentation/UIKit/Reference/UIImagePickerController_Class/UIImagePickerController/UIImagePickerController.html#//apple_ref/occ/cl/UIImagePickerController" target="_self" style="color: rgb(0, 51, 102); text-decoration: none;">UIImagePickerController</a></code> interface to capture images from the device’s still camera.</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">auto-focus-camera</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_66"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app requires (or specifically prohibits) auto-focus capabilities in the device’s still camera. Although most developers should not need to include this key, you might include it if your app supports macro photography or requires sharper images in order to do some sort of image processing.</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">front-facing-camera</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_67"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app requires (or specifically prohibits) the presence of a forward-facing camera. Apps use the <code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);"><a href="http://developer.apple.com/library/ios/documentation/UIKit/Reference/UIImagePickerController_Class/UIImagePickerController/UIImagePickerController.html#//apple_ref/occ/cl/UIImagePickerController" target="_self" style="color: rgb(0, 51, 102); text-decoration: none;">UIImagePickerController</a></code> interface to capture video from the device’s camera.</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">camera-flash</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_68"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app requires (or specifically prohibits) the presence of a camera flash for taking pictures or shooting video. Apps use the <code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);"><a href="http://developer.apple.com/library/ios/documentation/UIKit/Reference/UIImagePickerController_Class/UIImagePickerController/UIImagePickerController.html#//apple_ref/occ/cl/UIImagePickerController" target="_self" style="color: rgb(0, 51, 102); text-decoration: none;">UIImagePickerController</a></code> interface to control the enabling of this feature.</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">video-camera</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_69"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app requires (or specifically prohibits) the presence of a camera with video capabilities on the device. Apps use the <code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);"><a href="http://developer.apple.com/library/ios/documentation/UIKit/Reference/UIImagePickerController_Class/UIImagePickerController/UIImagePickerController.html#//apple_ref/occ/cl/UIImagePickerController" target="_self" style="color: rgb(0, 51, 102); text-decoration: none;">UIImagePickerController</a></code> interface to capture video from the device’s camera.</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">accelerometer</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_70"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app requires (or specifically prohibits) the presence of accelerometers on the device. Apps use the classes of the Core Motion framework to receive accelerometer events. You do not need to include this key if your app detects only device orientation changes.</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">gyroscope</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_71"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app requires (or specifically prohibits) the presence of a gyroscope on the device. Apps use the Core Motion framework to retrieve information from gyroscope hardware.</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">location-services</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_72"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app requires (or specifically prohibits) the ability to retrieve the device’s current location using the Core Location framework. (This key refers to the general location services feature. If you specifically need GPS-level accuracy, you should also include the <code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">gps</code> key.)</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">gps</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_73"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app requires (or specifically prohibits) the presence of GPS (or AGPS) hardware for greater accuracy when tracking locations. If you include this key, you should also include the <code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">location-services</code> key. You should require GPS only if your app needs more accurate location data than the cell or Wi-fi radios might otherwise allow.</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">magnetometer</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_74"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app requires (or specifically prohibits) the presence of magnetometer hardware. Apps use this hardware to receive heading-related events through the Core Location framework.</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">gamekit</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_75"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app requires (or specifically prohibits) Game Center (iOS 4.1 and later.)</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">microphone</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_76"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app uses the built-in microphone or supports accessories that provide a microphone.</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">opengles-1</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_77"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app requires (or specifically prohibits) the presence of the OpenGL ES 1.1 interfaces.</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">opengles-2</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_78"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app requires (or specifically prohibits) the presence of the OpenGL ES 2.0 interfaces.</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">armv6</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_79"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app is compiled only for the armv6 instruction set. (iOS v3.1 and later.)</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">armv7</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_80"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app is compiled only for the armv7 instruction set. (iOS v3.1 and later.)</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">peer-peer</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_81"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app requires (or specifically prohibits) peer-to-peer connectivity over Bluetooth. (iOS v3.1 and later.)</p>
+</td>
+</tr>
+<tr>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;"><code style="font-family: Courier, Consolas, monospace; color: rgb(102, 102, 102);">bluetooth-le</code><a name="//apple_ref/doc/uid/TP40009252-DontLinkElementID_82"/></p>
+</td>
+<td style="padding: 0.667em; font-size: 13px; vertical-align: middle; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(155, 179, 205); border-right-width: 1px; border-right-style: solid; border-right-color: rgb(155, 179, 205);">
+<p style="margin-top: 0em; margin-bottom: 0em; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">Include this key if your app requires (or specifically prohibits) the presence of Bluetooth low-energy hardware on the device. (iOS 5 and later.)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="margin-top: 0em; margin-bottom: 0.833em; font-size: 13px; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif;">This key is supported in iOS 3.0 and later.</p>
+<a name="//apple_ref/doc/uid/TP40009252-SW12" title="UIRequiresPersistentWiFi" style="color: rgb(51, 102, 204); font-family: 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, Arial, Verdana, sans-serif; font-size: 13px; background-color: rgb(255, 255, 255);"><br/></a>
+</body></html>
