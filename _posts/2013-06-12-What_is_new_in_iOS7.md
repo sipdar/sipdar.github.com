@@ -13,7 +13,7 @@ iOS 7.0应该是这五年来最大的更新。包括重新设计的UI，全新�
 * **UICollisionBehavior**  碰撞效果
 * **UIGravityBehavior**  重力矢量的动态效果
 * **UIPushBehavior** 指定其动态项目连续或瞬时力矢量
-* **UISnapBehavior** 指定某个点的效果，可以连接起来。个人感觉类似 core Animation 的 group
+* **UISnapBehavior** 指定某个对某个点的连接效果。
 
 这些动态效果必须添加到 [UIDynamicAnimator](https://developer.apple.com/library/prerelease/ios/documentation/UIKit/Reference/UIDynamicAnimator_Class/Reference/Reference.html#//apple_ref/doc/uid/TP40013153) 的对象上。animator 提供了执行这些动态效果时的关系。每个动态的对象可以有过个效果，所有的这些效果必须在同一个animator对象下执行动画效果。
 
@@ -93,11 +93,14 @@ objc 增强了对模块的支持， 提高了编译速度和索引速度。用xc
  
 
 ##Other
+####  状态栏，导航栏和应用UI不再有界限区分
+####  所有的导航栏跟toolbar 上的按钮都变成了文字 
 #### Barcode Scanning 条码扫描
 #### iBeacons 通过蓝牙4.0获取位置数据
 #### 60-fps Video Capture：iOS 7 允许应用以60帧每秒录制视频
 #### 集成了腾讯微博
-
+#### MessageUI里添加了附件按钮
+#### Store Kit在内购方面采用了新的订单系统，这将可以实现对订单的本机验证
 
 
 
