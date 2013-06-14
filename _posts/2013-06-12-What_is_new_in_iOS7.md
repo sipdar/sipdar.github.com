@@ -76,7 +76,7 @@ AirDrop使用户可以分享 照片 文档 链接 和其他的数据类型。[UI
 * Multipeer Connectivity framework 
 * JavaScript Core framework (JavaScriptCore.framework) 
 
- 	提供了用 OBjc封装的标准JS对象使用此框架来评估JavaScript代码和解析JSON数据.
+	提供了用 OBjc封装的标准JS对象使用此框架来评估JavaScript代码和解析JSON数据. 	
 * Media Accessibility framework (MediaAccessibility.framework) 管理多媒体文件的隐藏式字幕
 * Safari Services framework (SafariServices.framework) 支持应用内添加URL到safari reading list  	
 
@@ -93,14 +93,16 @@ objc 增强了对模块的支持， 提高了编译速度和索引速度。用xc
  
 
 ##Other
-####  状态栏，导航栏和应用UI不再有界限区分
-####  所有的导航栏跟toolbar 上的按钮都变成了文字 
-#### Barcode Scanning 条码扫描
-#### iBeacons 通过蓝牙4.0获取位置数据
-#### 60-fps Video Capture：iOS 7 允许应用以60帧每秒录制视频
-#### 集成了腾讯微博
-#### MessageUI里添加了附件按钮
-#### Store Kit在内购方面采用了新的订单系统，这将可以实现对订单的本机验证
+*  状态栏，导航栏和应用UI不再有界限区分
+*  所有的导航栏跟toolbar 上的按钮都变成了文字 
+* Barcode Scanning 条码扫描
+* iBeacons 通过蓝牙4.0获取位置数据
+* 60-fps Video Capture：iOS 7 允许应用以60帧每秒录制视频
+* 集成了腾讯微博
+* MessageUI里添加了附件按钮
+* Store Kit在内购方面采用了新的订单系统，这将可以实现对订单的本机验
+* iOS7的模拟器支持iCloud调试 推送调试了。
+* iOS6开始就支持多种中文字体了。一直没发现 [字体列表](http://support.apple.com/kb/HT5484)
 
 
 
