@@ -104,6 +104,7 @@ objc 增强了对模块的支持， 提高了编译速度和索引速度。用xc
 * iOS7的模拟器支持iCloud调试 推送调试了。
 * iOS6开始就支持多种字体了。一直没发现 [字体列表](http://support.apple.com/kb/HT5484)
 * 应用单独设置VPN
+* UIView有了tintColor属性：可以使用一个tint color，并对view和它的subview有影响。
 
 
 
