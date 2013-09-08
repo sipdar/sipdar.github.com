@@ -27,5 +27,5 @@ frame 并不是个确定的值。它会根据 bounds center 以及做动画的�
 当你设置图层的 **frame** 属性的时候,**position** 会根据锚点相应的改变,而当你设置图层的 **position** 属性的时候,**bounds**会根据锚点做相应的改变。锚点的默认值是**(0.5,0.5)**.
 
 下面几幅图片展示了锚点的位置对于 **position**的影响。
-![image](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreAnimation_guide/Art/layer_coords_anchorpoint_position_2x.png)
-![image](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreAnimation_guide/Art/layer_coords_anchorpoint_transform_2x.png)
+![image](http://m3.img.libdd.com/farm4/2013/0908/15/C9DA0E164914D457005A246C534030BD82A87510B80BC_657_726.PNG)
+![image](http://m1.img.libdd.com/farm4/2013/0908/15/7F64FC799F69C56600175ACAF10941B6BF93D381B4E36_657_639.PNG)
