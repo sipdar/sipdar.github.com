@@ -1,7 +1,8 @@
 ---
 layout: post
-title: Core Animation (三)  Layout
+title: Core Animation (三) layout
 ---
+
 #Core Animation (三)
 ##布局
 **UIView** 有三个跟布局有关的属性，**frame** **bounds** **center**。 **CALayer** 也有三个类似的属性，**frame** **bounds** **position** 。view 使用 center ，layer 使用position。实际上他们是一样的。
