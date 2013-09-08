@@ -1,7 +1,8 @@
 ---
 layout: post
-title: Core Animation (三) layout
+title: Core Animation (二)  The Backing Image
 ---
+
 
 #Core Animation (三)
 ##布局
@@ -19,7 +20,8 @@ frame 并不是个确定的值。它会根据 bounds center 以及做动画的�
 旋转之后的frame 变大了。
 ##锚点（anchorPoint）
 图层的 **anchorPoint** 属性指定了一个基于图层 **bounds** 的符合位置坐标系的位置。锚点指定了 **bounds** 相对于 **position** 的值,同时也作为变换时候的支点。锚点使用单元空间坐标系表示,**(0.0,0.0)**点接近图层 的原点,而**(1.0,1.0)**是原点的对角点。改变图层的父图层的变换属性将会影响到 **anchorPoint** 的方向,具体变化取决于父图层坐标系的 Y 轴。
-当你设置图层的 **frame** 属性的时候,**position** 会根据锚点相应的改变,而当你设置图层的 **position** 属性的时候,**bounds**会根据锚点做相应的改变。锚点的默认值是**(0.5,0.5)**.
+
+当你设置图层的 **frame** 属性的时候,**position** 会根据锚点相应的改变,而当你设置图层的 **position** 属性的时候,**bounds**会根据锚点做相应的改变。锚点的默认值是**(0.5,0.5)**.
 
 下面几幅图片展示了锚点的位置对于 **position**的影响。
 ![image](https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreAnimation_guide/Art/layer_coords_anchorpoint_position_2x.png)
