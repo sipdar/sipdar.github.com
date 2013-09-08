@@ -29,3 +29,15 @@ frame 并不是个确定的值。它会根据 bounds center 以及做动画的�
 下面几幅图片展示了锚点的位置对于 **position**的影响。
 ![image](http://m3.img.libdd.com/farm4/2013/0908/15/C9DA0E164914D457005A246C534030BD82A87510B80BC_657_726.PNG)
 ![image](http://m1.img.libdd.com/farm4/2013/0908/15/7F64FC799F69C56600175ACAF10941B6BF93D381B4E36_657_639.PNG)
+
+
+##图层的坐标系
+我们可以通过 CALayer的方法 在进行坐标转换。
+
+	- (CGPoint)convertPoint:(CGPoint)point fromLayer:(CALayer *)layer;
+	- (CGPoint)convertPoint:(CGPoint)point toLayer:(CALayer *)layer;
+	- (CGRect)convertRect:(CGRect)rect fromLayer:(CALayer *)layer;
+	- (CGRect)convertRect:(CGRect)rect toLayer:(CALayer *)layer;
+
+
+
