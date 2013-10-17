@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Visual Effects (四)  Layout
+title: Core Animation (四) Visual Effects
 ---
 
 
