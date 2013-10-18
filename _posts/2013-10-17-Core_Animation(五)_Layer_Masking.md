@@ -18,7 +18,8 @@ title: Core Animation (五)Layer Masking
 	UIView *viewB = [[UIView alloc] initWithFrame:CGRectMake(350, 80, 100, 100)];
 	UIImage *image = [UIImage imageNamed:@"kangaroo.png"];
 	UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-	imageView.frame = CGRectMake(250, 100 , CGRectGetWidth(imageView.frame), CGRectGetHeight(imageView.frame));
+	imageView.frame = CGRectMake(250, 100 , CGRectGetWidth(imageView.frame), 
+											 CGRectGetHeight(imageView.frame));
 	viewB.backgroundColor = [UIColor greenColor];
 	viewA.backgroundColor = [UIColor greenColor];
 	
