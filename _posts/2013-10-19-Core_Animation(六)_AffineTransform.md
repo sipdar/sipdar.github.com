@@ -86,11 +86,9 @@ AffineTransform类描述了一种二维仿射变换的功能，它是一种二�
 函数| 操作 
 ------------ | -------------
 CGAffineTransformMakeTranslation | 新的平移矩阵要移动到距离远点的位置     
-CGAffineTransformTranslate | 应用现有的仿射变换平移操作。   
 CGAffineTransformMakeRotation | 构建一个新的旋转矩阵 参数是旋转的弧度。
-CGAffineTransformRotate | 应用到现有的仿射变换的旋转操作。  
 CGAffineTransformMakeScale | 构建一个新的缩放矩阵指定多少拉伸或收缩坐标x和y值。
-CGAffineTransformScale | 应用现有的仿射变换的缩放操作。
+
 
 我们看下面这个例子，它把LLVM的logo 旋转了 45°：
 
@@ -103,9 +101,14 @@ CGAffineTransformScale | 应用现有的仿射变换的缩放操作。
 	[self.view addSubview:imageView];
 	
 ![image](http://m3.img.libdd.com/farm4/2013/1019/21/D78163CE65A5BDE31AFB5899ABBECB2C63DFCF8CA2CCB_594_856.PNG)
-我们在旋转ImageView的时候 传给 **CGAffineTransformMakeRotation** 的参数是一个宏定义 **M_PI_4**,
-并不是 45°。变换功能 在iOS中使用的是弧度并不是角度。 弧度通常指定使用的数学常数π（圆周率）的倍数。 π弧度等于180度，所以π除以4是相当于45度。
-C 的**math**库，方便地提供常数π的公倍数，M_PI_4是常数，表示π除以4。如果你想使用弧度，你可以使用这些宏来转换角度。
+
+我们在旋转ImageView的时候 传给 **CGAffineTransformMakeRotation** 的参数是一个宏定义 **M_PI_4**,并不是 45°。旋转的单位采用弧度(radians),而不是角度(degress)。以下两个函数,你可以在 弧度和角度之间切换。
+
+	CGFloat DegreesToRadians(CGFloat degrees) {return degrees * M_PI / 180;};
+	￼CGFloat RadiansToDegrees(CGFloat radians) {return radians * 180 / M_PI;};
+	
+弧度通常指定使用的数学常数π（圆周率）的倍数。 π弧度等于180度，所以π除以4是相当于45度。
+C 的**math**库，方便地提供常数π的公倍数，M_PI_4是常数，表示π除以4。如果你想使用弧度时候，你可以直接使用这些宏。
 
 	#define M_E         2.71828182845904523536028747135266250   /* e              */
 	#define M_LOG2E     1.44269504088896340735992468100189214   /* log2(e)        */
@@ -122,3 +125,69 @@ C 的**math**库，方便地提供常数π的公倍数，M_PI_4是常数，表�
 	#define M_SQRT1_2   0.707106781186547524400844362104849039  /* 1/sqrt(2)      */
 	
 ##组合Transforms
+
+**Core Graphics** 还提供了另外一系列的函数，使开发者可以方便的组合 **Transforms**
+
+例如
+
+函数| 操作 
+------------ | -------------
+GAffineTransformRotate(CGAffineTransform t, CGFloat angle)  | 原始的基础上加上偏移
+CGAffineTransformScale(CGAffineTransform t, CGFloat sx, CGFloat sy) | 加上缩放
+CGAffineTransformTranslate(CGAffineTransform t, CGFloat tx, CGFloat ty) | 加上旋转
+
+
+当我们操作 **Transforms** 的时候，我们经常会创建一个初始的什么也不做的**Transform**，就像 **point** 的 **zero** 或者 **nil**。在矩阵的世界中，恒等矩阵就是干这个用的。 **Core Graphics** 为我们提供了 
+
+	CGAffineTransformIdentity
+	
+当我们想组合两个已经存在的 **transform**的时候，我们可以使用
+
+	CGAffineTransformConcat(CGAffineTransform t1, CGAffineTransform t2);
+
+下面的代码使LLVM的logo 缩小了50% 旋转了45°，并且向下移动了100的位置。
+
+	UIImage *image = [UIImage imageNamed:@"DragonMedium"];
+	UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+	imageView.frame = CGRectMake(0, 0 , CGRectGetWidth(imageView.frame), 
+										CGRectGetHeight(imageView.frame));
+	imageView.center = self.view.center;
+	
+	CGAffineTransform transform = CGAffineTransformIdentity;
+	transform = CGAffineTransformScale(transform, 0.5, 0.5);
+	transform = CGAffineTransformTranslate(transform, 0, 100);
+	
+	imageView.transform = CGAffineTransformRotate(transform, M_PI_4);
+	[self.view addSubview:imageView];
+		
+![image](http://m2.img.libdd.com/farm5/2013/1019/22/CE867462973B6617719D875B002DCE2EFB1FFE54D45AB_594_856.PNG)		
+
+##Shear Transform
+**Shear Transform** 是第四种 **Affine Transform** （我也不知道该怎么翻译这个 Shear Transform）。和旋转 缩放 移动 不同的是 **Core Graphics**并没有提供现成的函数来做 **Shear Transform**,不过我们可以自己来实现他。
+
+
+	CGAffineTransform CGAffineTransformMakeShear(CGFloat x, CGFloat y)
+	{
+		CGAffineTransform transform = CGAffineTransformIdentity;
+		transform.c = -x;
+		transform.b = y;
+		return transform;
+	}
+	
+下面给imageview 添加上 transform
+	
+	UIImage *image = [UIImage imageNamed:@"DragonMedium"];
+	UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+	imageView.backgroundColor = [UIColor greenColor];
+	imageView.frame = CGRectMake(0, 0 , CGRectGetWidth(imageView.frame), 
+										CGRectGetHeight(imageView.frame));
+	imageView.center = self.view.center;
+	imageView.transform = CGAffineTransformMakeShear(0.6,0);
+	
+	[self.view addSubview:imageView];
+	
+	
+效果如下
+
+![image](http://m1.img.libdd.com/farm4/2013/1019/22/433CC9E800E500602AB99C94F72ACC8FA3529787B5BEE_594_856.PNG)	
+
