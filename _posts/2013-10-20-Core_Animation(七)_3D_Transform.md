@@ -6,7 +6,7 @@ title: Core Animation (七)3DTransform
 
 #3D Transform
 ##3D Transform
-**CGAffineTransform** 属于 **Core Graphics Framework** ,**Core Graphic**是一个绘制2D图形的库。**CGAffineTransform** 只提供 2D 的旋转缩放移动等。我们要想实现 3D矩阵下的旋转缩放就要用到**CATransform3D**。在2D动画中，**point**属性只有 X Y 值，在3D坐标中，多了一个 Z 值。它代表的是当前的Layer距离用户视角的远近，正是这个Z值 使我们可以在3D坐标系中旋转缩放移动。
+**CGAffineTransform** 属于 **Core Graphics Framework** ,**Core Graphic**是一个绘制2D图形的库。**CGAffineTransform** 只提供 2D 的旋转缩放移动等。我们要想实现 3D矩阵下的旋转缩放就要用到**CATransform3D**。在2D动画中，**point**属性只有 X Y 值，在3D坐标中，多了一个 Z 值。它代表的是当前的Layer距离用户视角的远近，正是这个Z值 使我们可以在3D坐标系中旋转缩放移动。 
 
 **CATransform3D** 跟 **CGAffineTransform** 一样也是个矩阵，是一个 4x4 的矩阵结构定义如下。
 	
