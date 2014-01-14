@@ -1,3 +1,8 @@
+---
+layout: post
+title: Core Animation - CAShapeLayer
+---
+
 ### CAShapeLayer
 我们在上面曾经用过**CGPath**代替图片来绘制阴影，同样的我们可以使用**CGPath**来绘制各种我们想要的图形，用来代替图片使用。
 
