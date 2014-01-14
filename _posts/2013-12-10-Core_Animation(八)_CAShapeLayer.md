@@ -1,9 +1,10 @@
 ---
 layout: post
-title: Core Animation - CAShapeLayer
+title: Core Animation CAShapeLayer
 ---
 
-### CAShapeLayer
+
+# CAShapeLayer
 我们在上面曾经用过**CGPath**代替图片来绘制阴影，同样的我们可以使用**CGPath**来绘制各种我们想要的图形，用来代替图片使用。
 
 **CAShapeLayer**是 **CALayer**的子类，在绘制的时候它使用的是矢量图形，而不是 **Bitmap Image**，因此效率非常高。在使用的时候 只要我们定义好颜色 线条的宽度，然后用**CGPath**来定义出形状，剩下的 **CAShapeLayer**会自动渲染。当然我们也可以使用 **Core Graphics**在**CALayer**中绘制我们想要的内容，但是有使用 **CAShapeLayer**有它的好处，
