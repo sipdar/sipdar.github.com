@@ -17,7 +17,7 @@
 	[path addLineToPoint:CGPointMake(200, 150)];	CAShapeLayer *shapeLayer = [CAShapeLayer layer]; 	shapeLayer.strokeColor = 	[UIColor redColor].CGColor; 	shapeLayer.fillColor = [UIColor clearColor].CGColor; 	shapeLayer.lineWidth = 5;	shapeLayer.lineJoin = kCALineJoinRound; 	shapeLayer.lineCap = kCALineCapRound; 		shapeLayer.path = path.CGPath;	[self.containerView.layer addSublayer:shapeLayer];
 
 
-![image](http://)**lineWidth** 就是线的宽度	
+![image](http://sipdar.github.io/image/shaplayer1.png)**lineWidth** 就是线的宽度	
 **lineCap** 线头的效果
 **lineJoin** 不同的线相交的地方的效果
 ##圆角
@@ -42,5 +42,5 @@
 	shapeLayer.lineCap = kCALineCapRound;
 	shapeLayer.path = path.CGPath;
 	testView.layer.mask =shapeLayer;
-![image](http://)
+![image](http://sipdar.github.io/image/shaplayer2.png)
 
