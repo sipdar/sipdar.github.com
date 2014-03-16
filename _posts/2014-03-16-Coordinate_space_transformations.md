@@ -66,7 +66,7 @@ Quartz通过使用当前转换矩阵(current transformation matrix， CTM)将一
 	CGContextConcatCTM(context, transform);
 	CGContextTranslateCTM(context, -self.imageView.center.x, -self.imageView.center.y);
 
-![image](../image/2014-03-16/CTM_Transform.png)
+![image](http://sipdar.github.io/image/2014-03-16/CTM_Transform.png)
 
 
 ## CGContextGetCTM
