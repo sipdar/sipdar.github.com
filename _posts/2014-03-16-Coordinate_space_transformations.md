@@ -5,11 +5,11 @@ title: Coordinate Space Transformations
 
 ##Coordinate Systems
 Quartz 2D和UIKit的坐标系是不同的，Quartz 2D 使用的是笛卡尔坐标系 原点在左下角，
-![image](../image/2014-03-16/Quartz2DCoordinate.png)
+![image](http://sipdar.github.io/image/2014-03-16/Quartz2DCoordinate.png)
 
 UIkit坐标系的原点在左上角。
 
-![image](../image/2014-03-16/native_coordinate_system.jpg)
+![image](http://sipdar.github.io/image/2014-03-16/native_coordinate_system.jpg)
 
  这个也就可以理解为什么用Quartz 2D画和UIKit的倒过来的。
  
@@ -26,24 +26,24 @@ Quartz通过使用当前转换矩阵(current transformation matrix， CTM)将一
 
 <script src="https://gist.github.com/sipdar/9580303.js"></script>
 
-![image](../image/2014-03-16/CTM_Original.png)
+![image](http://sipdar.github.io/image/2014-03-16/CTM_Original.png)
 
 
 ##CGContextTranslateCTM
 <script src="https://gist.github.com/sipdar/9580363.js"></script>
 
-![image](../image/2014-03-16/CTM_Translate.png)
+![image](http://sipdar.github.io/image/2014-03-16/CTM_Translate.png)
 ##CGContextScaleCTM
 
 	CGContextScaleCTM(context, 0.5, 1.5);
 	
-![image](../image/2014-03-16/CTM_Scale.png)
+![image](http://sipdar.github.io/image/2014-03-16/CTM_Scale.png)
 
 ##CGContextRotateCTM
 
 	CGContextRotateCTM(context, M_2_PI);
 	
-![image](../image/2014-03-16/CTM_Rotate.png)
+![image](http://sipdar.github.io/image/2014-03-16/CTM_Rotate.png)
 
 这时候我们发现旋转并没有按照绘制的**Context**中心旋转， 因为旋转是以坐标系的原点为中心来做的，所以我们为了要保持图片的中心位置就要配合 **CGContextTranslateCTM** 一起使用。
 
@@ -51,7 +51,7 @@ Quartz通过使用当前转换矩阵(current transformation matrix， CTM)将一
 	CGContextRotateCTM(context, M_2_PI);
 	CGContextTranslateCTM(context, -self.imageView.center.x, -self.imageView.center.y);
 
-![image](../image/2014-03-16/CTM_Rotate_withCenter.png)
+![image](http://sipdar.github.io/image/2014-03-16/CTM_Rotate_withCenter.png)
 
 ##CGContextConcatCTM
 此外我们还可以通过 **CGAffineTransform **来变幻坐标系 比如我之前写过的仿射变换。
@@ -70,4 +70,4 @@ Quartz通过使用当前转换矩阵(current transformation matrix， CTM)将一
 
 
 ## CGContextGetCTM
-我们可以通过 **CGContextGetCTM** 在程序运行中取回当前**Context**上使用的转换矩阵。
+我们可以通过 **CGContextGetCTM** 在程序运行中取回当前**Context**上使用的转换矩阵。
