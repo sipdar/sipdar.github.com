@@ -11,7 +11,7 @@ UIkit坐标系的原点在左上角。
 
 ![image](http://sipdar.github.io/image/2014-03-16/native_coordinate_system.jpg)
 
- 这个也就可以理解为什么用Quartz 2D画和UIKit的倒过来的。
+ 这个也就可以理解为什么用Quartz 2D画的图形和UIKit的倒过来的。
  
  但是在IOS 3.2及后续的版本中，当UIKit为你的应用程序创建一个**Graphics Context**时，也对**Context**进行了额外的修改以匹配UIKit的约定。
 
