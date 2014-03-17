@@ -82,10 +82,8 @@ ul.posts {
   font-size: 110%;
   text-align: justify;
   width: 42em;
-  margin: 1em auto 1em auto;
+  margin: 2em auto 2em auto;
   line-height: 1.5em;
-  min-width: 780px;
-  max-width: 1024px;
 }
 
 .title {
