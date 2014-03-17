@@ -24,13 +24,30 @@ Quartz通过使用当前转换矩阵(current transformation matrix， CTM)将一
 
 我们先来看一个图片绘制的例子,首先是是没做矩阵转换的代码。
 
-<script src="https://gist.github.com/sipdar/9580303.js"></script>
+	UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 320),NO ,[UIScreen mainScreen].scale);
+	// Perform drawing here
+	UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(50, 50, 200, 200)];
+	[[UIColor redColor] setFill];
+	[path fill];
+	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+	self.imageView.image = image;
+	UIGraphicsEndImageContext();
 
 ![image](http://sipdar.github.io/image/2014-03-16/CTM_Original.png)
 
 
 ##CGContextTranslateCTM
-<script src="https://gist.github.com/sipdar/9580363.js"></script>
+
+	UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 320),NO ,[UIScreen mainScreen].scale);
+	// Perform drawing here
+	CGContextRef context = UIGraphicsGetCurrentContext();
+	CGContextTranslateCTM(context, 70, 0);
+	UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(50, 50, 200, 200)];
+	[[UIColor redColor] setFill];
+	[path fill];
+	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+	self.imageView.image = image;
+	UIGraphicsEndImageContext();
 
 ![image](http://sipdar.github.io/image/2014-03-16/CTM_Translate.png)
 ##CGContextScaleCTM
