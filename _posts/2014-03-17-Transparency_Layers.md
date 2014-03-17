@@ -20,13 +20,19 @@ title: Transparency Layers
 	CGFloat wd = 250;
 	CGFloat ht = 250;
 	CGSize myShadowOffset = CGSizeMake (5, -5);
-		CGContextSetShadow (myContext, myShadowOffset, 3);
+	CGContextSetShadow (myContext, myShadowOffset, 3);
 	CGContextBeginTransparencyLayer (myContext, NULL);
-	CGContextSetRGBFillColor (myContext, 0, 1, 0, 1);	CGContextFillRect (myContext, CGRectMake (wd/3+ 20,ht/2 ,wd/4,ht/4));	CGContextSetRGBFillColor (myContext, 0, 0, 1, 1);
-	CGContextFillRect (myContext, CGRectMake (wd/3-20,ht/2-50,wd/4,ht/4));	CGContextSetRGBFillColor (myContext, 1, 0, 0, 1);	CGContextFillRect (myContext, CGRectMake (wd/3,ht/2-20,wd/4,ht/4));	CGContextEndTransparencyLayer (myContext);
-
+	CGContextSetRGBFillColor (myContext, 0, 1, 0, 1);
+	CGContextFillRect (myContext, CGRectMake (wd/3+ 20,ht/2 ,wd/4,ht/4));
+	CGContextSetRGBFillColor (myContext, 0, 0, 1, 1);
+	CGContextFillRect (myContext, CGRectMake (wd/3-20,ht/2-50,wd/4,ht/4));
+	CGContextSetRGBFillColor (myContext, 1, 0, 0, 1);
+	CGContextFillRect (myContext, CGRectMake (wd/3,ht/2-20,wd/4,ht/4));
+	CGContextEndTransparencyLayer (myContext);
 	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-	self.imageView.image = image;	UIGraphicsEndImageContext();
+	self.imageView.image = image;
+	UIGraphicsEndImageContext();
+
 
 ![image](http://sipdar.github.io/image/2014-03-17/a.png)
 
