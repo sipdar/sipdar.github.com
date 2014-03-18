@@ -37,8 +37,8 @@ title: Blend Modes
 	CGContextDrawImage(context, CGRectMake(0, 50, 320, 240), foregroundImage.CGImage);
 	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
 	self.imageView.image = image;	UIGraphicsEndImageContext();
-＝		
-	-(UIColor *)colorWihtIndex:(NSInteger) index{
+
+	-(UIColor *)colorWihtIndex:(NSInteger) index{
 		if (index == 0)
 			return [[UIColor yellowColor] colorWithAlphaComponent:0.8];
 		else if (index== 1)
@@ -51,8 +51,7 @@ title: Blend Modes
 			return [[UIColor blueColor] colorWithAlphaComponent:0.8];
 		return [UIColor purpleColor];
 	}
-
-![image](http://sipdar.github.io/image/2014-03-18/normal.png)
+![image](http://sipdar.github.io/image/2014-03-18/normal.png)
 
 ### Multiply Blend Mode
 
