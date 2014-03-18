@@ -56,7 +56,7 @@ title: Blend Modes
 ### Multiply Blend Mode
 
 	CGContextSetBlendMode(context, kCGBlendModeMultiply);
-![image](http://sipdar.github.io/image/2014-03-18/multiply.png)
+![image](http://sipdar.github.io/image/2014-03-18/Multiply.png)
 
 ### Screen Blend Mode
 	CGContextSetBlendMode(context, kCGBlendModeScreen);
