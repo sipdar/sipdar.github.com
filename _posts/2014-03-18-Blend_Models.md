@@ -22,7 +22,7 @@ title: Blend Modes
 	CGFloat y = 0;
 	CGFloat height = 50 ;
 	for (int i = 0; i<5; i++) {
-		y  = height * i ;
+		y  += height ;
 		CGRect rect = CGRectMake(0, y, 320, height);
 		UIColor *color = [self colorWihtIndex:i];
 		CGContextSetFillColorWithColor(context, color.CGColor);
@@ -34,9 +34,23 @@ title: Blend Modes
 	CGContextTranslateCTM(context, 0.0f, -320);
 
 	CGContextSetBlendMode(context, kCGBlendModeNormal);
-	CGContextDrawImage(context, CGRectMake(0, 0, 320, 240), foregroundImage.CGImage);
+	CGContextDrawImage(context, CGRectMake(0, 50, 320, 240), foregroundImage.CGImage);
 	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
 	self.imageView.image = image;	UIGraphicsEndImageContext();
+＝		
+	-(UIColor *)colorWihtIndex:(NSInteger) index{
+		if (index == 0)
+			return [[UIColor yellowColor] colorWithAlphaComponent:0.8];
+		else if (index== 1)
+			return [[UIColor purpleColor] colorWithAlphaComponent:0.8];
+		else if (index== 2)
+			return [[UIColor redColor]colorWithAlphaComponent:0.8];
+		else if (index== 3)
+			return [[UIColor greenColor] colorWithAlphaComponent:0.8];
+		else if (index== 4)
+			return [[UIColor blueColor] colorWithAlphaComponent:0.8];
+		return [UIColor purpleColor];
+	}
 
 ![image](http://sipdar.github.io/image/2014-03-18/normal.png)
 
