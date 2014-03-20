@@ -12,7 +12,7 @@ title: Blend Modes
 3. 在画我们想和背景图形合成的图片 用 **CGContextDrawImage** 绘制。其实不只是图片。接下来绘制的无论是图片 矩形 文字都会使用  **Blend Modes** 和背景组合在一起。
 
 下面我们把左边的图片跟右边的条纹背景用不同的 **Blend Modes** 混合在一起看看都有什么效果
-![image](http://sipdar.github.io/image/2014-03-18/1.png)
+![image](http://sipdar.github.io/image/2014/03/18/1.png)
 
 ###	Normal Blend Mode
 
@@ -51,75 +51,75 @@ title: Blend Modes
 			return [[UIColor blueColor] colorWithAlphaComponent:0.8];
 		return [UIColor purpleColor];
 	}
-![image](http://sipdar.github.io/image/2014-03-18/normal.png)
+![image](http://sipdar.github.io/image/2014/03/18/normal.png)
 
 ### Multiply Blend Mode
 
 	CGContextSetBlendMode(context, kCGBlendModeMultiply);
-![image](http://sipdar.github.io/image/2014-03-18/Multiply.png)
+![image](http://sipdar.github.io/image/2014/03/18/Multiply.png)
 
 ### Screen Blend Mode
 	CGContextSetBlendMode(context, kCGBlendModeScreen);
 	
-![image](http://sipdar.github.io/image/2014-03-18/Screen.png)
+![image](http://sipdar.github.io/image/2014/03/18/Screen.png)
 
 ## Overlay Blend Mode
 	CGContextSetBlendMode(context, kCGBlendModeOverlay);
 	
-![image](http://sipdar.github.io/image/2014-03-18/Overlay.png)
+![image](http://sipdar.github.io/image/2014/03/18/Overlay.png)
 
 ##Lighten Blend Mode
 	CGContextSetBlendMode(context, kCGBlendModeLighten);
 	
-![image](http://sipdar.github.io/image/2014-03-18/Lighten.png)
+![image](http://sipdar.github.io/image/2014/03/18/Lighten.png)
 
 ##Color Dodge Blend Mode
 	CGContextSetBlendMode(context, kCGBlendModeColorDodge);
 	
-![image](http://sipdar.github.io/image/2014-03-18/Overlay.png)
+![image](http://sipdar.github.io/image/2014/03/18/Overlay.png)
 
 ##Color Burn Blend Mode
 	CGContextSetBlendMode(context, kCGBlendModeColorBurn);
 	
-![image](http://sipdar.github.io/image/2014-03-18/ColorBurn.png)
+![image](http://sipdar.github.io/image/2014/03/18/ColorBurn.png)
 
 ##Soft Light Blend Mode
 	CGContextSetBlendMode(context, kCGBlendModeSoftLight);
 	
-![image](http://sipdar.github.io/image/2014-03-18/SoftLight.png)
+![image](http://sipdar.github.io/image/2014/03/18/SoftLight.png)
 
 ##Hard Light Blend Mode
 	CGContextSetBlendMode(context, kCGBlendModeHardLight);
 	
-![image](http://sipdar.github.io/image/2014-03-18/HardLight.png)
+![image](http://sipdar.github.io/image/2014/03/18/HardLight.png)
 
 ## Difference Blend Mode
 	CGContextSetBlendMode(context, kCGBlendModeDifference);
 	
-![image](http://sipdar.github.io/image/2014-03-18/Difference.png)
+![image](http://sipdar.github.io/image/2014/03/18/Difference.png)
 ## Exclusion Blend Mode
 	CGContextSetBlendMode(context, kCGBlendModeExclusion);
 	
-![image](http://sipdar.github.io/image/2014-03-18/Exclusion.png)
+![image](http://sipdar.github.io/image/2014/03/18/Exclusion.png)
 
 ## Hue Blend Mode
 	CGContextSetBlendMode(context, kCGBlendModeHue);
 	
-![image](http://sipdar.github.io/image/2014-03-18/Hue.png)
+![image](http://sipdar.github.io/image/2014/03/18/Hue.png)
 
 ## Saturation Blend Mode
 	CGContextSetBlendMode(context, kCGBlendModeSaturation);
 	
-![image](http://sipdar.github.io/image/2014-03-18/Saturation.png)
+![image](http://sipdar.github.io/image/2014/03/18/Saturation.png)
 
 ## Color Blend Mode
 	CGContextSetBlendMode(context, kCGBlendModeColor);
 	
-![image](http://sipdar.github.io/image/2014-03-18/Color.png)
+![image](http://sipdar.github.io/image/2014/03/18/Color.png)
 
 ##Luminosity Blend Mode
 
 	CGContextSetBlendMode(context, kCGBlendModeLuminosity);
 	
-![image](http://sipdar.github.io/image/2014-03-18/Luminosity.png)
+![image](http://sipdar.github.io/image/2014/03/18/Luminosity.png)
 
