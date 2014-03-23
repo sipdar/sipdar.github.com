@@ -7,3 +7,7 @@ author:
     name:         sipdar
 description:      "北漂的IT民工\'s Blog"
 
+analytics :
+  provider : google 
+  google : 
+      tracking_id : 'UA-49285145-1'
