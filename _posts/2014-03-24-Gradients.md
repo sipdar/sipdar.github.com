@@ -4,7 +4,7 @@ title: Gradients
 ---
 **Quartz **提供了两种绘制渐变的数据类型，**CGShadingRef** 和**CGGradientRef** 我们都可以始终这两种方式来绘制线性渐变或者辐射渐变。
 
-![image](../image/2014/03/24/gradient1.png)
+![image](http://sipdar.github.io/image/2014/03/24/gradient1.png)
 
 #CGGradientRef
 
@@ -21,17 +21,17 @@ title: Gradients
 	CGContextDrawLinearGradient (context,mygradient,CGPointMake(0.0, 0.0),CGPointMake(200.0, 200.0), 0);
 	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();	UIGraphicsEndImageContext();
 	
-![image](../image/2014/03/24/gradient2.png)
+![image](http://sipdar.github.io/image/2014/03/24/gradient2.png)
 
 ###Painting a radial gradient using a CGGradient object
 
 	//CGContextDrawLinearGradient (context,mygradient,CGPointMake(0.0, 0.0),CGPointMake(200.0, 200.0), 0);
 	CGContextDrawRadialGradient (context,mygradient,CGPointMake(10.0, 10.0),10.0f,CGPointMake(150.0, 150.0),50.0f,kCGGradientDrawsBeforeStartLocation & kCGGradientDrawsAfterEndLocation);
 
-![image](../image/2014/03/24/gradient3.png)
+![image](http://sipdar.github.io/image/2014/03/24/gradient3.png)
 
 	CGContextDrawRadialGradient (context,mygradient,CGPointMake(100.0, 100.0),0.0f,CGPointMake(100.0, 100.0),100.0f,kCGGradientDrawsBeforeStartLocation & kCGGradientDrawsAfterEndLocation);
-![image](../image/2014/03/24/gradient5.png)
+![image](http://sipdar.github.io/image/2014/03/24/gradient5.png)
 
 ###多个颜色渐变
 	
@@ -41,7 +41,7 @@ title: Gradients
 								0.5,0.5,0.5,1.0,
 								0.8,0.8,0.3,1.0};
 								
-![image](../image/2014/03/24/gradient4.png)													
+![image](http://sipdar.github.io/image/2014/03/24/gradient4.png)													
 ### 用 **Gradient** 实现一个 iOS 6.0风格的高光按钮	
 我们继承UIButton 然后在 **- (void)drawRect:**  中 添加渐变效果
 
@@ -77,5 +77,5 @@ title: Gradients
 	}
 
 		
-![image](../image/2014/03/24/gradient6.png)													
+![image](http://sipdar.github.io/image/2014/03/24/gradient6.png)													
 
