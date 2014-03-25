@@ -1,0 +1,625 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<style>
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote {
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #737373;
+    background-color: white;
+    margin: 10px 13px 10px 13px;
+}
+table {
+	margin: 10px 0 15px 0;
+	border-collapse: collapse;
+}
+td,th {	
+	border: 1px solid #ddd;
+	padding: 3px 10px;
+}
+th {
+	padding: 5px 10px;	
+}
+
+a {
+    color: #0069d6;
+}
+a:hover {
+    color: #0050a3;
+    text-decoration: none;
+}
+a img {
+    border: none;
+}
+p {
+    margin-bottom: 9px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #404040;
+    line-height: 36px;
+}
+h1 {
+    margin-bottom: 18px;
+    font-size: 30px;
+}
+h2 {
+    font-size: 24px;
+}
+h3 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 16px;
+}
+h5 {
+    font-size: 14px;
+}
+h6 {
+    font-size: 13px;
+}
+hr {
+    margin: 0 0 19px;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+}
+blockquote {
+    padding: 13px 13px 21px 15px;
+    margin-bottom: 18px;
+    font-family:georgia,serif;
+    font-style: italic;
+}
+blockquote:before {
+    content:"\201C";
+    font-size:40px;
+    margin-left:-10px;
+    font-family:georgia,serif;
+    color:#eee;
+}
+blockquote p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 18px;
+    margin-bottom: 0;
+    font-style: italic;
+}
+code, pre {
+    font-family: Monaco, Andale Mono, Courier New, monospace;
+}
+code {
+    background-color: #fee9cc;
+    color: rgba(0, 0, 0, 0.75);
+    padding: 1px 3px;
+    font-size: 12px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+pre {
+    display: block;
+    padding: 14px;
+    margin: 0 0 18px;
+    line-height: 16px;
+    font-size: 11px;
+    border: 1px solid #d9d9d9;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+pre code {
+    background-color: #fff;
+    color:#737373;
+    font-size: 11px;
+    padding: 0;
+}
+@media screen and (min-width: 914px) {
+    body {
+        width: 854px;
+        margin:10px auto;
+    }
+}
+@media print {
+	body,code,pre code,h1,h2,h3,h4,h5,h6 {
+		color: black;
+	}
+	table, pre {
+		page-break-inside: avoid;
+	}
+}
+</style>
+<title>Core Image</title>
+
+</head>
+<body>
+<h1>Core Image</h1>
+
+<p><strong>Core Image</strong>是一个很强大的图像处理框架，最早2004在<strong>Mac</strong>平台上发布，2011年随着<strong>iOS5</strong>iOS 平台也可以使用<strong>Core Image</strong>了，只是<strong>iOS</strong>上不如<strong>Mac</strong>下面的滤镜丰富。大概九十几种滤镜。
+通过<strong>Core Image</strong>我们可以方便的修改图像的饱和度亮度和对比度之类的。他把大量的技术细节隐藏起来了，对于开发者来说，我们不用去了解高深的图像处理算法，还是非常易用的。</p>
+
+<h2>处理图像</h2>
+
+<p><strong>Core image</strong>有三个类来支持图像处理：</p>
+
+<ol>
+<li><strong>CIFilter</strong> 每个<strong>CIFilter</strong>都相当于一个滤镜。</li>
+<li><strong>CIImage</strong> 这个类存储图片数据，我们可以通过 <strong>UIImage</strong> 或者 图片文件，构造出来。</li>
+<li><strong>CIContext</strong> 图像处理都是在一个<strong>CIContext</strong>中完成的，通过它<strong>Core Image</strong>可以绘制一个<strong>CIFilter</strong>产生的结果。我们使用的时候可以指定<strong>CIContext</strong>基于CPU还是GPU。</li>
+</ol>
+
+
+<p>下面是一个<strong>Core Image</strong>使用的简单例子</p>
+
+<pre><code>self.logoImageView.image = [UIImage imageNamed:@"baby.jpg"];
+CIContext *context = [CIContext contextWithOptions:nil];
+CIImage *image = [CIImage imageWithCGImage:[UIImage imageNamed:@"baby.jpg"].CGImage];
+CIFilter *filter =[CIFilter filterWithName:@"CISepiaTone"];
+[filter setValue:image forKey:kCIInputImageKey];
+[filter setValue:@0.8 forKey:kCIInputIntensityKey];
+CIImage *result = [filter valueForKey:kCIOutputImageKey];
+CGRect extent = [result extent];
+CGImageRef cgImage = [context createCGImage:result fromRect:extent];
+UIImage *resultImage = [UIImage imageWithCGImage:cgImage];
+self.progressView.image = resultImage;
+</code></pre>
+
+<p><img src="../image/2014/03/25/1.png" alt="image" /></p>
+
+<h2>内置滤镜</h2>
+
+<p><strong>Core Image</strong>提供了大量内置的滤镜，供你的应用做图像处理。不同iOS版本提供的滤镜是不同的，所以Core Image 提供了方法，让你可以查询系统提供了哪些滤镜。我们可以查找指定的分类，也可以通过<strong>nil</strong>残说获得所有的滤镜名称。</p>
+
+<pre><code>    NSArray *filterList = [CIFilter filterNamesInCategories:nil];
+</code></pre>
+
+<h3>滤镜的类别列表</h3>
+
+<h4>根据效果分类</h4>
+
+<table>
+<thead>
+<tr>
+<th>Effect type  </th>
+<th> Indicates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kCICategoryDistortionEffect </td>
+<td> Distortion effects, such as bump, twirl, hole</td>
+</tr>
+<tr>
+<td>kCICategoryGeometryAdjustment </td>
+<td> Geometry adjustment, such as affine transform, crop, perspective transform</td>
+</tr>
+<tr>
+<td>kCICategoryCompositeOperation </td>
+<td> Compositing, such as source over, minimum, source atop, color dodge blend mode</td>
+</tr>
+<tr>
+<td>kCICategoryHalftoneEffect </td>
+<td> Halftone effects, such as screen, line screen, hatched</td>
+</tr>
+<tr>
+<td>kCICategoryColorAdjustment </td>
+<td> Color adjustment, such as gamma adjust, white point adjust, exposure</td>
+</tr>
+<tr>
+<td>kCICategoryColorEffect </td>
+<td> Color effect, such as hue adjust, posterize</td>
+</tr>
+<tr>
+<td>kCICategoryTransition </td>
+<td> Transitions between images, such as dissolve, disintegrate with mask, swipe</td>
+</tr>
+<tr>
+<td>kCICategoryTileEffect </td>
+<td> Tile effect, such as parallelogram, triangle</td>
+</tr>
+<tr>
+<td>kCICategoryGenerator </td>
+<td> Image generator, such as stripes, constant color, checkerboard</td>
+</tr>
+<tr>
+<td>kCICategoryGradient </td>
+<td> Gradient, such as axial, radial, Gaussian</td>
+</tr>
+<tr>
+<td>kCICategoryStylize </td>
+<td> Stylize, such as pixellate, crystallize</td>
+</tr>
+<tr>
+<td>kCICategorySharpen </td>
+<td> Sharpen, luminance</td>
+</tr>
+<tr>
+<td>kCICategoryBlur </td>
+<td> Blur, such as Gaussian, zoom, motion</td>
+</tr>
+</tbody>
+</table>
+
+
+<h4>根据用法分类</h4>
+
+<table>
+<thead>
+<tr>
+<th>USE  </th>
+<th> Indicates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kCICategoryStillImage </td>
+<td> Can be used for still images</td>
+</tr>
+<tr>
+<td>kCICategoryVideo </td>
+<td> Can be used for video</td>
+</tr>
+<tr>
+<td>kCICategoryInterlaced </td>
+<td> Can be used for interlaced images</td>
+</tr>
+<tr>
+<td>kCICategoryNonSquarePixels </td>
+<td> Can be used for nonsquare pixels</td>
+</tr>
+<tr>
+<td>kCICategoryHighDynamicRange </td>
+<td> Can be used for high-dynamic range pixels</td>
+</tr>
+</tbody>
+</table>
+
+
+<h3>滤镜的属性</h3>
+
+<p>很多滤镜都有多个输入参数。并且每个输入的参数有可能都是不同的数据类型。那么我们可以通过下面这个方法获得指定滤镜的属性。</p>
+
+<pre><code>CIFilter *myFilter = [CIFilter filterWithName:@"&lt;# Filter Name Here #&gt;"];
+NSDictionary *myFilterAttributes = [myFilter attributes];
+</code></pre>
+
+<p>滤镜属性是以<strong>key-Value</strong>的形式保存的。<strong>Core Image</strong>使用<strong>KVC</strong>，你可以通过<strong>KVC</strong>获得或更改属性的值。</p>
+
+<p>滤镜的属性类型。</p>
+
+<table>
+<thead>
+<tr>
+<th>Data Type  </th>
+<th> Object  </th>
+<th> Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Strings </td>
+<td> NSString </td>
+<td> Used for such things as display names</td>
+</tr>
+<tr>
+<td>Floating-point values </td>
+<td> NSNumber </td>
+<td> Scalar values such as intensity levels and radii</td>
+</tr>
+<tr>
+<td>Vectors </td>
+<td> CIVector </td>
+<td> Specify positions, areas, and color values; can have 2, 3, or 4 elements, each of which is a floating-point number</td>
+</tr>
+<tr>
+<td>Colors </td>
+<td> CIColor </td>
+<td> Contain color values and a color space in which to interpret the values</td>
+</tr>
+<tr>
+<td>Images </td>
+<td> CIImage </td>
+<td> Lightweight objects that specify image “recipes”</td>
+</tr>
+<tr>
+<td>Transforms </td>
+<td> NSData on iOS NSAffineTransformon OS X </td>
+<td> An affine transformation to apply to an image</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>创建一个Core Image Context</h2>
+
+<p>要渲染图像，我们需要创建一个<strong>Core Image Context</strong>,并且用这个<strong>Context</strong>来渲染输出图像。我们在创建<strong>Core Image Context</strong>可以通过初始化方法来指定 <strong>Context</strong>的渲染方式，<strong>GPU</strong> 还是<strong>CPU</strong>。</p>
+
+<table>
+<thead>
+<tr>
+<th>Context  </th>
+<th> Renderer  </th>
+<th> Supported platform</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>contextWithOptions: </td>
+<td> CPU or GPU </td>
+<td> iOS</td>
+</tr>
+<tr>
+<td>contextWithCGContext: options: NSGraphicsContext </td>
+<td> CPU or GPU </td>
+<td> OS X</td>
+</tr>
+<tr>
+<td>contextWithEAGLContext:<br> contextWithEAGLContext: options: </td>
+<td> GPU </td>
+<td> iOS</td>
+</tr>
+<tr>
+<td>contextWithCGLContext: pixelFormat:options: <br>contextWithCGLContext: pixelFormat: colorSpace:options: </td>
+<td>GPU </td>
+<td> OS X</td>
+</tr>
+</tbody>
+</table>
+
+
+<p>当我们的应用不需要实时渲染的时候我们用下面的方法创建 <strong>Context</strong></p>
+
+<pre><code>CIContext *context = [CIContext contextWithOptions:nil];
+</code></pre>
+
+<p>这个方法可以使用CPU或者GPU进行渲染。要定义使用哪个，需要设置一个<strong>dictionary</strong>，增加键kCIContextUserSoftwareRenderer，并设置相应的布尔值。CPU渲染要比GPU要慢。但是对于GPU渲染，在渲染结果被拷贝回CPU内存并转化为UIImage之前，不会被显示出来。</p>
+
+<p>如果我们需要实时渲染，我们就要用到 GPU了。</p>
+
+<pre><code>EAGLContext *myEAGLContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+NSDictionary *options = @{ kCIContextWorkingColorSpace : [NSNull null] };
+CIContext *myContext = [CIContext contextWithEAGLContext:myEAGLContext options:options];
+</code></pre>
+
+<h2>创建一个CIImage对象</h2>
+
+<p><strong>Core Image filters</strong> 处理<strong>Core Image</strong>images.<strong>Core Image</strong> 封装了image 对象，在渲染结果之前，<strong>Core Image</strong> 实际上不产生一个像素。下面是<strong>Core Image</strong>创建的方法：</p>
+
+<table>
+<thead>
+<tr>
+<th>Image source  </th>
+<th> Methods  </th>
+<th> Platform</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>URL </td>
+<td> imageWithContentsOfURL:<br>imageWithContentsOfURL: options: </td>
+<td> iOS, OS X</td>
+</tr>
+<tr>
+<td>Quartz 2D image (CGImageRef) </td>
+<td> imageWithCGImage:<br>imageWithCGImage: options: </td>
+<td> iOS, OS X</td>
+</tr>
+<tr>
+<td>Bitmap data </td>
+<td> imageWithBitmapData: bytesPerRow:size:format:colorSpace: <br> imageWithImageProvider: size:format:colorSpace:options: </td>
+<td> iOS, OS X</td>
+</tr>
+<tr>
+<td>Encoded data (an image in memory)</td>
+<td>imageWithData: imageWithData: options: </td>
+<td> iOS, OS X</td>
+</tr>
+<tr>
+<td>CIImageProvider </td>
+<td> imageWithImageProvider: size:format:colorSpace:options: </td>
+<td> iOS, OS X</td>
+</tr>
+<tr>
+<td>OpenGL texture </td>
+<td>imageWithTexture: size:flipped: colorSpace:<br>imageWithTexture: size:flipped: options: </td>
+<td> iOS, OS X</td>
+</tr>
+<tr>
+<td>Core Video pixel buffer </td>
+<td>imageWithCVPixelBuffer:<br>imageWithCVPixelBuffer:options: </td>
+<td> iOS</td>
+</tr>
+<tr>
+<td>Core Video image buffer </td>
+<td>imageWithCVImageBuffer:<br>imageWithCVImageBuffer:options: </td>
+<td> OS X</td>
+</tr>
+<tr>
+<td>IOSurface </td>
+<td> imageWithIOSurface:<br>imageWithIOSurface: options: </td>
+<td> OS X</td>
+</tr>
+<tr>
+<td>Quartz 2D layer (CGLayerRef) </td>
+<td> imageWithCGLayer:<br>imageWithCGLayer: options: </td>
+<td> OS X</td>
+</tr>
+<tr>
+<td>NSCIImageRep </td>
+<td>initWithBitmapImageRep: </td>
+<td> OS X</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>Core Image 处理流程</h2>
+
+<p><img src="../image/2014/03/25/2.png" alt="image" /></p>
+
+<p>当有多个滤镜的时候，<strong>Core Image</strong>会决定处理顺序，使效率达到最高。</p>
+
+<h2>渲染处理完成的图像</h2>
+
+<p>渲染使用 <strong>GPU</strong> 还是 <strong>CPU</strong> 取决于我们生成 <strong>Context</strong>的时候指定的是哪个。</p>
+
+<table>
+<thead>
+<tr>
+<th>Method   </th>
+<th> Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>drawImage:inRect: fromRect: </td>
+<td> Renders a region of an image to a rectangle in the context destination.<br>On iOS, this method renders only to a CIContext object that is created with contextWithEAGLContext:.<br>On OS X, the dimensions of the destination rectangle are in points if the CIContext object is created with a CGContextRef. The dimensions are in points if the CIContext object is created with a CGLContext object.</td>
+</tr>
+<tr>
+<td>createCGImage: fromRect:<br>createCGImage:fromRect:format:colorSpace: </td>
+<td> Create a Quartz 2D image from a region of a CIImage object. (iOS and OS X)</td>
+</tr>
+<tr>
+<td>render:toBitmap:rowBytes:bounds:format:colorSpace: </td>
+<td> Renders a CIImage object into a bitmap. (iOS and OS X)</td>
+</tr>
+<tr>
+<td>createCGLayerWithSize:info: </td>
+<td> Creates a CGLayer object renders the CIImage object into the layer. (OS X only)</td>
+</tr>
+<tr>
+<td>render: toCVPixelBuffer:<br>render:toCVPixelBuffer:bounds:colorSpace: </td>
+<td> Renders the CIImage object into a Core Video pixel buffer. (iOS only)</td>
+</tr>
+<tr>
+<td>render:toIOSurface:bounds:colorSpace: </td>
+<td> Renders the CIImage object into an IOSurface object. (OS X only)</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>多线程</h2>
+
+<p><strong>CIContext</strong>和<strong>CIImage</strong>都是不可更改的。所以它们是线程安全的。可以在多个线程中使用同一个<strong>Context</strong>来渲染<strong>CIImage</strong>对象。<strong>CIFilter</strong>因为有写操作，所以它不是线程安全的，我们要给每个线程创建独立的<strong>CIFilter</strong>对象。</p>
+
+<h2>滤镜链</h2>
+
+<p>我们可以组合使用多个滤镜，来达到更好的滤镜效果。滤镜链的意思就是我们可以把前一个滤镜的输出结果，当作后面一个滤镜的输入参数。
+我们看下面三个滤镜组合的效果</p>
+
+<pre><code>self.logoImageView.image = [UIImage imageNamed:@"baby.jpg"];
+CIContext *context = [CIContext contextWithOptions:nil];
+CIImage *image = [CIImage imageWithCGImage:[UIImage imageNamed:@"baby.jpg"].CGImage];
+CIFilter *filter =[CIFilter filterWithName:@"CISepiaTone"];
+[filter setValue:image forKey:kCIInputImageKey];
+[filter setValue:@0.8 forKey:kCIInputIntensityKey];
+CIImage *result = [filter valueForKey:kCIOutputImageKey];
+CIFilter *gloom = [CIFilter filterWithName:@"CIGloom"];
+[gloom setDefaults];
+[gloom setValue: result forKey: kCIInputImageKey];
+[gloom setValue: @25.0f forKey: kCIInputRadiusKey];
+[gloom setValue: @0.75f forKey: kCIInputIntensityKey];
+result = [gloom valueForKey: kCIOutputImageKey];
+
+CIFilter *bumpDistortion = [CIFilter filterWithName:@"CIBumpDistortion"];
+[bumpDistortion setDefaults];
+[bumpDistortion setValue: result forKey: kCIInputImageKey];
+[bumpDistortion setValue: [CIVector vectorWithX:350 Y:250] forKey: kCIInputCenterKey];
+[bumpDistortion setValue: @150.0f forKey: kCIInputRadiusKey];
+[bumpDistortion setValue: @3.0f forKey: kCIInputScaleKey];
+result = [bumpDistortion valueForKey: kCIOutputImageKey];
+
+CGRect extent = [result extent];
+CGImageRef cgImage = [context createCGImage:result fromRect:extent];
+UIImage *resultImage = [UIImage imageWithCGImage:cgImage];
+self.progressView.image = resultImage;
+</code></pre>
+
+<p><img src="../image/2014/03/25/3.png" alt="image" /></p>
+
+<h2>Transition</h2>
+
+<p>使用<strong>Core Image</strong>实现图片之间的切换效果</p>
+
+<pre><code>@interface TransitionView : GLKView
+@end
+
+@interface TransitionView ()&lt;GLKViewDelegate&gt;
+{
+    NSTimeInterval  base;
+    CGRect imageRect;
+}
+@property (nonatomic, strong) CIImage *image1;
+@property (nonatomic, strong) CIImage *image2;
+@property (nonatomic, strong) CIVector *extent;
+@property (nonatomic, strong) CIFilter *transition;
+@property (nonatomic, strong) CIContext *myContext;
+@end
+
+@implementation TransitionView
+- (void)awakeFromNib {
+    self.transition = [CIFilter filterWithName: @"CIDissolveTransition"];
+    UIImage *uiImage1    = [UIImage imageNamed:@"sample1.jpg"];
+    UIImage *uiImage2    = [UIImage imageNamed:@"sample2.jpg"];
+    self.image1    = [CIImage imageWithCGImage:uiImage1.CGImage];
+    self.image2    = [CIImage imageWithCGImage:uiImage2.CGImage];
+    imageRect = CGRectMake(0, 0, uiImage1.size.width, uiImage1.size.height);
+    base = [NSDate timeIntervalSinceReferenceDate];
+    [NSTimer scheduledTimerWithTimeInterval:1.0/30.0 target:self selector:@selector(onTimer:) userInfo:nil repeats:YES];
+    self.delegate = self;
+    self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    self.myContext = [CIContext contextWithEAGLContext:self.context];
+}
+
+- (CIImage *)imageForTransitionAtTime:(float)time{
+    if (fmodf(time, 2.0) &lt; 1.0f){
+        [self.transition setValue:self.image1 forKey:@"inputImage"];
+        [self.transition setValue:self.image2 forKey:@"inputTargetImage"];
+    }else{
+        [self.transition setValue:self.image2 forKey:@"inputImage"];
+        [self.transition setValue:self.image1 forKey:@"inputTargetImage"];
+    }
+    CGFloat transitionTime = 0.5 * (1 - cos(fmodf(time, 1.0f) * M_PI));
+    [self.transition setValue:@(transitionTime) forKey:@"inputTime"];
+
+    CIImage *transitionImage = [self.transition valueForKey:@"outputImage"];
+    return transitionImage;
+}
+
+- (void)glkView:(GLKView *)view drawInRect:(CGRect)rect {
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_async(queue, ^{
+        float t = 0.4 * ([NSDate timeIntervalSinceReferenceDate] - base);
+        CIImage *image = [self imageForTransitionAtTime:t];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.myContext drawImage:image inRect:imageRect fromRect:imageRect];
+        });
+    });
+}
+
+- (void)onTimer:(NSTimer *)timer {
+    [self setNeedsDisplay];
+}
+
+@end
+</code></pre>
+
+<p><img src="../image/2014/03/25/4.gif" alt="image" /></p>
+</body>
+</html>
