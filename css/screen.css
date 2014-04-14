@@ -16,7 +16,7 @@ html, body {
 }
 
 body {
-  background-color: white;
+  background-color: #F6F4F0;
   font: 13.34px helvetica, arial, clean, sans-serif;
   *font-size: small;
   text-align: center;
@@ -170,14 +170,20 @@ ul.posts {
   }
 
   #post code {
-    border: 1px solid #ddd;
-	background-color: #000;
-    font-size: 85%;
+    border: 1px solid #fff;
+	background-color: #FEE9CC;
+    font-size: 115%;
+    font-style: ;
     padding: 0 .2em;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
   }
 
     #post pre code {
-      border: none;
+      border: 0px solid #ddd;
+      background-color: #000;
+      font-size: 80%;
     }
 
   /* terminal */
