@@ -10,7 +10,11 @@
 		
 		<!-- Homepage CSS -->
 		<link rel="stylesheet" href="/css/screen.css" type="text/css" media="screen, projection" />
-	</head>
+		
+		<link href="/css/prettify.css" rel="stylesheet" type="text/css" media="all">
+			
+			
+			</head>
 	<body>
 		
 		<div class="site">
@@ -19,7 +23,7 @@
 				<a class="extra" href="/">home</a>
 			</div>
 			
-			<div class="contentList">
+
 				{{ content }}
 				
 				<div class="footer">
@@ -36,8 +40,16 @@
 					</div>
 				</div>
 			</div>
-		</div>
+
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+		<script type="text/javascript" src="/css/prettify.js"></script>
+		
+		<script type="text/javascript">
+			$(function(){
+			  $("pre").addClass("prettyprint linenums").attr('style', 'overflow:auto');
+			  prettyPrint();
+			  });
+			</script>
 		
 		<script>
 			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
