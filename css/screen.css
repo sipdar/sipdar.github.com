@@ -89,14 +89,14 @@ ul.posts {
 .title {
   color: #a00;
   font-weight: bold;
-  left:50%; 
-  margin-left:-100px;
+  left:50%;
+  margin-left:-150px;
   margin-bottom: 2em;
   position:absolute;
 }
 .site .contentList{
-  left:50%; 
-  margin-left:-100px;
+  left:50%;
+  margin-left:-150px;
   position:absolute;
 }
 
