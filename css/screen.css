@@ -95,10 +95,9 @@ ul.posts {
   position:absolute;
 }
 .site .contentList{
-  left:50%;
-  margin-left:-150px;
-  position:absolute;
-}
+    width: 30em;
+    margin: 2em auto 2em auto;
+ }
 
   .site .title a {
     color: #a00;
@@ -133,7 +132,7 @@ ul.posts {
 
     .site .footer .contact {
       float: left;
-      margin-right: 3em;
+      margin:auto 2em auto auto;
     }
 
       .site .footer .contact a {
