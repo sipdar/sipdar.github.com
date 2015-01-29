@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
  <title>Sunny</title>
- <link href="https://github.com/sipdar/atom.xml" rel="self"/>
- <link href="https://github.com/sipdar/"/>
- <updated>2015-01-29T23:38:22+08:00</updated>
- <id>https://github.com/sipdar</id>
+ <link href="http://sipdar.github.com/atom.xml" rel="self"/>
+ <link href="http://sipdar.github.com/"/>
+ <updated>2015-01-30T00:00:00+08:00</updated>
+ <id>http://sipdar.github.com</id>
  <author>
    <name>Sunny</name>
    <email></email>
@@ -14,9 +14,9 @@
  
  <entry>
    <title>Swift</title>
-   <link href="https://github.com/sipdar/2015/01/24/Swift%20%E9%97%AD%E5%8C%85/"/>
+   <link href="http://sipdar.github.com/2015/01/24/Swift%20%E9%97%AD%E5%8C%85/"/>
    <updated>2015-01-24T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2015/01/24/Swift 闭包</id>
+   <id>http://sipdar.github.com/2015/01/24/Swift 闭包</id>
    <content type="html">&lt;h2&gt;函数 ()-&amp;gt;()&lt;/h2&gt;
 
 &lt;p&gt;&lt;strong&gt;Swift&lt;/strong&gt; 中的闭包和 &lt;strong&gt;Objective-C&lt;/strong&gt; 中的 &lt;strong&gt;block&lt;/strong&gt; 类似，闭包是功能性自包含模块，可以在代码中被传递和使用。 在 &lt;strong&gt;Swift&lt;/strong&gt; 中  函数只是闭包的一种特殊形式。&lt;/p&gt;
@@ -145,9 +145,9 @@
  
  <entry>
    <title>Core Image 旧胶片效果</title>
-   <link href="https://github.com/sipdar/2014/03/30/%E6%97%A7%E8%83%B6%E7%89%87%E6%95%88%E6%9E%9C/"/>
+   <link href="http://sipdar.github.com/2014/03/30/%E6%97%A7%E8%83%B6%E7%89%87%E6%95%88%E6%9E%9C/"/>
    <updated>2014-03-30T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2014/03/30/旧胶片效果</id>
+   <id>http://sipdar.github.com/2014/03/30/旧胶片效果</id>
    <content type="html">&lt;p&gt;下面是实现一个带燥点的旧胶片效果的处理流程&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/30/1.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
@@ -205,9 +205,9 @@
  
  <entry>
    <title>Core Image 移轴效果和渐变</title>
-   <link href="https://github.com/sipdar/2014/03/29/%E7%A7%BB%E8%BD%B4%E6%95%88%E6%9E%9C%E5%92%8C%E6%B8%90%E5%8F%98/"/>
+   <link href="http://sipdar.github.com/2014/03/29/%E7%A7%BB%E8%BD%B4%E6%95%88%E6%9E%9C%E5%92%8C%E6%B8%90%E5%8F%98/"/>
    <updated>2014-03-29T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2014/03/29/移轴效果和渐变</id>
+   <id>http://sipdar.github.com/2014/03/29/移轴效果和渐变</id>
    <content type="html">&lt;p&gt;围绕着脸部周围添加一个白色阴影渐变&lt;/p&gt;
 
 &lt;ul&gt;
@@ -297,9 +297,9 @@
  
  <entry>
    <title>Core Image 人脸检测</title>
-   <link href="https://github.com/sipdar/2014/03/27/%E4%BA%BA%E8%84%B8%E6%A3%80%E6%B5%8B/"/>
+   <link href="http://sipdar.github.com/2014/03/27/%E4%BA%BA%E8%84%B8%E6%A3%80%E6%B5%8B/"/>
    <updated>2014-03-27T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2014/03/27/人脸检测</id>
+   <id>http://sipdar.github.com/2014/03/27/人脸检测</id>
    <content type="html">&lt;p&gt;&lt;strong&gt;Core Image&lt;/strong&gt;可以对图像进行分析，并找到图片中人脸的位置。&lt;strong&gt;Core Image&lt;/strong&gt;检测出人脸后，可以提供面部特性，比如眼睛和嘴的位置。它还可以跟踪视频中人脸的位置。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/27/1.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
@@ -379,9 +379,9 @@ for (CIFaceFeature *faceFeature in features){
  
  <entry>
    <title>Core Image 实时渲染</title>
-   <link href="https://github.com/sipdar/2014/03/26/CoreImage%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93/"/>
+   <link href="http://sipdar.github.com/2014/03/26/CoreImage%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93/"/>
    <updated>2014-03-26T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2014/03/26/CoreImage实时渲染</id>
+   <id>http://sipdar.github.com/2014/03/26/CoreImage实时渲染</id>
    <content type="html">&lt;p&gt;我们在使用 &lt;strong&gt;AVFoundation&lt;/strong&gt; 显示视频的时候，也可以使用 Core Image 进行事实渲染。&lt;/p&gt;
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;#import &amp;lt;UIKit/UIKit.h&amp;gt;
 #import &amp;lt;GLKit/GLKit.h&amp;gt;
@@ -446,9 +446,9 @@ for (CIFaceFeature *faceFeature in features){
  
  <entry>
    <title>Gradients</title>
-   <link href="https://github.com/sipdar/2014/03/24/Gradients/"/>
+   <link href="http://sipdar.github.com/2014/03/24/Gradients/"/>
    <updated>2014-03-24T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2014/03/24/Gradients</id>
+   <id>http://sipdar.github.com/2014/03/24/Gradients</id>
    <content type="html">&lt;p&gt;&lt;strong&gt;Quartz **提供了两种绘制渐变的数据类型，&lt;/strong&gt;CGShadingRef** 和&lt;strong&gt;CGGradientRef&lt;/strong&gt; 我们都可以始终这两种方式来绘制线性渐变或者辐射渐变。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/24/gradient1.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
@@ -529,9 +529,9 @@ CGFloat components[12] = {1.0,0.5,0.4,1.0,
  
  <entry>
    <title>Shadows</title>
-   <link href="https://github.com/sipdar/2014/03/20/Shadows/"/>
+   <link href="http://sipdar.github.com/2014/03/20/Shadows/"/>
    <updated>2014-03-20T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2014/03/20/Shadows</id>
+   <id>http://sipdar.github.com/2014/03/20/Shadows</id>
    <content type="html">&lt;h2&gt;outer Shadow 阴影&lt;/h2&gt;
 
 &lt;p&gt;我们在绘制UI的时候经常需要添加一些阴影效果。 UIKit的CALayer 可以很方便的添加阴影。&lt;/p&gt;
@@ -642,9 +642,9 @@ UIBezierPath* bezier3Path = [UIBezierPath bezierPath];
  
  <entry>
    <title>Bitmap Image</title>
-   <link href="https://github.com/sipdar/2014/03/19/Bitmap_Image/"/>
+   <link href="http://sipdar.github.com/2014/03/19/Bitmap_Image/"/>
    <updated>2014-03-19T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2014/03/19/Bitmap_Image</id>
+   <id>http://sipdar.github.com/2014/03/19/Bitmap_Image</id>
    <content type="html">&lt;h1&gt;Bitmap Image&lt;/h1&gt;
 
 &lt;p&gt;位图图像 &lt;strong&gt;Bitmap Image&lt;/strong&gt; 由像素组成，每一个像素都相当于图像中的一个点，JPEG,TIFF,PNG 类型的文件都是位图图像。在位图图像中每个像素都被分配一个特定位置和颜色值。在处理位图图像时，我们编辑的是像素而不是对象或形状，也就是说，编辑的是每一个点。位图图像被限制成正方形，但是我们通过填充透明像素来使图片呈现其他的形状包括旋转裁切等效果。&lt;/p&gt;
@@ -726,9 +726,9 @@ UIBezierPath* bezier3Path = [UIBezierPath bezierPath];
  
  <entry>
    <title>Blend Modes</title>
-   <link href="https://github.com/sipdar/2014/03/18/Blend_Models/"/>
+   <link href="http://sipdar.github.com/2014/03/18/Blend_Models/"/>
    <updated>2014-03-18T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2014/03/18/Blend_Models</id>
+   <id>http://sipdar.github.com/2014/03/18/Blend_Models</id>
    <content type="html">&lt;h1&gt;Blend Modes&lt;/h1&gt;
 
 &lt;p&gt;我们在使用&lt;strong&gt;Quartz 2D&lt;/strong&gt;画图的时候，经常遇到图形叠加的情况。在多个图形重叠的时候有时候我们想重叠的部分透明阿，或者重叠的部分颜色混合在一起阿。这时候就要用到 &lt;strong&gt;Quartz 2D&lt;/strong&gt; 的混合模式了
@@ -861,9 +861,9 @@ UIGraphicsEndImageContext();
  
  <entry>
    <title>Transparency Layers</title>
-   <link href="https://github.com/sipdar/2014/03/17/Transparency_Layers/"/>
+   <link href="http://sipdar.github.com/2014/03/17/Transparency_Layers/"/>
    <updated>2014-03-17T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2014/03/17/Transparency_Layers</id>
+   <id>http://sipdar.github.com/2014/03/17/Transparency_Layers</id>
    <content type="html">&lt;p&gt;&lt;strong&gt;Transparency Layer&lt;/strong&gt; 是由多个对象组合在一起拼成的图形，它在图形绘制的过程中会被当作一个对象来处理。 &lt;strong&gt;Transparency Layer&lt;/strong&gt; 最常见的用处就是在我们想对一组图形添加效果的时候。比如像下面这样对三个叠加在一起的三个圆形添加阴影。&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/17/circlesWithShadow.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
@@ -910,9 +910,9 @@ UIGraphicsEndImageContext();
  
  <entry>
    <title>Coordinate Space Transformations</title>
-   <link href="https://github.com/sipdar/2014/03/16/Coordinate_space_transformations/"/>
+   <link href="http://sipdar.github.com/2014/03/16/Coordinate_space_transformations/"/>
    <updated>2014-03-16T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2014/03/16/Coordinate_space_transformations</id>
+   <id>http://sipdar.github.com/2014/03/16/Coordinate_space_transformations</id>
    <content type="html">&lt;h2&gt;Coordinate Systems&lt;/h2&gt;
 
 &lt;p&gt;Quartz 2D和UIKit的坐标系是不同的，Quartz 2D 使用的是笛卡尔坐标系 原点在左下角，
@@ -999,9 +999,9 @@ CGContextTranslateCTM(context, -self.imageView.center.x, -self.imageView.center.
  
  <entry>
    <title>Core Animation CAShapeLayer</title>
-   <link href="https://github.com/sipdar/2013/12/10/Core_Animation(%E5%85%AB)_CAShapeLayer/"/>
+   <link href="http://sipdar.github.com/2013/12/10/Core_Animation(%E5%85%AB)_CAShapeLayer/"/>
    <updated>2013-12-10T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2013/12/10/Core_Animation(八)_CAShapeLayer</id>
+   <id>http://sipdar.github.com/2013/12/10/Core_Animation(八)_CAShapeLayer</id>
    <content type="html">&lt;h1&gt;CAShapeLayer&lt;/h1&gt;
 
 &lt;p&gt;我们在上面曾经用过&lt;strong&gt;CGPath&lt;/strong&gt;代替图片来绘制阴影，同样的我们可以使用&lt;strong&gt;CGPath&lt;/strong&gt;来绘制各种我们想要的图形，用来代替图片使用。&lt;/p&gt;
@@ -1078,9 +1078,9 @@ testView.layer.mask =shapeLayer;
  
  <entry>
    <title>Core Animation (七)3DTransform</title>
-   <link href="https://github.com/sipdar/2013/10/20/Core_Animation(%E4%B8%83)_3D_Transform/"/>
+   <link href="http://sipdar.github.com/2013/10/20/Core_Animation(%E4%B8%83)_3D_Transform/"/>
    <updated>2013-10-20T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2013/10/20/Core_Animation(七)_3D_Transform</id>
+   <id>http://sipdar.github.com/2013/10/20/Core_Animation(七)_3D_Transform</id>
    <content type="html">&lt;h1&gt;3D Transform&lt;/h1&gt;
 
 &lt;h2&gt;3D Transform&lt;/h2&gt;
@@ -1229,9 +1229,9 @@ imageView.layer.transform = transformRight;
  
  <entry>
    <title>Core Animation (六)CGAffineTransform</title>
-   <link href="https://github.com/sipdar/2013/10/19/Core_Animation(%E5%85%AD)_AffineTransform/"/>
+   <link href="http://sipdar.github.com/2013/10/19/Core_Animation(%E5%85%AD)_AffineTransform/"/>
    <updated>2013-10-19T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2013/10/19/Core_Animation(六)_AffineTransform</id>
+   <id>http://sipdar.github.com/2013/10/19/Core_Animation(六)_AffineTransform</id>
    <content type="html">&lt;h1&gt;变换&lt;/h1&gt;
 
 &lt;p&gt;图层一旦创建,你就可以通过矩阵变换来改变一个图层的几何形状。&lt;strong&gt;CGAffineTransform&lt;/strong&gt; ,用于 图层的旋转,缩放,位移，还有 &lt;strong&gt;CATransform3D&lt;/strong&gt; 它可以把二维的平面转换到三维矩阵中。&lt;/p&gt;
@@ -1408,9 +1408,9 @@ imageView.transform = CGAffineTransformMakeShear(0.6,0);
  
  <entry>
    <title>Core Animation (五)Layer Masking</title>
-   <link href="https://github.com/sipdar/2013/10/17/Core_Animation(%E4%BA%94)_Layer_Masking/"/>
+   <link href="http://sipdar.github.com/2013/10/17/Core_Animation(%E4%BA%94)_Layer_Masking/"/>
    <updated>2013-10-17T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2013/10/17/Core_Animation(五)_Layer_Masking</id>
+   <id>http://sipdar.github.com/2013/10/17/Core_Animation(五)_Layer_Masking</id>
    <content type="html">&lt;h1&gt;Layer Masking (五)&lt;/h1&gt;
 
 &lt;h2&gt;Layer Masking&lt;/h2&gt;
@@ -1445,9 +1445,9 @@ viewB.layer.mask = layer;
  
  <entry>
    <title>Core Animation (四) Visual Effects</title>
-   <link href="https://github.com/sipdar/2013/10/07/Core_Animation(%E5%9B%9B)_visual_effects/"/>
+   <link href="http://sipdar.github.com/2013/10/07/Core_Animation(%E5%9B%9B)_visual_effects/"/>
    <updated>2013-10-07T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2013/10/07/Core_Animation(四)_visual_effects</id>
+   <id>http://sipdar.github.com/2013/10/07/Core_Animation(四)_visual_effects</id>
    <content type="html">&lt;h1&gt;Visual Effects (四)&lt;/h1&gt;
 
 &lt;h2&gt;圆角&lt;/h2&gt;
@@ -1598,9 +1598,9 @@ CGPathRelease(circlePath);
  
  <entry>
    <title>Core Animation (三)  Layout</title>
-   <link href="https://github.com/sipdar/2013/09/08/core_animation_(%E4%B8%89)/"/>
+   <link href="http://sipdar.github.com/2013/09/08/core_animation_(%E4%B8%89)/"/>
    <updated>2013-09-08T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2013/09/08/core_animation_(三)</id>
+   <id>http://sipdar.github.com/2013/09/08/core_animation_(三)</id>
    <content type="html">&lt;h1&gt;Core Animation (三)&lt;/h1&gt;
 
 &lt;h2&gt;布局&lt;/h2&gt;
@@ -1640,9 +1640,9 @@ CGPathRelease(circlePath);
  
  <entry>
    <title>Core Animation (二)  The Backing Image</title>
-   <link href="https://github.com/sipdar/2013/08/23/core_animation_(%E4%BA%8C)/"/>
+   <link href="http://sipdar.github.com/2013/08/23/core_animation_(%E4%BA%8C)/"/>
    <updated>2013-08-23T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2013/08/23/core_animation_(二)</id>
+   <id>http://sipdar.github.com/2013/08/23/core_animation_(二)</id>
    <content type="html">&lt;h1&gt;Core Animation (二)&lt;/h1&gt;
 
 &lt;h2&gt;The contents Image&lt;/h2&gt;
@@ -1770,9 +1770,9 @@ contentScale的用在我的汽车图片的时候并没有效果，因为 &lt;str
  
  <entry>
    <title>Core Animation (一)</title>
-   <link href="https://github.com/sipdar/2013/08/23/core_animation/"/>
+   <link href="http://sipdar.github.com/2013/08/23/core_animation/"/>
    <updated>2013-08-23T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2013/08/23/core_animation</id>
+   <id>http://sipdar.github.com/2013/08/23/core_animation</id>
    <content type="html">&lt;h1&gt;Core Animation (一)&lt;/h1&gt;
 
 &lt;p&gt;一直很羡慕 github 上很多人写的炫酷的动画跟UI的特效。有时候自己想搞一个动画的时候就去 github 搜一下。作为一个iOS 开发人员 我决定从头学习 Core animation。&lt;/p&gt;
@@ -1812,9 +1812,9 @@ iOS 之所以有UIView 和 CALayer 两套平行的层级结构，是为了更好
  
  <entry>
    <title>iOS开发单例模式</title>
-   <link href="https://github.com/sipdar/2013/04/14/ios%E5%BC%80%E5%8F%91%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+   <link href="http://sipdar.github.com/2013/04/14/ios%E5%BC%80%E5%8F%91%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
    <updated>2013-04-14T00:00:00+08:00</updated>
-   <id>https://github.com/sipdar/2013/04/14/ios开发单例模式</id>
+   <id>http://sipdar.github.com/2013/04/14/ios开发单例模式</id>
    <content type="html">&lt;h2&gt;什么是单例&lt;/h2&gt;
 
 &lt;p&gt;单例模式是一种常用的软件设计模式。在它的核心结构中只包含一个被称为单例类的特殊类。通过单例模式可以保证系统中一个类只有一个实例而且该实例易于外界访问，从而方便对实例个数的控制并节约系统资源。如果希望在系统中某个类的对象只能存在一个，单例模式是最好的解决方案。&lt;/p&gt;
