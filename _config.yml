@@ -1,13 +1,26 @@
-markdown:         rdiscount
-pygments:         true
-baseurl:     /
-url:         http://sipdar.github.com
-title:            iOS dev
-author:
-    name:         sipdar
-description:      "北漂的IT民工\'s Blog"
+# Dependencies
+markdown:         redcarpet
+highlighter:      pygments
 
-analytics :
-  provider : google 
-  google : 
-      tracking_id : 'UA-49285145-1'
+# Permalinks
+permalink:        pretty
+relative_permalinks: true
+
+# Setup
+title:            Sunny
+tagline:          'A iOS tech blog'
+description:      'This is my personal blog Welcome ！<a href="https://twitter.com/sipdar" target="_blank">@sunny</a>.'
+url:              https://github.com/sipdar
+baseurl:          /
+
+author:
+  name:           'Sunny'
+  url:            https://twitter.com/sipdar
+
+paginate:         5
+
+# Custom vars
+version:          2.1.0
+
+github:
+  repo:           https://github.com/sipdar

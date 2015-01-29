@@ -9,61 +9,65 @@ title: Bitmap Image
 
 通常情况下我们在程序中大多使用 UIImagePNGRepresentation() 来将图片转换成二进制数据。但是这样的话实际上在转换的过程中被压缩了。那么我们可以通过 **Quartz** 来获得原始的图片数据。
 首先我们要先把图片绘制到**context**上 然后使用 **CGBitmapContextGetData（）**获取二进制数据。	
-
-	-(NSData *)bytesFromRGBImage:(UIImage *)sourceImage {
-		if (!sourceImage) {
-			return nil;
-		}
-
-		CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();//创建设备的colorSpace
-
-		if (colorSpace == NULL) {
-			return nil;
-		}
-
-		int width = sourceImage.size.width;//获取的像素点的个数
-		int height = sourceImage.size.height;//获取的像素点的个数
-		//8 是每一像素点的大小 8个bit(0-255)的空间
-		// width * 4 每一行的像素点占用的字节数，每个像素点的ARGB四个通道各占8个bit(0-255)的空间
-
-		CGContextRef context = CGBitmapContextCreate(NULL,width, height, 8, width *4, colorSpace, (CGBitmapInfo)kCGImageAlphaPremultipliedFirst);
-
-		CGColorSpaceRelease(colorSpace);
-		if (context == NULL) {
-			return nil;
-		}
-
-		CGRect rect = (CGRect){.size = sourceImage.size};
-		CGContextDrawImage(context, rect, sourceImage.CGImage);
-		NSData *data = [NSData dataWithBytes:CGBitmapContextGetData(context) length:width*height*4];
-		CGContextRelease(context);
-		return data;
+{% highlight objc linenos %}
+-(NSData *)bytesFromRGBImage:(UIImage *)sourceImage {
+	if (!sourceImage) {
+		return nil;
 	}
+
+	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();//创建设备的colorSpace
+
+	if (colorSpace == NULL) {
+		return nil;
+	}
+
+	int width = sourceImage.size.width;//获取的像素点的个数
+	int height = sourceImage.size.height;//获取的像素点的个数
+	//8 是每一像素点的大小 8个bit(0-255)的空间
+	// width * 4 每一行的像素点占用的字节数，每个像素点的ARGB四个通道各占8个bit(0-255)的空间
+
+	CGContextRef context = CGBitmapContextCreate(NULL,width, height, 8, width *4, colorSpace, (CGBitmapInfo)kCGImageAlphaPremultipliedFirst);
+
+	CGColorSpaceRelease(colorSpace);
+	if (context == NULL) {
+		return nil;
+	}
+
+	CGRect rect = (CGRect){.size = sourceImage.size};
+	CGContextDrawImage(context, rect, sourceImage.CGImage);
+	NSData *data = [NSData dataWithBytes:CGBitmapContextGetData(context) length:width*height*4];
+	CGContextRelease(context);
+	return data;
+}
+
+{% endhighlight %}
+
 同样我们还可以通过二进制数据获得图片对象
-
-	-(UIImage *)imageFromBytes:(NSData *)data size:(CGSize)targetSize {
-		int width = targetSize.width;
-		int height = targetSize.height;
-		if (data.length < width *height *4) {
-			return nil;
-		}
-
-		CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-		if (colorSpace == NULL) {
-			return nil;
-		}
-		Byte *bytes = (Byte *)data.bytes;
-		CGContextRef context = CGBitmapContextCreate(bytes, width, height, 8, width*4, colorSpace, (CGBitmapInfo) kCGImageAlphaPremultipliedFirst);
-		CGColorSpaceRelease(colorSpace);
-		if (context == NULL) {
-			return nil;
-		}
-
-		CGImageRef imageRef = CGBitmapContextCreateImage(context);
-		UIImage *image = [UIImage imageWithCGImage:imageRef];
-		CGContextRelease(context);
-		return image;
+{% highlight objc linenos %}
+-(UIImage *)imageFromBytes:(NSData *)data size:(CGSize)targetSize {
+	int width = targetSize.width;
+	int height = targetSize.height;
+	if (data.length < width *height *4) {
+		return nil;
 	}
+
+	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+	if (colorSpace == NULL) {
+		return nil;
+	}
+	Byte *bytes = (Byte *)data.bytes;
+	CGContextRef context = CGBitmapContextCreate(bytes, width, height, 8, width*4, colorSpace, (CGBitmapInfo) kCGImageAlphaPremultipliedFirst);
+	CGColorSpaceRelease(colorSpace);
+	if (context == NULL) {
+		return nil;
+	}
+
+	CGImageRef imageRef = CGBitmapContextCreateImage(context);
+	UIImage *image = [UIImage imageWithCGImage:imageRef];
+	CGContextRelease(context);
+	return image;
+}
+{% endhighlight %}
 
 
 #####Alpha通道

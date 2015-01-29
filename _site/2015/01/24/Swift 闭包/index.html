@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Swift &middot; Sunny
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body class="theme-base-0c">
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          Sunny
+        </a>
+      </h1>
+      <p class="lead">This is my personal blog Welcome ！<a href="https://twitter.com/sipdar" target="_blank">@sunny</a>.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/archive/">Archives</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      
+<!--       <a class="sidebar-nav-item" href="https://github.com/sipdar/archive/v2.1.0.zip">Download</a> -->
+      <a class="sidebar-nav-item" href="https://github.com/sipdar">GitHub project</a>
+      <a class="sidebar-nav-item" href="mailto:sipdar@163.com">Email</a>
+<!--       <span class="sidebar-nav-item">Currently v2.1.0</span> -->
+
+    </nav>
+
+    <p>&copy; 2015. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Swift</h1>
+  <span class="post-date">24 Jan 2015</span>
+  <h2>函数 ()-&gt;()</h2>
+
+<p><strong>Swift</strong> 中的闭包和 <strong>Objective-C</strong> 中的 <strong>block</strong> 类似，闭包是功能性自包含模块，可以在代码中被传递和使用。 在 <strong>Swift</strong> 中  函数只是闭包的一种特殊形式。</p>
+
+<p>1.全局函数是一个有名字但不会捕获任何值的闭包
+2.内嵌函数是一个有名字可以捕获到所在的函数域内值的闭包
+3.闭包表达式是一个没有名字的可以捕获上下文中的变量或者常量的闭包</p>
+
+<h3>定义函数</h3>
+
+<p>我们在 <strong>Swift</strong> 中使用 <strong>func</strong> 关键字来定义函数，函数可以没有参数和返回值，也可以有一个或者多个参数和返回值。在<strong>Swift</strong>中多个参数的返回值叫做元组(<strong>tuples</strong>)</p>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">func</span> <span class="n">foo</span><span class="p">(</span><span class="nl">firstname</span><span class="p">:</span><span class="n">String</span> <span class="p">,</span><span class="nl">lastname</span><span class="p">:</span><span class="n">String</span><span class="p">)</span><span class="o">-&gt;</span><span class="p">(</span><span class="nl">fullname</span><span class="p">:</span><span class="n">String</span><span class="p">)</span>
+   <span class="k">return</span><span class="p">(</span><span class="s">&quot;(firstname) (lastname)&quot;</span><span class="p">)</span>
+ <span class="p">}</span></code></pre></div>
+
+<h3>函数调用</h3>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">let</span> <span class="n">fullname</span> <span class="o">=</span> <span class="n">foo</span><span class="p">(</span><span class="s">&quot;zhao”,”sunny”)</span></code></pre></div>
+
+<h3>函数类型</h3>
+
+<p>每一个函数都有它的类型，函数的类型由函数本身的参数类型和返回值类型来决定的。</p>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">func</span> <span class="n">sum</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span><span class="n">Int</span><span class="p">,</span><span class="nl">y</span><span class="p">:</span><span class="n">Int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="nl">result</span><span class="p">:</span><span class="n">Int</span><span class="p">)</span><span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="n">Y</span></code></pre></div>
+
+<p>上面这个函数的函数类型就是</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">(</span><span class="n">Int</span><span class="p">,</span><span class="n">Int</span><span class="p">)</span><span class="o">-&gt;</span><span class="p">(</span><span class="n">Int</span><span class="p">)</span></code></pre></div>
+
+<p>函数类型在构建函数的时候当成参数类型或者返回值类型来使用。</p>
+
+<h3>返回函数类型</h3>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="n">func</span> <span class="n">foo</span><span class="p">()</span><span class="o">-&gt;</span><span class="p">((</span><span class="n">String</span><span class="p">,</span><span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span><span class="p">)</span>
+   <span class="n">func</span> <span class="n">bar</span><span class="p">(</span><span class="nl">firstname</span><span class="p">:</span><span class="n">String</span><span class="p">,</span><span class="nl">lastname</span><span class="p">:</span><span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span><span class="p">(</span><span class="nl">fullname</span><span class="p">:</span><span class="n">String</span><span class="p">)</span>
+  <span class="k">return</span><span class="p">(</span><span class="s">&quot;(firstname) (lastname)&quot;</span><span class="p">)</span>
+   <span class="p">}</span>
+   <span class="k">return</span> <span class="n">bar</span>
+ <span class="p">}</span>
+ <span class="n">let</span> <span class="n">namecombination</span> <span class="err">＝</span> <span class="n">foo</span><span class="p">()</span>
+ <span class="n">namecombination</span><span class="p">(</span><span class="s">&quot;wang&quot;</span><span class="p">,</span><span class="s">&quot;er&quot;</span><span class="p">)</span></code></pre></div>
+
+<h3>可变参数函数</h3>
+
+<p>可变参数函数是指函数可以接收不固定个参数。在参数类型后面添加 <strong>…</strong> 来标记这个参数为可变参数。我们可以在函数中像访问数组一样访问可变参数。</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="n">func</span> <span class="n">foo</span><span class="p">(</span><span class="nl">names</span><span class="p">:</span><span class="n">String</span><span class="p">...)</span> <span class="o">-&gt;</span><span class="p">()</span> 
+   <span class="k">for</span> <span class="n">name</span> <span class="k">in</span> <span class="n">names</span> 
+ <span class="n">println</span><span class="p">(</span><span class="s">&quot;(name)&quot;</span><span class="p">)</span>
+   <span class="p">}</span>
+ <span class="p">}</span>
+<span class="n">func</span> <span class="n">foo</span><span class="p">(</span><span class="s">&quot;zhao&quot;</span><span class="p">,</span><span class="s">&quot;zhang&quot;</span><span class="p">,</span><span class="s">&quot;wang&quot;</span><span class="p">)</span></code></pre></div>
+
+<h3>In-out 参数函数</h3>
+
+<p>传入函数的参数值只能在函数域内改变。参数传递是值传递，也就是说我们在函数内部修改了一个参数的值，在函数结束后，函数外部访问到的参数值还是传入函数之前的值，它并没有随着函数内的修改而改变。在<strong>Objective-C</strong> 我们通过指针来保存函数内修改过的值以供函数结束后外部访问。常见的例子就是 <strong>NSError</strong> 的使用。
+在<strong>Swift</strong> 中我们也可以做类似的操作。我们需要** inout** 关键字来标记要修改的参数。</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="n">func</span> <span class="n">swapTwoInts</span><span class="p">(</span><span class="k">inout</span> <span class="nl">a</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="k">inout</span> <span class="nl">b</span><span class="p">:</span> <span class="n">Int</span><span class="p">)</span>  
+    <span class="n">let</span> <span class="n">temporaryA</span> <span class="o">=</span> <span class="n">a</span>
+ <span class="n">a</span> <span class="o">=</span> <span class="n">b</span> 
+ <span class="n">b</span> <span class="o">=</span> <span class="n">temporaryA</span>
+<span class="p">}</span>
+<span class="n">var</span> <span class="n">someInt</span> <span class="o">=</span> <span class="mi">3</span> 
+<span class="n">var</span> <span class="n">anotherInt</span> <span class="o">=</span> <span class="mi">107</span> 
+<span class="n">swapTwoInts</span><span class="p">(</span><span class="o">&amp;</span><span class="n">someInt</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">anotherInt</span><span class="p">)</span></code></pre></div>
+
+<h2>闭包 { ()-&gt;() in }</h2>
+
+<h3>定义一个闭包</h3>
+
+<p>闭包是一个使用花括号**** 包围起来，并且使用函数类型<strong>()-&gt;()</strong>来定义的代码模块。<strong>-&gt;</strong>符号分割了输入参数和返回值类型。在关键字 <strong>in</strong> 来区分闭包的头和闭包函数体。</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">returnType</span> <span class="k">in</span> 
+<span class="n">statements</span>
+<span class="p">}</span></code></pre></div>
+
+<p>一个数组的<strong>map</strong>闭包的例子 </p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="n">let</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;zhao&quot;</span><span class="p">,</span><span class="s">&quot;wang&quot;</span><span class="p">,</span><span class="s">&quot;Li&quot;</span><span class="p">]</span> 
+<span class="n">names</span><span class="p">.</span><span class="n">map</span><span class="p">(</span>
+  <span class="p">(</span><span class="nl">name</span><span class="p">:</span><span class="n">String</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">String</span> <span class="k">in</span> 
+<span class="s">&quot;(name) has been map !&quot;</span>
+<span class="p">})</span></code></pre></div>
+
+<h3>已知参数类型的闭包</h3>
+
+<p><strong>map</strong>的闭包是作为函数参数传入的，所以 <strong>Swift</strong> 是可以做类型推断的，这样的话我们就不需要在闭包中在描述闭包的函数类型，也就是我们可以省略 <strong>(String) -&gt; (String)</strong> 部分，来简写闭包表达式</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="n">let</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;zhao&quot;</span><span class="p">,</span><span class="s">&quot;wang&quot;</span><span class="p">,</span><span class="s">&quot;Li&quot;</span><span class="p">]</span> 
+<span class="n">names</span><span class="p">.</span><span class="n">map</span><span class="p">(</span>
+  <span class="n">name</span> <span class="k">in</span> 
+<span class="s">&quot;(name) has been map !&quot;</span>
+<span class="p">})</span></code></pre></div>
+
+<h3>如果闭包有返回值我们也可以简写省略掉return。</h3>
+
+<p>例如</p>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">let</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;zhao&quot;</span><span class="p">,</span><span class="s">&quot;wang&quot;</span><span class="p">,</span><span class="s">&quot;Li&quot;</span><span class="p">]</span> 
+<span class="k">let</span> <span class="n">orderNames</span> <span class="o">=</span> <span class="n">sort</span><span class="p">(</span><span class="n">names</span><span class="p">,</span><span class="n">s1</span><span class="p">,</span><span class="n">s2</span> <span class="k">in</span> <span class="n">s1</span> <span class="o">&gt;</span> <span class="n">s2</span><span class="p">)</span></code></pre></div>
+
+<h3>闭包参数名简写</h3>
+
+<p><strong>Swift</strong> 为内联函数提供了参数名称简写功能，您可以直接通过 $0,$1,$2等名字来引用的闭包的参数的值。</p>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="k">let</span> <span class="n">names</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;zhao&quot;</span><span class="p">,</span><span class="s">&quot;wang&quot;</span><span class="p">,</span><span class="s">&quot;Li&quot;</span><span class="p">]</span> 
+<span class="n">names</span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="s">&quot;($0) has been map !&quot;</span><span class="p">)</span>
+<span class="n">sort</span><span class="p">(</span><span class="n">names</span><span class="p">,</span><span class="err">$</span><span class="mi">0</span> <span class="o">&gt;</span> <span class="err">$</span><span class="mi">1</span><span class="p">)</span></code></pre></div>
+
+<p>如果闭包是函数的最后一个参数，我们可以省略掉圆括号</p>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="n">names</span><span class="p">.</span><span class="n">map</span><span class="s">&quot;($0) has been map !&quot;</span>
+<span class="n">sort</span><span class="p">(</span><span class="n">names</span><span class="p">)</span><span class="err">$</span><span class="mi">0</span> <span class="o">&gt;</span> <span class="err">$</span><span class="mi">1</span></code></pre></div>
+
+<p>对于排序函数 <strong>sort()</strong> 来说作为参数的闭包表达式只进行了两个值的比较，比较是通过操作符 <strong>&gt;</strong>来进行的。在<strong>Swift</strong>中可以进行操作符重载，我们会发现在<strong>String</strong> 中定义了<strong>&gt;</strong>的函数实现，也就是 <strong>&gt;</strong> 本身就是一个函数 ，它接收两个<strong>String</strong> 类型的参数 并返回一个<strong>Bool</strong>类型的值。这和 <strong>Sort</strong> 函数的第二个参数的类型是一致的。所以，我们还可以进一步简写 <strong>Sort()</strong></p>
+
+<div class="highlight"><pre><code class="language-swift" data-lang="swift"><span class="n">sort</span><span class="p">(</span><span class="n">names</span><span class="p">,</span><span class="o">&gt;</span><span class="p">)</span></code></pre></div>
+
+<h2>闭包跟函数是引用类型</h2>
+
+<p>无论您将函数/闭包赋值给一个常量还是变量，您实际上都是将常量/变量的值设置为对应函数/闭包的引用。这也意味着如果您将闭包赋值给了两个不同的常量/变量，两个值都会指向同一个闭包：</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2014/03/30/%E6%97%A7%E8%83%B6%E7%89%87%E6%95%88%E6%9E%9C/">
+            Core Image 旧胶片效果
+            <small>30 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/03/29/%E7%A7%BB%E8%BD%B4%E6%95%88%E6%9E%9C%E5%92%8C%E6%B8%90%E5%8F%98/">
+            Core Image 移轴效果和渐变
+            <small>29 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/03/27/%E4%BA%BA%E8%84%B8%E6%A3%80%E6%B5%8B/">
+            Core Image 人脸检测
+            <small>27 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

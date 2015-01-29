@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Core Image 实时渲染 &middot; Sunny
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body class="theme-base-0c">
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          Sunny
+        </a>
+      </h1>
+      <p class="lead">This is my personal blog Welcome ！<a href="https://twitter.com/sipdar" target="_blank">@sunny</a>.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/archive/">Archives</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      
+<!--       <a class="sidebar-nav-item" href="https://github.com/sipdar/archive/v2.1.0.zip">Download</a> -->
+      <a class="sidebar-nav-item" href="https://github.com/sipdar">GitHub project</a>
+      <a class="sidebar-nav-item" href="mailto:sipdar@163.com">Email</a>
+<!--       <span class="sidebar-nav-item">Currently v2.1.0</span> -->
+
+    </nav>
+
+    <p>&copy; 2015. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Core Image 实时渲染</h1>
+  <span class="post-date">26 Mar 2014</span>
+  <p>我们在使用 <strong>AVFoundation</strong> 显示视频的时候，也可以使用 Core Image 进行事实渲染。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">#import &lt;UIKit/UIKit.h&gt;
+#import &lt;GLKit/GLKit.h&gt;
+#import &lt;AVFoundation/AVFoundation.h&gt;
+#import &lt;CoreImage/CoreImage.h&gt;
+@interface ViewController : GLKViewController &lt;AVCaptureVideoDataOutputSampleBufferDelegate&gt; {
+    AVCaptureSession *session;
+    CIContext *coreImageContext;
+}
+@property (strong, nonatomic) EAGLContext *context;
+@end
+
+@implementation ViewController
+@synthesize context = _context;
+- (void)viewDidLoad{
+    [super viewDidLoad];
+    self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    GLKView *view = (GLKView *)self.view;
+    view.frame = CGRectMake(0, 0, 640, 1136);
+    view.context = self.context;
+    view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
+    coreImageContext = [CIContext contextWithEAGLContext:self.context];
+
+    NSError * error;
+    session = [[AVCaptureSession alloc] init];
+    [session beginConfiguration];
+    [session setSessionPreset:AVCaptureSessionPreset640x480];
+    AVCaptureDevice * videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&amp;error];
+    [session addInput:input];
+
+    AVCaptureVideoDataOutput * dataOutput = [[AVCaptureVideoDataOutput alloc] init];
+    [dataOutput setAlwaysDiscardsLateVideoFrames:YES]; 
+    [dataOutput setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];   
+    [dataOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
+
+    [session addOutput:dataOutput];
+    [session commitConfiguration];
+    NSArray *array = [[session.outputs objectAtIndex:0] connections];
+    for (AVCaptureConnection *connection in array){
+        connection.videoOrientation = AVCaptureVideoOrientationPortrait;
+    }
+    [session startRunning];
+}
+
+-(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+    CVPixelBufferRef pixelBuffer = (CVPixelBufferRef)CMSampleBufferGetImageBuffer(sampleBuffer);
+    CIImage *image = [CIImage imageWithCVPixelBuffer:pixelBuffer];
+    CGRect rect = [image extent];
+    rect.origin.y = 200;
+    rect.size.width  =  640;
+    rect.size.height  =  (640.0/480.0)*640;
+    CIFilter *filter =[CIFilter filterWithName:@&quot;CISepiaTone&quot;];
+    [filter setValue:image forKey:kCIInputImageKey];
+    [filter setValue:@0.8 forKey:kCIInputIntensityKey];
+    image = filter.outputImage;
+    [coreImageContext drawImage:image inRect:rect fromRect:[image extent] ];
+}
+@end
+</code></pre></div>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/01/24/Swift%20%E9%97%AD%E5%8C%85/">
+            Swift
+            <small>24 Jan 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/03/30/%E6%97%A7%E8%83%B6%E7%89%87%E6%95%88%E6%9E%9C/">
+            Core Image 旧胶片效果
+            <small>30 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/03/29/%E7%A7%BB%E8%BD%B4%E6%95%88%E6%9E%9C%E5%92%8C%E6%B8%90%E5%8F%98/">
+            Core Image 移轴效果和渐变
+            <small>29 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

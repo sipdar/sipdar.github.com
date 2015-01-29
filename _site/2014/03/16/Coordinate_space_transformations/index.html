@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Coordinate Space Transformations &middot; Sunny
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body class="theme-base-0c">
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          Sunny
+        </a>
+      </h1>
+      <p class="lead">This is my personal blog Welcome ！<a href="https://twitter.com/sipdar" target="_blank">@sunny</a>.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/archive/">Archives</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      
+<!--       <a class="sidebar-nav-item" href="https://github.com/sipdar/archive/v2.1.0.zip">Download</a> -->
+      <a class="sidebar-nav-item" href="https://github.com/sipdar">GitHub project</a>
+      <a class="sidebar-nav-item" href="mailto:sipdar@163.com">Email</a>
+<!--       <span class="sidebar-nav-item">Currently v2.1.0</span> -->
+
+    </nav>
+
+    <p>&copy; 2015. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Coordinate Space Transformations</h1>
+  <span class="post-date">16 Mar 2014</span>
+  <h2>Coordinate Systems</h2>
+
+<p>Quartz 2D和UIKit的坐标系是不同的，Quartz 2D 使用的是笛卡尔坐标系 原点在左下角，
+<img src="http://sipdar.github.io/image/2014/03/16/Quartz2DCoordinate.png" alt="image"></p>
+
+<p>UIkit坐标系的原点在左上角。</p>
+
+<p><img src="http://sipdar.github.io/image/2014/03/16/native_coordinate_system.jpg" alt="image"></p>
+
+<p>这个也就可以理解为什么用Quartz 2D画的图形和UIKit的倒过来的。</p>
+
+<p>但是在IOS 3.2及后续的版本中，当UIKit为你的应用程序创建一个<strong>Graphics Context</strong>时，也对<strong>Context</strong>进行了额外的修改以匹配UIKit的约定。</p>
+
+<h2>What is CTM ?</h2>
+
+<p><strong>CTM</strong> = <strong>Current Transformation Matrix</strong></p>
+
+<p>Quartz通过使用当前转换矩阵(current transformation matrix， CTM)将一个独立的坐标系统(user space)映射到输出设备的坐标系统(device space)，<strong>CTM</strong> 通过平移(translation)、旋转(rotation)、缩放(scale)操作将点从一个坐标空间映射到另外一个坐标空间。</p>
+
+<p>我们可以通过CTM来决定对象如何被绘制。例如，为了绘制一个旋转了45度的矩形，我们可以在绘制矩形之前旋转<strong>Graphics Context</strong>的坐标系统。Quartz使用旋转过的坐标系统来将矩形绘制到输出设备中。设备显示在屏幕上的矩形，就是旋转过后的矩形。</p>
+
+<p>我们先来看一个图片绘制的例子,首先是是没做矩阵转换的代码。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 320),NO ,[UIScreen mainScreen].scale);
+// Perform drawing here
+UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(50, 50, 200, 200)];
+[[UIColor redColor] setFill];
+[path fill];
+UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+self.imageView.image = image;
+UIGraphicsEndImageContext();
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/16/CTM_Original.png" alt="image"></p>
+
+<h2>CGContextTranslateCTM</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 320),NO ,[UIScreen mainScreen].scale);
+// Perform drawing here
+CGContextRef context = UIGraphicsGetCurrentContext();
+CGContextTranslateCTM(context, 70, 0);
+UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(50, 50, 200, 200)];
+[[UIColor redColor] setFill];
+[path fill];
+UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+self.imageView.image = image;
+UIGraphicsEndImageContext();
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/16/CTM_Translate.png" alt="image"></p>
+
+<h2>CGContextScaleCTM</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextScaleCTM(context, 0.5, 1.5);
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/16/CTM_Scale.png" alt="image"></p>
+
+<h2>CGContextRotateCTM</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextRotateCTM(context, M_2_PI);
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/16/CTM_Rotate.png" alt="image"></p>
+
+<p>这时候我们发现旋转并没有按照绘制的<strong>Context</strong>中心旋转， 因为旋转是以坐标系的原点为中心来做的，所以我们为了要保持图片的中心位置就要配合 <strong>CGContextTranslateCTM</strong> 一起使用。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextTranslateCTM(context,self.imageView.center.x,self.imageView.center.y);
+CGContextRotateCTM(context, M_2_PI);
+CGContextTranslateCTM(context, -self.imageView.center.x, -self.imageView.center.y);
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/16/CTM_Rotate_withCenter.png" alt="image"></p>
+
+<h2>CGContextConcatCTM</h2>
+
+<p>此外我们还可以通过 *<em>CGAffineTransform *</em>来变幻坐标系 比如我之前写过的仿射变换。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextTranslateCTM(context,self.imageView.center.x,self.imageView.center.y);
+CGAffineTransform transform = CGAffineTransformIdentity;
+transform = CGAffineTransformScale(transform, 0.5, 0.5);
+transform = CGAffineTransformTranslate(transform, 0, 100);
+transform.c = -0.5;
+transform.b = 0;
+CGContextConcatCTM(context, transform);
+CGContextTranslateCTM(context, -self.imageView.center.x, -self.imageView.center.y);
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/16/CTM_Transform.png" alt="image"></p>
+
+<h2>CGContextGetCTM</h2>
+
+<p>我们可以通过 <strong>CGContextGetCTM</strong> 在程序运行中取回当前<strong>Context</strong>上使用的转换矩阵。</p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/01/24/Swift%20%E9%97%AD%E5%8C%85/">
+            Swift
+            <small>24 Jan 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/03/30/%E6%97%A7%E8%83%B6%E7%89%87%E6%95%88%E6%9E%9C/">
+            Core Image 旧胶片效果
+            <small>30 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/03/29/%E7%A7%BB%E8%BD%B4%E6%95%88%E6%9E%9C%E5%92%8C%E6%B8%90%E5%8F%98/">
+            Core Image 移轴效果和渐变
+            <small>29 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

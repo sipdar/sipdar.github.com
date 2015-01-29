@@ -1,0 +1,1867 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+ <title>Sunny</title>
+ <link href="https://github.com/sipdar/atom.xml" rel="self"/>
+ <link href="https://github.com/sipdar/"/>
+ <updated>2015-01-29T23:38:22+08:00</updated>
+ <id>https://github.com/sipdar</id>
+ <author>
+   <name>Sunny</name>
+   <email></email>
+ </author>
+
+ 
+ <entry>
+   <title>Swift</title>
+   <link href="https://github.com/sipdar/2015/01/24/Swift%20%E9%97%AD%E5%8C%85/"/>
+   <updated>2015-01-24T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2015/01/24/Swift 闭包</id>
+   <content type="html">&lt;h2&gt;函数 ()-&amp;gt;()&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Swift&lt;/strong&gt; 中的闭包和 &lt;strong&gt;Objective-C&lt;/strong&gt; 中的 &lt;strong&gt;block&lt;/strong&gt; 类似，闭包是功能性自包含模块，可以在代码中被传递和使用。 在 &lt;strong&gt;Swift&lt;/strong&gt; 中  函数只是闭包的一种特殊形式。&lt;/p&gt;
+
+&lt;p&gt;1.全局函数是一个有名字但不会捕获任何值的闭包
+2.内嵌函数是一个有名字可以捕获到所在的函数域内值的闭包
+3.闭包表达式是一个没有名字的可以捕获上下文中的变量或者常量的闭包&lt;/p&gt;
+
+&lt;h3&gt;定义函数&lt;/h3&gt;
+
+&lt;p&gt;我们在 &lt;strong&gt;Swift&lt;/strong&gt; 中使用 &lt;strong&gt;func&lt;/strong&gt; 关键字来定义函数，函数可以没有参数和返回值，也可以有一个或者多个参数和返回值。在&lt;strong&gt;Swift&lt;/strong&gt;中多个参数的返回值叫做元组(&lt;strong&gt;tuples&lt;/strong&gt;)&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-swift&quot; data-lang=&quot;swift&quot;&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;firstname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;lastname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;fullname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+   &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;(firstname) (lastname)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;函数调用&lt;/h3&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-swift&quot; data-lang=&quot;swift&quot;&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fullname&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;zhao”,”sunny”)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;函数类型&lt;/h3&gt;
+
+&lt;p&gt;每一个函数都有它的类型，函数的类型由函数本身的参数类型和返回值类型来决定的。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-swift&quot; data-lang=&quot;swift&quot;&gt;&lt;span class=&quot;k&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sum&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Y&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;上面这个函数的函数类型就是&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;函数类型在构建函数的时候当成参数类型或者返回值类型来使用。&lt;/p&gt;
+
+&lt;h3&gt;返回函数类型&lt;/h3&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;n&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;firstname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;lastname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;fullname&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;(firstname) (lastname)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+   &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bar&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;namecombination&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;＝&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;namecombination&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;wang&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;er&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;可变参数函数&lt;/h3&gt;
+
+&lt;p&gt;可变参数函数是指函数可以接收不固定个参数。在参数类型后面添加 &lt;strong&gt;…&lt;/strong&gt; 来标记这个参数为可变参数。我们可以在函数中像访问数组一样访问可变参数。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;n&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;...)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; 
+   &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;names&lt;/span&gt; 
+ &lt;span class=&quot;n&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;(name)&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+   &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;foo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;zhao&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;zhang&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;wang&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;In-out 参数函数&lt;/h3&gt;
+
+&lt;p&gt;传入函数的参数值只能在函数域内改变。参数传递是值传递，也就是说我们在函数内部修改了一个参数的值，在函数结束后，函数外部访问到的参数值还是传入函数之前的值，它并没有随着函数内的修改而改变。在&lt;strong&gt;Objective-C&lt;/strong&gt; 我们通过指针来保存函数内修改过的值以供函数结束后外部访问。常见的例子就是 &lt;strong&gt;NSError&lt;/strong&gt; 的使用。
+在&lt;strong&gt;Swift&lt;/strong&gt; 中我们也可以做类似的操作。我们需要** inout** 关键字来标记要修改的参数。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;n&quot;&gt;func&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;swapTwoInts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;inout&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;inout&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;  
+    &lt;span class=&quot;n&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temporaryA&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;
+ &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; 
+ &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;temporaryA&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;someInt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;var&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;anotherInt&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;107&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;swapTwoInts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;someInt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;anotherInt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;闭包 { ()-&amp;gt;() in }&lt;/h2&gt;
+
+&lt;h3&gt;定义一个闭包&lt;/h3&gt;
+
+&lt;p&gt;闭包是一个使用花括号**** 包围起来，并且使用函数类型&lt;strong&gt;()-&amp;gt;()&lt;/strong&gt;来定义的代码模块。&lt;strong&gt;-&amp;gt;&lt;/strong&gt;符号分割了输入参数和返回值类型。在关键字 &lt;strong&gt;in&lt;/strong&gt; 来区分闭包的头和闭包函数体。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;params&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;returnType&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;statements&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;一个数组的&lt;strong&gt;map&lt;/strong&gt;闭包的例子 &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;n&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;names&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;zhao&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;wang&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Li&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; 
+&lt;span class=&quot;s&quot;&gt;&amp;quot;(name) has been map !&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;已知参数类型的闭包&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;map&lt;/strong&gt;的闭包是作为函数参数传入的，所以 &lt;strong&gt;Swift&lt;/strong&gt; 是可以做类型推断的，这样的话我们就不需要在闭包中在描述闭包的函数类型，也就是我们可以省略 &lt;strong&gt;(String) -&amp;gt; (String)&lt;/strong&gt; 部分，来简写闭包表达式&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;n&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;names&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;zhao&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;wang&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Li&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; 
+&lt;span class=&quot;s&quot;&gt;&amp;quot;(name) has been map !&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;如果闭包有返回值我们也可以简写省略掉return。&lt;/h3&gt;
+
+&lt;p&gt;例如&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-swift&quot; data-lang=&quot;swift&quot;&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;names&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;zhao&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;wang&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Li&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 
+&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;orderNames&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s2&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s1&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h3&gt;闭包参数名简写&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Swift&lt;/strong&gt; 为内联函数提供了参数名称简写功能，您可以直接通过 $0,$1,$2等名字来引用的闭包的参数的值。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-swift&quot; data-lang=&quot;swift&quot;&gt;&lt;span class=&quot;k&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;names&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;zhao&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;wang&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;Li&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; 
+&lt;span class=&quot;n&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;($0) has been map !&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;如果闭包是函数的最后一个参数，我们可以省略掉圆括号&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-swift&quot; data-lang=&quot;swift&quot;&gt;&lt;span class=&quot;n&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;map&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;($0) has been map !&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;对于排序函数 &lt;strong&gt;sort()&lt;/strong&gt; 来说作为参数的闭包表达式只进行了两个值的比较，比较是通过操作符 &lt;strong&gt;&amp;gt;&lt;/strong&gt;来进行的。在&lt;strong&gt;Swift&lt;/strong&gt;中可以进行操作符重载，我们会发现在&lt;strong&gt;String&lt;/strong&gt; 中定义了&lt;strong&gt;&amp;gt;&lt;/strong&gt;的函数实现，也就是 &lt;strong&gt;&amp;gt;&lt;/strong&gt; 本身就是一个函数 ，它接收两个&lt;strong&gt;String&lt;/strong&gt; 类型的参数 并返回一个&lt;strong&gt;Bool&lt;/strong&gt;类型的值。这和 &lt;strong&gt;Sort&lt;/strong&gt; 函数的第二个参数的类型是一致的。所以，我们还可以进一步简写 &lt;strong&gt;Sort()&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-swift&quot; data-lang=&quot;swift&quot;&gt;&lt;span class=&quot;n&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;names&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;闭包跟函数是引用类型&lt;/h2&gt;
+
+&lt;p&gt;无论您将函数/闭包赋值给一个常量还是变量，您实际上都是将常量/变量的值设置为对应函数/闭包的引用。这也意味着如果您将闭包赋值给了两个不同的常量/变量，两个值都会指向同一个闭包：&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Core Image 旧胶片效果</title>
+   <link href="https://github.com/sipdar/2014/03/30/%E6%97%A7%E8%83%B6%E7%89%87%E6%95%88%E6%9E%9C/"/>
+   <updated>2014-03-30T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2014/03/30/旧胶片效果</id>
+   <content type="html">&lt;p&gt;下面是实现一个带燥点的旧胶片效果的处理流程&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/30/1.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;首先用 &lt;strong&gt;CISepiaTone&lt;/strong&gt; 生成单色旧胶片的图像&lt;/li&gt;
+&lt;li&gt;然后生成一张白色燥点的遮罩图片&lt;/li&gt;
+&lt;li&gt;然后生成一张黑色划痕燥点的遮罩图片，来体现胶片磨损的效果&lt;/li&gt;
+&lt;li&gt;最后把三张图片合成在一起&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2&gt;首先来单色照片&lt;/h2&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sepiaToneFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;filterWithName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;CISepiaTone&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sepiaToneFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myImage&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCIInputImageKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/30/2.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;生成白色燥点遮罩然后跟单色的照片合成在一起&lt;/h2&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randomFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;filterWithName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;CIRandomGenerator&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;filterWithName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;CIColorMatrix&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randomFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputImage&lt;/span&gt;    &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCIInputImageKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;bp&quot;&gt;CIVector&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIVector&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;vectorWithX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;inputRVector&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;inputGVector&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;inputBVector&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIVector&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;vectorWithX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;inputAVector&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compositingFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;filterWithName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;CIAdditionCompositing&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compositingFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputImage&lt;/span&gt;   &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCIInputImageKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compositingFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sepiaToneFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputImage&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCIInputBackgroundImageKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/30/3.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;生成黑色划痕遮罩 然后在合成在一起&lt;/h2&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;bp&quot;&gt;CIImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maskImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;randomFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputImage&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;imageByApplyingTransform&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CGAffineTransformMakeScale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;45&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)];&lt;/span&gt;
+&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorFilter2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;filterWithName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;CIColorMatrix&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorFilter2&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maskImage&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCIInputImageKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;bp&quot;&gt;CIVector&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vector2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIVector&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;vectorWithX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorFilter2&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIVector&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;vectorWithX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;inputRVector&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorFilter2&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vector2&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;inputGVector&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorFilter2&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vector2&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;inputBVector&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorFilter2&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;vector2&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;inputAVector&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorFilter2&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIVector&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;vectorWithX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;W&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;inputBiasVector&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blackFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;filterWithName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;CIMinimumComponent&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blackFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorFilter2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputImage&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCIInputImageKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compositingFilter2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;filterWithName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;CIMultiplyCompositing&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compositingFilter2&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blackFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputImage&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCIInputImageKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compositingFilter2&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compositingFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputImage&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCIInputBackgroundImageKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/30/4.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Core Image 移轴效果和渐变</title>
+   <link href="https://github.com/sipdar/2014/03/29/%E7%A7%BB%E8%BD%B4%E6%95%88%E6%9E%9C%E5%92%8C%E6%B8%90%E5%8F%98/"/>
+   <updated>2014-03-29T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2014/03/29/移轴效果和渐变</id>
+   <content type="html">&lt;p&gt;围绕着脸部周围添加一个白色阴影渐变&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;找到图像中的人脸&lt;/li&gt;
+&lt;li&gt;在CIRadialGradient上以人脸为中心，创建一个遮罩图片&lt;/li&gt;
+&lt;li&gt;将这遮罩图片与原始图片混合&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/29/1.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;CIContext&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIContext&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;contextWithOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;UIImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;UIImage&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;imageNamed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;baby.jpg&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;CIImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIImage&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;imageWithCGImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CGImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;CIDetector&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;detector&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIDetector&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;detectorOfType&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CIDetectorTypeFace&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;l&quot;&gt;@{&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;CIDetectorAccuracy&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CIDetectorAccuracyHigh&lt;/span&gt;&lt;span class=&quot;l&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;NSArray&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;features&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;detector&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;featuresInImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;CIFaceFeature&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;faceFeature&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;features&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;firstObject&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGFloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;centerX&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;faceFeature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bounds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;origin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;faceFeature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bounds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;2.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGFloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;centerY&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;faceFeature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bounds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;origin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;y&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;faceFeature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bounds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;2.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGFloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;radius&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;faceFeature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bounds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;faceFeature&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bounds&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;radialGradient&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;filterWithName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;CIRadialGradient&amp;quot;&lt;/span&gt;&lt;span class=&quot;nl&quot;&gt;keysAndValues&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt;                          &lt;span class=&quot;s&quot;&gt;@&amp;quot;inputRadius0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;l&quot;&gt;@(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;l&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt;                          &lt;span class=&quot;s&quot;&gt;@&amp;quot;inputRadius1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;l&quot;&gt;@(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;radius&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;10.0f&lt;/span&gt;&lt;span class=&quot;l&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt;                          &lt;span class=&quot;s&quot;&gt;@&amp;quot;inputColor0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIColor&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;colorWithRed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;alpha&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt;                          &lt;span class=&quot;s&quot;&gt;@&amp;quot;inputColor1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIColor&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;colorWithRed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;alpha&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt;                          &lt;span class=&quot;n&quot;&gt;kCIInputCenterKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIVector&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;vectorWithX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;centerX&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;centerY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;16&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compositing&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;filterWithName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;CISourceOverCompositing&amp;quot;&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;keysAndValues&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;17&lt;/span&gt;                          &lt;span class=&quot;n&quot;&gt;kCIInputImageKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;radialGradient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;18&lt;/span&gt;                          &lt;span class=&quot;n&quot;&gt;kCIInputBackgroundImageKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;19&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGImageRef&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cgImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;createCGImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compositing&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputImage&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;fromRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CGRectMake&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;20&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;UIImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;maskImage2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;UIImage&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;imageWithCGImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cgImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/29/2.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;移轴效果的实现&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;实现移轴效果首先要生成一张模糊的图像。&lt;/li&gt;
+&lt;li&gt;然后生成两个线性渐变透明的图像，把它们拼在一起生成一张遮罩图像。&lt;/li&gt;
+&lt;li&gt;将原始图像模糊图像和遮罩图像混合在一起。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/29/3.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;模糊的图像使用&lt;strong&gt;CIGaussianBlur&lt;/strong&gt;生成&lt;/h3&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;CIContext&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIContext&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;contextWithOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;UIImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;UIImage&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;imageNamed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;baby.jpg&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;CIImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIImage&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;imageWithCGImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CGImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;filterWithName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;CIGaussianBlur&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;5&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myImage&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCIInputImageKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;6&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;@20&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCIInputRadiusKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/29/4.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;两个线性渐变的图像使用 &lt;strong&gt;CILinearGradient&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;从一个单色（如绿色或灰色）创建一个线性渐变，一幅从上倒下变化，另一幅从下到上渐变。然后把它们两个合成一张图像&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradientfilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;filterWithName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;CILinearGradient&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradientfilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIVector&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;vectorWithX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.75&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;    &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;inputPoint0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradientfilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIColor&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;colorWithRed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;alpha&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;inputColor0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradientfilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIVector&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;vectorWithX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;inputPoint1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradientfilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIColor&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;colorWithRed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;alpha&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;inputColor1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradientfilter2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;filterWithName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;CILinearGradient&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradientfilter2&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIVector&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;vectorWithX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.25&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;   &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;inputPoint0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradientfilter2&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIColor&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;colorWithRed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;alpha&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;inputColor0&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradientfilter2&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIVector&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;vectorWithX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;Y&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;inputPoint1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradientfilter2&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIColor&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;colorWithRed&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;green&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;blue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;alpha&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;inputColor1&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compositingFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;filterWithName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;CIAdditionCompositing&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compositingFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradientfilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputImage&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCIInputImageKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compositingFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gradientfilter2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputImage&lt;/span&gt;    &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCIInputBackgroundImageKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/29/5.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;然后将模糊图像 原图 跟遮罩图像合成在一起。移轴效果比较合适处理建筑物照片人像效果不太好。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;lineno&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blendFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CIFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;filterWithName&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;@&amp;quot;CIBlendWithMask&amp;quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blendFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blurFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputImage&lt;/span&gt;    &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCIInputImageKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;3&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blendFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;myImage&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCIInputBackgroundImageKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;4&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;blendFilter&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;setValue&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;compositingFilter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;outputImage&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;forKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCIInputMaskImageKey&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/29/6.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Core Image 人脸检测</title>
+   <link href="https://github.com/sipdar/2014/03/27/%E4%BA%BA%E8%84%B8%E6%A3%80%E6%B5%8B/"/>
+   <updated>2014-03-27T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2014/03/27/人脸检测</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;Core Image&lt;/strong&gt;可以对图像进行分析，并找到图片中人脸的位置。&lt;strong&gt;Core Image&lt;/strong&gt;检测出人脸后，可以提供面部特性，比如眼睛和嘴的位置。它还可以跟踪视频中人脸的位置。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/27/1.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;下面我们看看如何实现人脸检测。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIImage *baby = [UIImage imageNamed:@&amp;quot;1.jpg&amp;quot;];
+CGFloat scale = 320.0/baby.size.width;
+CIImage *myimage = [CIImage imageWithCGImage:baby.CGImage];
+CIContext *context = [CIContext contextWithOptions:nil];
+CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace context:context options:@{CIDetectorAccuracy:CIDetectorAccuracyHigh}];
+NSArray *features = [detector featuresInImage:myimage];
+for (CIFaceFeature *faceFeature in features){
+    CGRect bounds = faceFeature.bounds;
+    bounds.origin.x *= scale;
+    bounds.origin.y *= scale;
+    bounds.size.width *= scale;
+    bounds.size.height *= scale;
+    UIView *faceView = [[UIView alloc] initWithFrame:bounds];
+    faceView.backgroundColor = [UIColor clearColor];
+    faceView.layer.borderWidth = 1;
+    faceView.layer.borderColor = [UIColor redColor].CGColor;
+    [self.imageView addSubview:faceView];
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/27/2.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;此外，我们还可以拿到眼睛跟嘴巴的位置&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;if (faceFeature.hasLeftEyePosition)
+    NSLog(@&amp;quot;Left eye %@&amp;quot;,NSStringFromCGPoint(faceFeature.leftEyePosition));
+if (faceFeature.hasRightEyePosition)
+    NSLog(@&amp;quot;Right eye %@&amp;quot;,NSStringFromCGPoint(faceFeature.rightEyePosition));
+if (faceFeature.hasMouthPosition)
+    NSLog(@&amp;quot;Mouth %@&amp;quot;, NSStringFromCGPoint(faceFeature.mouthPosition));
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;利用&lt;strong&gt;Core Image&lt;/strong&gt; 进行脸部打码&lt;/h2&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/27/4.png&quot; alt=&quot;image&quot;&gt;
+要实现这个效果，分下面几步。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;首先我们要生成一张像素化的图像。&lt;/li&gt;
+&lt;li&gt;然后我们找到图像中人脸的位置，生成一张遮罩图片。&lt;/li&gt;
+&lt;li&gt;然后我们把像素图片和遮罩图片合成一张图片并且使用原图做为背景。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3&gt;像素图片&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIImage *baby = [UIImage imageNamed:@&amp;quot;1.jpg&amp;quot;];
+CIImage *myimage = [CIImage imageWithCGImage:baby.CGImage];
+CGFloat scale = MAX(baby.size.width, baby.size.height)/60;
+CIImage *pixlImage =[CIFilter filterWithName:@&amp;quot;CIPixellate&amp;quot; keysAndValues:kCIInputImageKey,myimage,kCIInputScaleKey,@(scale),nil].outputImage;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;脸部遮罩图片&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CIImage *maskImage = nil;
+CIContext *context = [CIContext contextWithOptions:nil];
+CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace context:context options:@{CIDetectorAccuracy:CIDetectorAccuracyHigh}];
+NSArray *features = [detector featuresInImage:myimage];
+
+for (CIFaceFeature *faceFeature in features){
+    CGFloat centerX = faceFeature.bounds.origin.x + faceFeature.bounds.size.width / 2.0;
+    CGFloat centerY = faceFeature.bounds.origin.y + faceFeature.bounds.size.height / 2.0;
+    CGFloat radius = MIN(faceFeature.bounds.size.width, faceFeature.bounds.size.height) / 1.5;
+    CIFilter *radialGradient = [CIFilter filterWithName:@&amp;quot;CIRadialGradient&amp;quot; keysAndValues:@&amp;quot;inputRadius0&amp;quot;, @(radius),@&amp;quot;inputRadius1&amp;quot;, @(radius + 1.0f),@&amp;quot;inputColor0&amp;quot;, [CIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0],@&amp;quot;inputColor1&amp;quot;, [CIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0],kCIInputCenterKey, [CIVector vectorWithX:centerX Y:centerY],nil];
+    CIImage *circleImage = [radialGradient valueForKey:kCIOutputImageKey];
+    if (nil == maskImage)
+        maskImage = circleImage;
+    else
+        maskImage = [[CIFilter filterWithName:@&amp;quot;CISourceOverCompositing&amp;quot; keysAndValues:kCIInputImageKey, circleImage,kCIInputBackgroundImageKey, maskImage,nil] valueForKey:kCIOutputImageKey];
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;合成最终的图片&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CIImage *resultImage =[CIFilter filterWithName:@&amp;quot;CIBlendWithMask&amp;quot; keysAndValues:kCIInputImageKey,pixlImage,@&amp;quot;inputMaskImage&amp;quot;,maskImage,@&amp;quot;inputBackgroundImage&amp;quot;,myimage,nil].outputImage;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/27/3.png&quot; alt=&quot;image&quot;&gt;    &lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Core Image 实时渲染</title>
+   <link href="https://github.com/sipdar/2014/03/26/CoreImage%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93/"/>
+   <updated>2014-03-26T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2014/03/26/CoreImage实时渲染</id>
+   <content type="html">&lt;p&gt;我们在使用 &lt;strong&gt;AVFoundation&lt;/strong&gt; 显示视频的时候，也可以使用 Core Image 进行事实渲染。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;#import &amp;lt;UIKit/UIKit.h&amp;gt;
+#import &amp;lt;GLKit/GLKit.h&amp;gt;
+#import &amp;lt;AVFoundation/AVFoundation.h&amp;gt;
+#import &amp;lt;CoreImage/CoreImage.h&amp;gt;
+@interface ViewController : GLKViewController &amp;lt;AVCaptureVideoDataOutputSampleBufferDelegate&amp;gt; {
+    AVCaptureSession *session;
+    CIContext *coreImageContext;
+}
+@property (strong, nonatomic) EAGLContext *context;
+@end
+
+@implementation ViewController
+@synthesize context = _context;
+- (void)viewDidLoad{
+    [super viewDidLoad];
+    self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    GLKView *view = (GLKView *)self.view;
+    view.frame = CGRectMake(0, 0, 640, 1136);
+    view.context = self.context;
+    view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
+    coreImageContext = [CIContext contextWithEAGLContext:self.context];
+
+    NSError * error;
+    session = [[AVCaptureSession alloc] init];
+    [session beginConfiguration];
+    [session setSessionPreset:AVCaptureSessionPreset640x480];
+    AVCaptureDevice * videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&amp;amp;error];
+    [session addInput:input];
+
+    AVCaptureVideoDataOutput * dataOutput = [[AVCaptureVideoDataOutput alloc] init];
+    [dataOutput setAlwaysDiscardsLateVideoFrames:YES]; 
+    [dataOutput setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];   
+    [dataOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
+
+    [session addOutput:dataOutput];
+    [session commitConfiguration];
+    NSArray *array = [[session.outputs objectAtIndex:0] connections];
+    for (AVCaptureConnection *connection in array){
+        connection.videoOrientation = AVCaptureVideoOrientationPortrait;
+    }
+    [session startRunning];
+}
+
+-(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+    CVPixelBufferRef pixelBuffer = (CVPixelBufferRef)CMSampleBufferGetImageBuffer(sampleBuffer);
+    CIImage *image = [CIImage imageWithCVPixelBuffer:pixelBuffer];
+    CGRect rect = [image extent];
+    rect.origin.y = 200;
+    rect.size.width  =  640;
+    rect.size.height  =  (640.0/480.0)*640;
+    CIFilter *filter =[CIFilter filterWithName:@&amp;quot;CISepiaTone&amp;quot;];
+    [filter setValue:image forKey:kCIInputImageKey];
+    [filter setValue:@0.8 forKey:kCIInputIntensityKey];
+    image = filter.outputImage;
+    [coreImageContext drawImage:image inRect:rect fromRect:[image extent] ];
+}
+@end
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Gradients</title>
+   <link href="https://github.com/sipdar/2014/03/24/Gradients/"/>
+   <updated>2014-03-24T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2014/03/24/Gradients</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;Quartz **提供了两种绘制渐变的数据类型，&lt;/strong&gt;CGShadingRef** 和&lt;strong&gt;CGGradientRef&lt;/strong&gt; 我们都可以始终这两种方式来绘制线性渐变或者辐射渐变。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/24/gradient1.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h1&gt;CGGradientRef&lt;/h1&gt;
+
+&lt;h3&gt;Painting an axial gradient using a CGGradient object&lt;/h3&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIGraphicsBeginImageContextWithOptions&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CGSizeMake&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;NO&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;,[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;UIScreen&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mainScreen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;scale&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGContextRef&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIGraphicsGetCurrentContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;locations&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGFloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGFloat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;components&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt;                      &lt;span class=&quot;mf&quot;&gt;0.8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGColorSpaceRef&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;colorSpace&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGColorSpaceCreateDeviceRGB&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGGradientRef&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mygradient&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGGradientCreateWithColorComponents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorSpace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;components&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;location&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;locations&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGContextDrawLinearGradient&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mygradient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CGPointMake&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;0.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CGPointMake&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mf&quot;&gt;200.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;200.0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;UIImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIGraphicsGetImageFromCurrentImageContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UIGraphicsEndImageContext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/24/gradient2.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;Painting a radial gradient using a CGGradient object&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;//CGContextDrawLinearGradient (context,mygradient,CGPointMake(0.0, 0.0),CGPointMake(200.0, 200.0), 0);
+CGContextDrawRadialGradient (context,mygradient,CGPointMake(10.0, 10.0),10.0f,CGPointMake(150.0, 150.0),50.0f,kCGGradientDrawsBeforeStartLocation &amp;amp; kCGGradientDrawsAfterEndLocation);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/24/gradient3.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextDrawRadialGradient (context,mygradient,CGPointMake(100.0, 100.0),0.0f,CGPointMake(100.0, 100.0),100.0f,kCGGradientDrawsBeforeStartLocation &amp;amp; kCGGradientDrawsAfterEndLocation);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/24/gradient5.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;多个颜色渐变&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;size_t locations = 3;
+CGFloat location[3] ={0.0,0.5,1.0};
+CGFloat components[12] = {1.0,0.5,0.4,1.0,
+                            0.5,0.5,0.5,1.0,
+                            0.8,0.8,0.3,1.0};
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/24/gradient4.png&quot; alt=&quot;image&quot;&gt;                                                    &lt;/p&gt;
+
+&lt;h3&gt;用 &lt;strong&gt;Gradient&lt;/strong&gt; 实现一个 iOS 6.0风格的高光按钮&lt;/h3&gt;
+
+&lt;p&gt;我们继承UIButton 然后在 &lt;strong&gt;- (void)drawRect:&lt;/strong&gt;  中 添加渐变效果&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        // Initialization code
+
+        self.layer.cornerRadius = 8.0f;
+        self.layer.masksToBounds = YES;
+        self.layer.borderWidth = 1.0f;
+        self.layer.borderColor = [UIColor colorWithWhite:0.5f alpha:0.2f].CGColor;
+    }
+    return self;
+}
+
+// Only override drawRect: if you perform custom drawing.
+// An empty implementation adversely affects performance during animation.
+- (void)drawRect:(CGRect)rect {
+    CGContextRef ref = UIGraphicsGetCurrentContext();
+    CGFloat locations[5] = {0.0,0.5,0.5,0.8,1.0};
+    CFArrayRef colors = (__bridge CFArrayRef) @[(id)[UIColor colorWithWhite:1.0f alpha:0.6f].CGColor,
+                            (id)[UIColor colorWithWhite:0.9f alpha:0.3f].CGColor,
+                            (id)[UIColor colorWithWhite:0.75f alpha:0.2f].CGColor,
+                            (id)[UIColor colorWithWhite:0.4f alpha:0.3f].CGColor,
+                            (id)[UIColor colorWithWhite:1.0f alpha:0.2f].CGColor];
+    CGColorSpaceRef colorSpc = CGColorSpaceCreateDeviceRGB();
+    CGGradientRef gradient = CGGradientCreateWithColors(colorSpc, colors, locations);
+    CGContextDrawLinearGradient(ref, gradient, CGPointMake(0.5, 0.0), CGPointMake(0.5, rect.size.height), kCGGradientDrawsAfterEndLocation);
+    CGColorSpaceRelease(colorSpc);
+    CGGradientRelease(gradient);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/24/gradient6.png&quot; alt=&quot;image&quot;&gt;                                                    &lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Shadows</title>
+   <link href="https://github.com/sipdar/2014/03/20/Shadows/"/>
+   <updated>2014-03-20T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2014/03/20/Shadows</id>
+   <content type="html">&lt;h2&gt;outer Shadow 阴影&lt;/h2&gt;
+
+&lt;p&gt;我们在绘制UI的时候经常需要添加一些阴影效果。 UIKit的CALayer 可以很方便的添加阴影。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;self.imageView.image = [UIImage imageNamed:@&amp;quot;abc.jpg&amp;quot;];
+self.imageView.layer.shadowColor = [UIColor blackColor].CGColor;
+self.imageView.layer.shadowOpacity = 0.7f;
+self.imageView.layer.shadowOffset = CGSizeMake(10.0f, 10.0f);
+self.imageView.layer.shadowRadius = 5.0f;
+self.imageView.layer.masksToBounds = NO;
+UIBezierPath *path = [UIBezierPath bezierPathWithRect:self.imageView.bounds];
+self.imageView.layer.shadowPath = path.CGPath;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/20/shadow1.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;通过 &lt;strong&gt;CGPath&lt;/strong&gt; 我们可以调整阴影的形状,下面就是个椭圆形的阴影。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGSize size = self.imageView.frame.size;
+CGRect ovalRect = CGRectMake(0.0f,size.height + 5,size.width - 10, 15);
+UIBezierPath *path = [UIBezierPath bezierPathWithOvalInRect:ovalRect];
+self.imageView.layer.shadowPath = path.CGPath;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/20/shadow2.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGSize size = self.imageView.frame.size;
+CGFloat curlFactor = 15.0f;
+CGFloat shadowDepth = 5.0f;
+UIBezierPath *path = [UIBezierPath bezierPath];
+[path moveToPoint:CGPointMake(0.0f, 0.0f)];
+[path addLineToPoint:CGPointMake(size.width, 0.0f)];
+[path addLineToPoint:CGPointMake(size.width, size.height + shadowDepth)];
+[path addCurveToPoint:CGPointMake(0.0f, size.height + shadowDepth)
+    controlPoint1:CGPointMake(size.width - curlFactor, size.height + shadowDepth - curlFactor)
+    controlPoint2:CGPointMake(curlFactor, size.height + shadowDepth - curlFactor)];
+self.imageView.layer.shadowPath = path.CGPath;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/20/shadow3.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;Inner Shadow 内阴影&lt;/h2&gt;
+
+&lt;p&gt;图形内阴影有些麻烦 我们需要用 &lt;strong&gt;Quartz&lt;/strong&gt; 自己绘制。最简单的方法就是做一张阴影的图片然后加在我们想要阴影效果的 &lt;strong&gt;UIView&lt;/strong&gt; 上。 本着干掉美工的原则我们可以自己来画一个阴影。两种方案 一种就是也是画好生成一张&lt;strong&gt;image&lt;/strong&gt;然后覆盖在想要添加阴影的&lt;strong&gt;UIView&lt;/strong&gt;上。还有一种就是复写&lt;strong&gt;-(void)drawRect:&lt;/strong&gt;方法。实现的方法都是一样的。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/20/shadow4.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;self.imageView.image = [UIImage imageNamed:@&amp;quot;abc.jpg&amp;quot;];
+UIGraphicsBeginImageContextWithOptions(self.imageView.frame.size,NO ,[UIScreen mainScreen].scale);
+CGContextRef context = UIGraphicsGetCurrentContext();
+
+UIColor* shadow = [UIColor greenColor];
+CGFloat shadowBlurRadius = 45;
+
+UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRect:CGRectMake(0, 0, self.imageView.frame.size.width, self.imageView.frame.size.height)];
+[[UIColor clearColor] setFill];
+[rectanglePath fill];
+CGRect rectangleBorderRect = CGRectInset([rectanglePath bounds], -shadowBlurRadius, -shadowBlurRadius);
+rectangleBorderRect = CGRectInset(CGRectUnion(rectangleBorderRect, [rectanglePath bounds]), -1, -1);
+
+UIBezierPath* rectangleNegativePath = [UIBezierPath bezierPathWithRect: rectangleBorderRect];
+[rectangleNegativePath appendPath: rectanglePath];
+rectangleNegativePath.usesEvenOddFillRule = YES;
+CGContextSaveGState(context);
+
+CGFloat xOffset = round(rectangleBorderRect.size.width);
+CGContextSetShadowWithColor(context,
+                        CGSizeMake(xOffset + copysign(0.1, xOffset),  copysign(0.1, 0)),
+                        shadowBlurRadius,
+                        shadow.CGColor);
+[rectanglePath addClip];
+CGAffineTransform transform = CGAffineTransformMakeTranslation(-round(rectangleBorderRect.size.width), 0);
+[rectangleNegativePath applyTransform: transform];
+[[UIColor grayColor] setFill];
+[rectangleNegativePath fill];
+
+CGContextRestoreGState(context);
+
+[[UIColor clearColor] setStroke];
+rectanglePath.lineWidth = 1;
+[rectanglePath stroke];
+UIImage *shadowImage = UIGraphicsGetImageFromCurrentImageContext();
+UIGraphicsEndImageContext();
+
+CALayer *shadowLayer = [CALayer layer];
+shadowLayer.frame = CGRectMake(0, 0, self.imageView.frame.size.width,   self.imageView.frame.size.height);
+shadowLayer.contents = (__bridge id)(shadowImage.CGImage);
+[self.imageView.layer addSublayer:shadowLayer];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Inner Shadow With CGPath&lt;/h2&gt;
+
+&lt;p&gt;在这里我用了绿色的阴影，因为图片整体偏暗 用黑色的不明显。
+同样的我们通过更改 &lt;strong&gt;rectanglePath&lt;/strong&gt; 就可以画出很多有趣的不规则的内阴影。我将上的&lt;strong&gt;rectanglePath&lt;/strong&gt;画的矩形变成下面这个不规则图形。我们就得到了一个底部是波浪形状的阴影。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/20/path.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIBezierPath* rectanglePath = [UIBezierPath bezierPath];
+UIBezierPath* bezier2Path = [UIBezierPath bezierPath];
+[bezier2Path moveToPoint: CGPointMake(0, 200)];
+[bezier2Path addCurveToPoint: CGPointMake(0, 0) controlPoint1: CGPointMake(0, -15) controlPoint2: CGPointMake(0, -2)];
+[bezier2Path addLineToPoint: CGPointMake(200, 0)];
+[bezier2Path addLineToPoint: CGPointMake(200, 200)];
+[rectanglePath appendPath:bezier2Path];
+
+UIBezierPath* bezier3Path = [UIBezierPath bezierPath];
+[bezier3Path moveToPoint: CGPointMake(0, 200)];
+[bezier3Path addCurveToPoint: CGPointMake(70, 180) controlPoint1: CGPointMake(0, 200) controlPoint2: CGPointMake(50, 200)];
+[bezier3Path addCurveToPoint: CGPointMake(145, 160) controlPoint1: CGPointMake(80, 160) controlPoint2: CGPointMake(150, 120)];
+[bezier3Path addCurveToPoint: CGPointMake(200, 200) controlPoint1: CGPointMake(130, 200) controlPoint2: CGPointMake(200, 180)];
+
+[rectanglePath appendPath:bezier3Path];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/20/shadow5.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Bitmap Image</title>
+   <link href="https://github.com/sipdar/2014/03/19/Bitmap_Image/"/>
+   <updated>2014-03-19T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2014/03/19/Bitmap_Image</id>
+   <content type="html">&lt;h1&gt;Bitmap Image&lt;/h1&gt;
+
+&lt;p&gt;位图图像 &lt;strong&gt;Bitmap Image&lt;/strong&gt; 由像素组成，每一个像素都相当于图像中的一个点，JPEG,TIFF,PNG 类型的文件都是位图图像。在位图图像中每个像素都被分配一个特定位置和颜色值。在处理位图图像时，我们编辑的是像素而不是对象或形状，也就是说，编辑的是每一个点。位图图像被限制成正方形，但是我们通过填充透明像素来使图片呈现其他的形状包括旋转裁切等效果。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Quartz&lt;/strong&gt; 支持很多流行的类型的图片格式，在iOS上包括 JPEG, GIF, PNG, TIF, ICO, GMP, XBM, and CUR。其他的图片类型 我们可以通过将格式信息传递给&lt;strong&gt;Quartz&lt;/strong&gt;保证图片被正确的解析。&lt;/p&gt;
+
+&lt;p&gt;通常情况下我们在程序中大多使用 UIImagePNGRepresentation() 来将图片转换成二进制数据。但是这样的话实际上在转换的过程中被压缩了。那么我们可以通过 &lt;strong&gt;Quartz&lt;/strong&gt; 来获得原始的图片数据。
+首先我们要先把图片绘制到&lt;strong&gt;context&lt;/strong&gt;上 然后使用 &lt;strong&gt;CGBitmapContextGetData（）&lt;/strong&gt;获取二进制数据。    &lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;NSData&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;bytesFromRGBImage:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;UIImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;sourceImage&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sourceImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt;      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;CGColorSpaceRef&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;colorSpace&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGColorSpaceCreateDeviceRGB&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//创建设备的colorSpace&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorSpace&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt;      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt;  &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;width&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sourceImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//获取的像素点的个数&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt;  &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sourceImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;//获取的像素点的个数&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;//8 是每一像素点的大小 8个bit(0-255)的空间&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt;  &lt;span class=&quot;c1&quot;&gt;// width * 4 每一行的像素点占用的字节数，每个像素点的ARGB四个通道各占8个bit(0-255)的空间&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;16&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;17&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;CGContextRef&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGBitmapContextCreate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;width&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;colorSpace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CGBitmapInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;kCGImageAlphaPremultipliedFirst&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;18&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;19&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;CGColorSpaceRelease&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorSpace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;20&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;21&lt;/span&gt;      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;22&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;23&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;24&lt;/span&gt;  &lt;span class=&quot;bp&quot;&gt;CGRect&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CGRect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sourceImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;25&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;CGContextDrawImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sourceImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CGImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;26&lt;/span&gt;  &lt;span class=&quot;bp&quot;&gt;NSData&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;NSData&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;dataWithBytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CGBitmapContextGetData&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;27&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;CGContextRelease&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;28&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;29&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;同样我们还可以通过二进制数据获得图片对象&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;lineno&quot;&gt; 1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;-(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;UIImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;imageFromBytes:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;NSData&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;size:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;CGSize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;targetSize&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 2&lt;/span&gt;  &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;width&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;targetSize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 3&lt;/span&gt;  &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;targetSize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 4&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;length&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;width&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;height&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 5&lt;/span&gt;      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 6&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 7&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt; 8&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;CGColorSpaceRef&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;colorSpace&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGColorSpaceCreateDeviceRGB&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt; 9&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorSpace&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;10&lt;/span&gt;      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;11&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;12&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;Byte&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bytes&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Byte&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;13&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;CGContextRef&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGBitmapContextCreate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;colorSpace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;CGBitmapInfo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;kCGImageAlphaPremultipliedFirst&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;14&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;CGColorSpaceRelease&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;colorSpace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;15&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;16&lt;/span&gt;      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;17&lt;/span&gt;  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;18&lt;/span&gt; 
+&lt;span class=&quot;lineno&quot;&gt;19&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;CGImageRef&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;imageRef&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CGBitmapContextCreateImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;20&lt;/span&gt;  &lt;span class=&quot;bp&quot;&gt;UIImage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;UIImage&lt;/span&gt; &lt;span class=&quot;nl&quot;&gt;imageWithCGImage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;imageRef&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;21&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;CGContextRelease&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;22&lt;/span&gt;  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;lineno&quot;&gt;23&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h5&gt;Alpha通道&lt;/h5&gt;
+
+&lt;p&gt;Alpha通道增加像素的透明度信息。&lt;/p&gt;
+
+&lt;h5&gt;色彩深度&lt;/h5&gt;
+
+&lt;p&gt;色彩深度又叫色彩位数，即位图中要用多少个二进制位来表示每个点的颜色，是分辨率的一个重要指标。常用有1位（单色），2位（4色，CGA），4位（16色，VGA），8位（256色），16位（增强色），24位和32位（真彩色）等。色深16位以上的位图还可以根据其中分别表示RGB三原色或CMYK四原色（有的还包括Alpha通道）的位数进一步分类.&lt;/p&gt;
+
+&lt;h5&gt;图像遮罩(image mask)&lt;/h5&gt;
+
+&lt;p&gt;&lt;strong&gt;image mask&lt;/strong&gt; 也是由一組像素组成的特殊的位图，能指定图片的绘制区域，常见就通过&lt;strong&gt;image mask&lt;/strong&gt;来绘制各种各样的形状，在iOS实际开发中用到的最多的可能就是圆角矩形了。 说白了就是就是我们通过&lt;strong&gt;image mask&lt;/strong&gt;想让图片怎么显示，就怎么显示。&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Blend Modes</title>
+   <link href="https://github.com/sipdar/2014/03/18/Blend_Models/"/>
+   <updated>2014-03-18T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2014/03/18/Blend_Models</id>
+   <content type="html">&lt;h1&gt;Blend Modes&lt;/h1&gt;
+
+&lt;p&gt;我们在使用&lt;strong&gt;Quartz 2D&lt;/strong&gt;画图的时候，经常遇到图形叠加的情况。在多个图形重叠的时候有时候我们想重叠的部分透明阿，或者重叠的部分颜色混合在一起阿。这时候就要用到 &lt;strong&gt;Quartz 2D&lt;/strong&gt; 的混合模式了
+&lt;strong&gt;Blend Modes&lt;/strong&gt;。通过 &lt;strong&gt;Blend Modes&lt;/strong&gt; 我们可以把几个图片组合起来绘制到已经有图形的
+ &lt;strong&gt;graphic context&lt;/strong&gt;上。&lt;/p&gt;
+
+&lt;h2&gt;How to use Blend Modes&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;首先先画背景。&lt;/li&gt;
+&lt;li&gt;使用 &lt;strong&gt;CGContextSetBlendMode&lt;/strong&gt; 设置 &lt;strong&gt;Blend Modes&lt;/strong&gt; &lt;/li&gt;
+&lt;li&gt;在画我们想和背景图形合成的图片 用 &lt;strong&gt;CGContextDrawImage&lt;/strong&gt; 绘制。其实不只是图片。接下来绘制的无论是图片 矩形 文字都会使用  &lt;strong&gt;Blend Modes&lt;/strong&gt; 和背景组合在一起。&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;下面我们把左边的图片跟右边的条纹背景用不同的 &lt;strong&gt;Blend Modes&lt;/strong&gt; 混合在一起看看都有什么效果
+&lt;img src=&quot;http://sipdar.github.io/image/2014/03/18/1.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;Normal Blend Mode&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIImage *foregroundImage = [UIImage imageNamed:@&amp;quot;abc.jpg&amp;quot;];
+UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 320),NO ,[UIScreen mainScreen].scale);
+CGContextRef context = UIGraphicsGetCurrentContext();
+CGFloat y = 0;
+CGFloat height = 50 ;
+for (int i = 0; i&amp;lt;5; i++) {
+    y  += height ;
+    CGRect rect = CGRectMake(0, y, 320, height);
+    UIColor *color = [self colorWihtIndex:i];
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextFillRect(context, rect);
+    CGContextSaveGState(context);
+}
+
+CGContextScaleCTM(context, 1.0f, -1.0f);
+CGContextTranslateCTM(context, 0.0f, -320);
+
+CGContextSetBlendMode(context, kCGBlendModeNormal);
+CGContextDrawImage(context, CGRectMake(0, 50, 320, 240), foregroundImage.CGImage);
+UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+self.imageView.image = image;
+UIGraphicsEndImageContext();
+
+
+-(UIColor *)colorWihtIndex:(NSInteger) index{
+    if (index == 0)
+        return [[UIColor yellowColor] colorWithAlphaComponent:0.8];
+    else if (index== 1)
+        return [[UIColor purpleColor] colorWithAlphaComponent:0.8];
+    else if (index== 2)
+        return [[UIColor redColor]colorWithAlphaComponent:0.8];
+    else if (index== 3)
+        return [[UIColor greenColor] colorWithAlphaComponent:0.8];
+    else if (index== 4)
+        return [[UIColor blueColor] colorWithAlphaComponent:0.8];
+    return [UIColor purpleColor];
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/18/normal.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;Multiply Blend Mode&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextSetBlendMode(context, kCGBlendModeMultiply);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/18/Multiply.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;Screen Blend Mode&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextSetBlendMode(context, kCGBlendModeScreen);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/18/Screen.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;Overlay Blend Mode&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextSetBlendMode(context, kCGBlendModeOverlay);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/18/Overlay.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;Lighten Blend Mode&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextSetBlendMode(context, kCGBlendModeLighten);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/18/Lighten.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;Color Dodge Blend Mode&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextSetBlendMode(context, kCGBlendModeColorDodge);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/18/Overlay.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;Color Burn Blend Mode&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextSetBlendMode(context, kCGBlendModeColorBurn);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/18/ColorBurn.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;Soft Light Blend Mode&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextSetBlendMode(context, kCGBlendModeSoftLight);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/18/SoftLight.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;Hard Light Blend Mode&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextSetBlendMode(context, kCGBlendModeHardLight);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/18/HardLight.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;Difference Blend Mode&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextSetBlendMode(context, kCGBlendModeDifference);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/18/Difference.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;Exclusion Blend Mode&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextSetBlendMode(context, kCGBlendModeExclusion);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/18/Exclusion.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;Hue Blend Mode&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextSetBlendMode(context, kCGBlendModeHue);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/18/Hue.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;Saturation Blend Mode&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextSetBlendMode(context, kCGBlendModeSaturation);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/18/Saturation.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;Color Blend Mode&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextSetBlendMode(context, kCGBlendModeColor);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/18/Color.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;Luminosity Blend Mode&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextSetBlendMode(context, kCGBlendModeLuminosity);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/18/Luminosity.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Transparency Layers</title>
+   <link href="https://github.com/sipdar/2014/03/17/Transparency_Layers/"/>
+   <updated>2014-03-17T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2014/03/17/Transparency_Layers</id>
+   <content type="html">&lt;p&gt;&lt;strong&gt;Transparency Layer&lt;/strong&gt; 是由多个对象组合在一起拼成的图形，它在图形绘制的过程中会被当作一个对象来处理。 &lt;strong&gt;Transparency Layer&lt;/strong&gt; 最常见的用处就是在我们想对一组图形添加效果的时候。比如像下面这样对三个叠加在一起的三个圆形添加阴影。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/17/circlesWithShadow.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;如果我们添加阴影的时候没用把这三个圆形绘制在 &lt;strong&gt;Transparency Layer&lt;/strong&gt; 上的话 那么阴影则将会添加在每个圆形周围上。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/17/circlesInnerShadow.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;使用 &lt;strong&gt;Transparency Layer&lt;/strong&gt; 的时候，我们首先要在绘制 &lt;strong&gt;Transparency Layer&lt;/strong&gt; 开始的地方调用
+&lt;strong&gt;CGContextBeginTransparencyLayer&lt;/strong&gt; 它需要两个参数，一个就是我们绘制图形的&lt;strong&gt;graphics context&lt;/strong&gt; 另外一个是个&lt;strong&gt;CFDictionary&lt;/strong&gt;对象，通过第二个参数我们可以控制一些绘制图形的属性，比如 阴影的开关 图形混合的类型 和图形的alpha值。一般的情况下都是传&lt;strong&gt;NULL&lt;/strong&gt;。接下来我们就可以执行我们绘图的代码了。 画完之后在   &lt;strong&gt;UIGraphicsEndImageContext&lt;/strong&gt; 或者 &lt;strong&gt;UIGraphicsPopContext&lt;/strong&gt; 之前我们需要调用 &lt;strong&gt;CGContextEndTransparencyLayer&lt;/strong&gt;来结束 &lt;strong&gt;Transparency Layer&lt;/strong&gt;的绘制。此外，我们还可以使用 &lt;strong&gt;CGContextBeginTransparencyLayerWithRect&lt;/strong&gt; 来制定区域来绘制 &lt;strong&gt;Transparency Layer&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;我们看下面这个例子代码&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 320),NO ,[UIScreen mainScreen].scale);
+CGContextRef myContext = UIGraphicsGetCurrentContext();
+CGFloat wd = 250;
+CGFloat ht = 250;
+CGSize myShadowOffset = CGSizeMake (5, -5);
+CGContextSetShadow (myContext, myShadowOffset, 3);
+CGContextBeginTransparencyLayer (myContext, NULL);
+CGContextSetRGBFillColor (myContext, 0, 1, 0, 1);
+CGContextFillRect (myContext, CGRectMake (wd/3+ 20,ht/2 ,wd/4,ht/4));
+CGContextSetRGBFillColor (myContext, 0, 0, 1, 1);
+CGContextFillRect (myContext, CGRectMake (wd/3-20,ht/2-50,wd/4,ht/4));
+CGContextSetRGBFillColor (myContext, 1, 0, 0, 1);
+CGContextFillRect (myContext, CGRectMake (wd/3,ht/2-20,wd/4,ht/4));
+CGContextEndTransparencyLayer (myContext);
+UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+self.imageView.image = image;
+UIGraphicsEndImageContext();
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/17/a.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;三个矩形被当作一个整体添加了阴影，如果注释掉 &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextBeginTransparencyLayer (myContext, NULL);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;和&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextEndTransparencyLayer (myContext);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;那么阴影就会单独的添加在每个图形上。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/17/b.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Coordinate Space Transformations</title>
+   <link href="https://github.com/sipdar/2014/03/16/Coordinate_space_transformations/"/>
+   <updated>2014-03-16T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2014/03/16/Coordinate_space_transformations</id>
+   <content type="html">&lt;h2&gt;Coordinate Systems&lt;/h2&gt;
+
+&lt;p&gt;Quartz 2D和UIKit的坐标系是不同的，Quartz 2D 使用的是笛卡尔坐标系 原点在左下角，
+&lt;img src=&quot;http://sipdar.github.io/image/2014/03/16/Quartz2DCoordinate.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;UIkit坐标系的原点在左上角。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/16/native_coordinate_system.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;这个也就可以理解为什么用Quartz 2D画的图形和UIKit的倒过来的。&lt;/p&gt;
+
+&lt;p&gt;但是在IOS 3.2及后续的版本中，当UIKit为你的应用程序创建一个&lt;strong&gt;Graphics Context&lt;/strong&gt;时，也对&lt;strong&gt;Context&lt;/strong&gt;进行了额外的修改以匹配UIKit的约定。&lt;/p&gt;
+
+&lt;h2&gt;What is CTM ?&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;CTM&lt;/strong&gt; = &lt;strong&gt;Current Transformation Matrix&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Quartz通过使用当前转换矩阵(current transformation matrix， CTM)将一个独立的坐标系统(user space)映射到输出设备的坐标系统(device space)，&lt;strong&gt;CTM&lt;/strong&gt; 通过平移(translation)、旋转(rotation)、缩放(scale)操作将点从一个坐标空间映射到另外一个坐标空间。&lt;/p&gt;
+
+&lt;p&gt;我们可以通过CTM来决定对象如何被绘制。例如，为了绘制一个旋转了45度的矩形，我们可以在绘制矩形之前旋转&lt;strong&gt;Graphics Context&lt;/strong&gt;的坐标系统。Quartz使用旋转过的坐标系统来将矩形绘制到输出设备中。设备显示在屏幕上的矩形，就是旋转过后的矩形。&lt;/p&gt;
+
+&lt;p&gt;我们先来看一个图片绘制的例子,首先是是没做矩阵转换的代码。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 320),NO ,[UIScreen mainScreen].scale);
+// Perform drawing here
+UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(50, 50, 200, 200)];
+[[UIColor redColor] setFill];
+[path fill];
+UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+self.imageView.image = image;
+UIGraphicsEndImageContext();
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/16/CTM_Original.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;CGContextTranslateCTM&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 320),NO ,[UIScreen mainScreen].scale);
+// Perform drawing here
+CGContextRef context = UIGraphicsGetCurrentContext();
+CGContextTranslateCTM(context, 70, 0);
+UIBezierPath *path = [UIBezierPath bezierPathWithRect:CGRectMake(50, 50, 200, 200)];
+[[UIColor redColor] setFill];
+[path fill];
+UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+self.imageView.image = image;
+UIGraphicsEndImageContext();
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/16/CTM_Translate.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;CGContextScaleCTM&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextScaleCTM(context, 0.5, 1.5);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/16/CTM_Scale.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;CGContextRotateCTM&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextRotateCTM(context, M_2_PI);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/16/CTM_Rotate.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;这时候我们发现旋转并没有按照绘制的&lt;strong&gt;Context&lt;/strong&gt;中心旋转， 因为旋转是以坐标系的原点为中心来做的，所以我们为了要保持图片的中心位置就要配合 &lt;strong&gt;CGContextTranslateCTM&lt;/strong&gt; 一起使用。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextTranslateCTM(context,self.imageView.center.x,self.imageView.center.y);
+CGContextRotateCTM(context, M_2_PI);
+CGContextTranslateCTM(context, -self.imageView.center.x, -self.imageView.center.y);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/16/CTM_Rotate_withCenter.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;CGContextConcatCTM&lt;/h2&gt;
+
+&lt;p&gt;此外我们还可以通过 *&lt;em&gt;CGAffineTransform *&lt;/em&gt;来变幻坐标系 比如我之前写过的仿射变换。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGContextTranslateCTM(context,self.imageView.center.x,self.imageView.center.y);
+CGAffineTransform transform = CGAffineTransformIdentity;
+transform = CGAffineTransformScale(transform, 0.5, 0.5);
+transform = CGAffineTransformTranslate(transform, 0, 100);
+transform.c = -0.5;
+transform.b = 0;
+CGContextConcatCTM(context, transform);
+CGContextTranslateCTM(context, -self.imageView.center.x, -self.imageView.center.y);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/2014/03/16/CTM_Transform.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;CGContextGetCTM&lt;/h2&gt;
+
+&lt;p&gt;我们可以通过 &lt;strong&gt;CGContextGetCTM&lt;/strong&gt; 在程序运行中取回当前&lt;strong&gt;Context&lt;/strong&gt;上使用的转换矩阵。&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Core Animation CAShapeLayer</title>
+   <link href="https://github.com/sipdar/2013/12/10/Core_Animation(%E5%85%AB)_CAShapeLayer/"/>
+   <updated>2013-12-10T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2013/12/10/Core_Animation(八)_CAShapeLayer</id>
+   <content type="html">&lt;h1&gt;CAShapeLayer&lt;/h1&gt;
+
+&lt;p&gt;我们在上面曾经用过&lt;strong&gt;CGPath&lt;/strong&gt;代替图片来绘制阴影，同样的我们可以使用&lt;strong&gt;CGPath&lt;/strong&gt;来绘制各种我们想要的图形，用来代替图片使用。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;CAShapeLayer&lt;/strong&gt;是 &lt;strong&gt;CALayer&lt;/strong&gt;的子类，在绘制的时候它使用的是矢量图形，而不是 &lt;strong&gt;Bitmap Image&lt;/strong&gt;，因此效率非常高。在使用的时候 只要我们定义好颜色 线条的宽度，然后用&lt;strong&gt;CGPath&lt;/strong&gt;来定义出形状，剩下的 &lt;strong&gt;CAShapeLayer&lt;/strong&gt;会自动渲染。当然我们也可以使用 &lt;strong&gt;Core Graphics&lt;/strong&gt;在&lt;strong&gt;CALayer&lt;/strong&gt;中绘制我们想要的内容，但是有使用 &lt;strong&gt;CAShapeLayer&lt;/strong&gt;有它的好处，&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;首先它速度非常快，&lt;strong&gt;CAShaplayer&lt;/strong&gt;使用的是硬件加速，比起用 &lt;strong&gt;Core Graphics&lt;/strong&gt;画一个图来会快很多&lt;/li&gt;
+&lt;li&gt;节省内存 它不象&lt;strong&gt;CALayer&lt;/strong&gt;那样会创建背景图片，所以无论它有多大，都不会太消耗内存&lt;/li&gt;
+&lt;li&gt;不会剪切超出自己&lt;strong&gt;bounds&lt;/strong&gt;的部分， 但是使用&lt;strong&gt;CALayer&lt;/strong&gt;的时候我们就会被&lt;strong&gt;CGPath&lt;/strong&gt;剪切掉超出的部分&lt;/li&gt;
+&lt;li&gt;没有像素画，在做缩放变幻的时候，不会出现像素化的情况。&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;我们看个小栗子 怎么使用 &lt;strong&gt;CASapeLayer&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIBezierPath *path = [[UIBezierPath alloc] init];
+[path moveToPoint:CGPointMake(175, 100)];
+[path addArcWithCenter:CGPointMake(150, 100) 
+                radius:25 
+            startAngle:0 
+              endAngle:2*M_PI
+             clockwise:YES];
+
+[path moveToPoint:CGPointMake(150, 125)];
+[path addLineToPoint:CGPointMake(150, 175)]; 
+[path addLineToPoint:CGPointMake(125, 225)];
+[path moveToPoint:CGPointMake(150, 175)]; 
+[path addLineToPoint:CGPointMake(175, 225)];
+[path moveToPoint:CGPointMake(100, 150)];
+[path addLineToPoint:CGPointMake(200, 150)];
+
+CAShapeLayer *shapeLayer = [CAShapeLayer layer]; 
+shapeLayer.strokeColor =    [UIColor redColor].CGColor; 
+shapeLayer.fillColor = [UIColor clearColor].CGColor;
+shapeLayer.lineWidth = 5;
+shapeLayer.lineJoin = kCALineJoinRound; 
+shapeLayer.lineCap = kCALineCapRound;   
+shapeLayer.path = path.CGPath;
+[self.containerView.layer addSublayer:shapeLayer];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/shaplayer1.png&quot; alt=&quot;image&quot;&gt;
+&lt;strong&gt;lineWidth&lt;/strong&gt; 就是线的宽度    &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;lineCap&lt;/strong&gt; 线头的效果&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;lineJoin&lt;/strong&gt; 不同的线相交的地方的效果&lt;/p&gt;
+
+&lt;h2&gt;圆角&lt;/h2&gt;
+
+&lt;p&gt;我们曾经使用过 &lt;strong&gt;CALayer&lt;/strong&gt; 的 &lt;strong&gt;cornerRadius&lt;/strong&gt;属性来绘制圆角矩形，我们使用 &lt;strong&gt;CAShaplayer&lt;/strong&gt;也可以实现这个效果，但是&lt;strong&gt;CAShaplayer&lt;/strong&gt;更好的地方在于它可以定义每个角实现不同的效果。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGRect rect = CGRectMake(50, 50, 150, 150);
+UIView *testView = [[UIView alloc] initWithFrame:rect];
+testView.backgroundColor = [UIColor redColor];
+[self.view addSubview:testView];
+
+CGSize radii = CGSizeMake(20, 20);
+UIRectCorner corners = UIRectCornerTopRight |
+UIRectCornerBottomRight | UIRectCornerBottomLeft;
+//create path
+UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:testView.bounds
+                                            byRoundingCorners:corners 
+                                                  cornerRadii:radii];
+CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+shapeLayer.strokeColor = [UIColor greenColor].CGColor;
+shapeLayer.fillColor=[UIColor redColor].CGColor;
+shapeLayer.lineWidth = 1;
+shapeLayer.lineJoin = kCALineJoinRound;
+shapeLayer.lineCap = kCALineCapRound;
+shapeLayer.path = path.CGPath;
+testView.layer.mask =shapeLayer;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://sipdar.github.io/image/shaplayer2.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Core Animation (七)3DTransform</title>
+   <link href="https://github.com/sipdar/2013/10/20/Core_Animation(%E4%B8%83)_3D_Transform/"/>
+   <updated>2013-10-20T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2013/10/20/Core_Animation(七)_3D_Transform</id>
+   <content type="html">&lt;h1&gt;3D Transform&lt;/h1&gt;
+
+&lt;h2&gt;3D Transform&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;CGAffineTransform&lt;/strong&gt; 属于 &lt;strong&gt;Core Graphics Framework&lt;/strong&gt; ,&lt;strong&gt;Core Graphic&lt;/strong&gt;是一个绘制2D图形的库。&lt;strong&gt;CGAffineTransform&lt;/strong&gt; 只提供 2D 的旋转缩放移动等。我们要想实现 3D矩阵下的旋转缩放就要用到&lt;strong&gt;CATransform3D&lt;/strong&gt;。在2D动画中，&lt;strong&gt;point&lt;/strong&gt;属性只有 X Y 值，在3D坐标中，多了一个 Z 值。它代表的是当前的Layer距离用户视角的远近，正是这个Z值 使我们可以在3D坐标系中旋转缩放移动。 &lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;CATransform3D&lt;/strong&gt; 跟 &lt;strong&gt;CGAffineTransform&lt;/strong&gt; 一样也是个矩阵，是一个 4x4 的矩阵结构定义如下。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;struct CATransform3D
+{
+  CGFloat m11, m12, m13, m14;
+  CGFloat m21, m22, m23, m24;
+  CGFloat m31, m32, m33, m34;
+  CGFloat m41, m42, m43, m44;
+};
+typedef struct CATransform3D CATransform3D;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;3D转换的计算如下。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreAnimation_guide/Art/transform_basic_math_2x.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;下面是几种常用的3D变换矩阵 跟 &lt;strong&gt;CGAffineTransform&lt;/strong&gt; 矩阵非常相似&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/ios/documentation/Cocoa/Conceptual/CoreAnimation_guide/Art/transform_manipulations_2x.png&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Core Graphic&lt;/strong&gt; 提供了一些列的函数使我们可以方便简单的实现 3D变换。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CATransform3DMakeRotation(angle,x,y,z);
+CATransform3DMakeScale(sx,sy,sz);
+CATransform3DMakeTranslation(tx,ty,tz);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;我们看下面这个例子&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIImage *image = [UIImage imageNamed:@&amp;quot;DragonMedium&amp;quot;];
+UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+imageView.backgroundColor = [UIColor greenColor];
+imageView.frame = CGRectMake(0, 0 , CGRectGetWidth(imageView.frame),
+                             CGRectGetHeight(imageView.frame));
+imageView.center = self.view.center;
+
+CATransform3D transform = CATransform3DMakeRotation(M_PI_4, 0, 1, 0);
+imageView.layer.transform = transform;
+[self.view addSubview:imageView];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://m1.img.libdd.com/farm5/2013/1020/22/00594CE26CC3572725BEF8911D9A93EBE1B6259EAEAD7_594_856.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;好像只是简单的压缩了宽度。并没有出现我们预期的3D 沿 Y轴旋转的效果，这是为什么呢。我们知道，要想在2D平面表现3D效果，无论是拍照，还是绘画都要用到一个叫做透视法的东西，当我们距离一个物体越远的时候，我们看它就越小，在&lt;strong&gt;CATransform3D&lt;/strong&gt;有一个值是控制透视效果的，就是 &lt;strong&gt;m34&lt;/strong&gt; .默认的情况下 &lt;strong&gt;m34&lt;/strong&gt;的值是零，意味着我们是在元素的角度看到UI，我们把上面的代码稍加改造。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CATransform3D transform =   CATransform3DIdentity;
+transform.m34 = -1.0 / 500.0;
+transform = CATransform3DRotate(transform,M_PI_4, 0, 1, 0);
+imageView.layer.transform = transform;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://m3.img.libdd.com/farm5/2013/1020/22/D23F55284B47C8C51F62F170CAA35113AA8262A12DC96_594_856.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;这次看上去就对了。我们将&lt;strong&gt;m34&lt;/strong&gt; 的值设为 &lt;strong&gt;-1.0/d&lt;/strong&gt; .d 表示的就是虚拟的摄像头跟屏幕的距离，因为摄像头并不是真的存在，这个值通常是靠感觉来调整的，一般来说 500 到 1000 都是不错的值。 可以多尝试几次。&lt;/p&gt;
+
+&lt;h2&gt;消失点&lt;/h2&gt;
+
+&lt;p&gt;艺术家或者工程师在纸上表现立体图时，常用一种透视法，这种方法源于人们的视觉经验：大小相同的物体，离你较近的看起来比离你较远的大。如当你沿着铁路线去看两条铁轨，沿着公路线去看两边排列整齐的树木时，两条平行的铁轨或两排树木连线交与很远很远的某一点，这点在透视图中叫做消失点。 凡是平行的直线都消失于无穷远处的同一个点，消失于视平线上的点的直线都是水平直线。（&lt;a href=&quot;http://baike.baidu.com/view/726134.htm&quot;&gt;百度百科&lt;/a&gt;）&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://m2.img.libdd.com/farm4/2013/1021/20/CF205F5BC5542C74D828DE5389D87F732919DF3EF7AAB_600_270.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;在2D的 &lt;strong&gt;transform&lt;/strong&gt; 中我们知道做变换的&lt;strong&gt;Layer&lt;/strong&gt;都有一个锚点。在&lt;strong&gt;3D&lt;/strong&gt;变换中，消失点就相当于一个锚点。
+当我们在3D坐标系中，每次更改&lt;strong&gt;Layer&lt;/strong&gt;的位置，同时也就更改消失点的位置。如果我们打算通过调整一个&lt;strong&gt;Layer&lt;/strong&gt; 的 &lt;strong&gt;M34&lt;/strong&gt; 来显示3D效果，那么 我们应该把先消失点定位在屏幕的中心，然后移动它到相应的位置，使得屏幕上所有的&lt;strong&gt;Layer&lt;/strong&gt;可以共享同一个消失点。已达到一个整体的3D效果。&lt;/p&gt;
+
+&lt;h2&gt;sublayerTransform&lt;/h2&gt;
+
+&lt;p&gt;如果我们有多个&lt;strong&gt;View&lt;/strong&gt;或者&lt;strong&gt;Layer&lt;/strong&gt;的时候，并且它们每一个都有单独的3D变换，这时候我们有必要使用统一的&lt;strong&gt;M34&lt;/strong&gt;的值，来保证它们在屏幕上显示的时候有个共同的消失点。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;CALayer&lt;/strong&gt;有个属性叫做 &lt;strong&gt;sublayerTransform&lt;/strong&gt; 它也是一个 &lt;strong&gt;CATransform3D&lt;/strong&gt; ，它只是在变换的时候作用于 &lt;strong&gt;subLayer&lt;/strong&gt; 。这意味着我们可以在&lt;strong&gt;superLayer&lt;/strong&gt;上设置变换，&lt;strong&gt;subLayer&lt;/strong&gt;都将自动继承。消失点会设置在&lt;strong&gt;superLayer&lt;/strong&gt;上，也就不必在单独给每一个&lt;strong&gt;subLayer&lt;/strong&gt;设置消失点了。
+我们看下面这个栗子。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIView *superImageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 200)];
+superImageView.backgroundColor = [UIColor redColor];
+superImageView.center = self.view.center;
+
+UIImage *image = [UIImage imageNamed:@&amp;quot;DragonMedium&amp;quot;];
+UIImageView *leftimageView = [[UIImageView alloc] initWithImage:image];
+UIImageView *rightImageView = [[UIImageView alloc] initWithImage:image];
+leftimageView.backgroundColor = [UIColor greenColor];
+rightImageView.backgroundColor = [UIColor greenColor];
+leftimageView.frame = CGRectMake(0, 25 , 150,150);
+rightImageView.frame = CGRectMake(170, 25 ,150,150);
+
+[superImageView addSubview:leftimageView];
+[superImageView addSubview:rightImageView];
+
+
+CATransform3D superTransform = CATransform3DIdentity;
+superTransform.m34 = -1.0/500.0;
+superImageView.layer.sublayerTransform = superTransform;
+
+CATransform3D transformLeft = CATransform3DMakeRotation(M_PI_4, 0, 1, 0);
+CATransform3D transformRight = CATransform3DMakeRotation(M_PI_4, 0, -1, 0);
+leftimageView.layer.transform = transformLeft;
+rightImageView.layer.transform = transformRight;
+
+[self.view addSubview:superImageView];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://m2.img.libdd.com/farm5/2013/1021/21/39A11261A15AA4267609265CFC081E716C6A92BD91981_771_548.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;镜像&lt;/h2&gt;
+
+&lt;p&gt;当我们把上面得例子中得&lt;strong&gt;rightImageView&lt;/strong&gt;的&lt;strong&gt;transform&lt;/strong&gt; 去掉。&lt;strong&gt;leftImageView&lt;/strong&gt;的 弧度参数从&lt;strong&gt;M&lt;em&gt;PI&lt;/em&gt;4&lt;/strong&gt; 变成 &lt;strong&gt;M_PI&lt;/strong&gt; 。发生了什么？&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://m3.img.libdd.com/farm5/2013/1021/22/CC17B94FEFD651EFFC31370D805FB1A3DE08FDBE85BF6_594_856.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;我们得到了一个&lt;strong&gt;Layer&lt;/strong&gt;的镜像。在3D变幻中有时候这种反面的镜像的计算和绘制是没有必要的，比如在一个不透明的物体做3D变幻的时候。对于背面的东西既然是不可见的也就没必要浪费资源显示。所以 &lt;strong&gt;CALayer&lt;/strong&gt;有个属性叫做 &lt;strong&gt;doubleSided&lt;/strong&gt; 可以关掉。&lt;/p&gt;
+
+&lt;h2&gt;当一个Layer和它所包含的Layer做相反的变换会发生什么呢？&lt;/h2&gt;
+
+&lt;p&gt;我们现在试着把&lt;strong&gt;superLayer&lt;/strong&gt;向右旋转 45度，把&lt;strong&gt;subLayer&lt;/strong&gt;向左旋转45度。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIView *superImageView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+superImageView.backgroundColor = [UIColor redColor];
+
+UIImage *image = [UIImage imageNamed:@&amp;quot;DragonMedium&amp;quot;];
+UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+imageView.backgroundColor = [UIColor greenColor];
+imageView.frame = CGRectMake(0,0 ,150,150);
+imageView.center = superImageView.center;
+
+[superImageView addSubview:imageView];
+superImageView.center = self.view.center;
+
+CATransform3D transformLeft = CATransform3DMakeRotation(M_PI_4, 0, 0, 1);
+CATransform3D transformRight = CATransform3DMakeRotation(-M_PI_4, 0, 0, 1);
+superImageView.layer.transform = transformLeft;
+imageView.layer.transform = transformRight;
+
+[self.view addSubview:superImageView];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://m1.img.libdd.com/farm4/2013/1021/22/7D268867F512EF7FBC26294BA406F7C78CC528DBF8165_594_856.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;我们在试试3D显示。将上面栗子中的3D transform 修改成下面这样&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CATransform3D transformLeft = CATransform3DIdentity;
+transformLeft.m34 = -1.0 / 500.0;
+transformLeft = CATransform3DRotate(transformLeft, M_PI_4, 0, 1, 0);
+
+CATransform3D transformRight = CATransform3DIdentity;
+transformRight.m34 = -1.0 / 500.0;
+transformRight = CATransform3DRotate(transformRight, -M_PI_4, 0, 1, 0);
+
+superImageView.layer.transform = transformLeft;
+imageView.layer.transform = transformRight;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://m3.img.libdd.com/farm4/2013/1021/22/84AA693C9690E7E26F750C11EA1C1718866B603CA9410_594_856.PNG&quot; alt=&quot;image&quot;&gt;
+我们发现绿色部分的变换比以前例子中的效果来变形的非常厉害，这是因为在做3D变换的时候每个&lt;strong&gt;Layer&lt;/strong&gt;的坐标系都是以&lt;strong&gt;superLayer&lt;/strong&gt;为参照的。也就是说 红色&lt;strong&gt;Layer&lt;/strong&gt;跟绿色&lt;strong&gt;Layer&lt;/strong&gt;并不在同一个参照系里。当我们要用 &lt;strong&gt;Core Animation&lt;/strong&gt;创建一些复杂的3D效果的时候，要注意这点。&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Core Animation (六)CGAffineTransform</title>
+   <link href="https://github.com/sipdar/2013/10/19/Core_Animation(%E5%85%AD)_AffineTransform/"/>
+   <updated>2013-10-19T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2013/10/19/Core_Animation(六)_AffineTransform</id>
+   <content type="html">&lt;h1&gt;变换&lt;/h1&gt;
+
+&lt;p&gt;图层一旦创建,你就可以通过矩阵变换来改变一个图层的几何形状。&lt;strong&gt;CGAffineTransform&lt;/strong&gt; ,用于 图层的旋转,缩放,位移，还有 &lt;strong&gt;CATransform3D&lt;/strong&gt; 它可以把二维的平面转换到三维矩阵中。&lt;/p&gt;
+
+&lt;h2&gt;Affine Transforms&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;UIView&lt;/strong&gt;  有个属性是 &lt;strong&gt;transform&lt;/strong&gt;,&lt;strong&gt;transform&lt;/strong&gt; 的类型就是 &lt;strong&gt;CGAffineTransform&lt;/strong&gt; 通过它我们可以对&lt;strong&gt;UIView&lt;/strong&gt;做一些二维的旋转缩放之类的操作。&lt;strong&gt;CGAffineTransform&lt;/strong&gt; 的定义如下&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;struct CGAffineTransform {
+      CGFloat a, b, c, d;
+      CGFloat tx, ty;
+};
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;它其实表示的是一个矩阵       &lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation01.gif&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;因为最后一列总是是(0,0,1)，所以有用的信息就是前面两列，对一个view进行仿射变化就相当于对view上的每个点做一个乘法，结果就是&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation02.gif&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;下面举例说明几个转换运算的数学实现，x y 是原先点的坐标，下面是矩阵转换的计算公式&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation03.gif&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;恒等矩阵&lt;/h3&gt;
+
+&lt;p&gt;恒等矩阵就是输入什么坐标，出来什么坐标，没有转换&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation04.gif&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;计算的结果如下，计算之前的x y 跟计算之后的 x‘ y’ 是相等的。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation05.gif&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;平移矩阵&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation06.gif&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;通过平移矩阵的计算公式如下&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation07.gif&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;缩放矩阵&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation08.gif&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;缩放矩阵的计算公式&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation09.gif&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;旋转矩阵&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation10.gif&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;旋转矩阵的计算公式&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation11.gif&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h3&gt;旋转加平移矩阵&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation12.gif&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;下面就是组合起来的计算公式&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation13.gif&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;AffineTransform类描述了一种二维仿射变换的功能，它是一种二维坐标到二维坐标之间的线性变换，保持二维图形的“平直性”（即变换后直线还是直线不会打弯，圆弧还是圆弧）和“平行性”（是指保二维图形间的相对位置关系不变，平行线还是平行线，而直线上点的位置顺序不变，另特别注意向量间夹角可能会发生变化。）仿射变换可以通过一系列的原子变换的复合来实现，包括：平移（Translation）、缩放（Scale）、翻转（Flip）、旋转（Rotation）和错切（Shear）&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://m1.img.libdd.com/farm5/2013/1019/20/8B45FAAB1B7FF35E7BBDFB6BF60F0B1CCE48596C04FAE_482_342.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;创建一个 &lt;strong&gt;CGAffineTransform&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;看了上面的的矩阵和计算有点叫人挠头。 不过 &lt;strong&gt;Core Graphics&lt;/strong&gt;为了方便开发者，提供了好多内建的函数，可以使我们不必学习复杂的数学知识，就可以实现上面的操作。
+下面的方法都可以创建 &lt;strong&gt;CGAffineTransform&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;函数| 操作 
+------------ | -------------
+CGAffineTransformMakeTranslation | 新的平移矩阵要移动到距离远点的位置&lt;br&gt;
+CGAffineTransformMakeRotation | 构建一个新的旋转矩阵 参数是旋转的弧度。
+CGAffineTransformMakeScale | 构建一个新的缩放矩阵指定多少拉伸或收缩坐标x和y值。&lt;/p&gt;
+
+&lt;p&gt;我们看下面这个例子，它把LLVM的logo 旋转了 45°：&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIImage *image = [UIImage imageNamed:@&amp;quot;DragonMedium&amp;quot;];
+UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+imageView.frame = CGRectMake(0, 0 , CGRectGetWidth(imageView.frame),
+                                     CGRectGetHeight(imageView.frame));
+imageView.center = self.view.center;
+imageView.transform = CGAffineTransformMakeRotation(M_PI_4);
+[self.view addSubview:imageView];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://m3.img.libdd.com/farm4/2013/1019/21/D78163CE65A5BDE31AFB5899ABBECB2C63DFCF8CA2CCB_594_856.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;我们在旋转ImageView的时候 传给 &lt;strong&gt;CGAffineTransformMakeRotation&lt;/strong&gt; 的参数是一个宏定义 &lt;strong&gt;M&lt;em&gt;PI&lt;/em&gt;4&lt;/strong&gt;,并不是 45°。旋转的单位采用弧度(radians),而不是角度(degress)。以下两个函数,你可以在 弧度和角度之间切换。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGFloat DegreesToRadians(CGFloat degrees) {return degrees * M_PI / 180;};
+￼CGFloat RadiansToDegrees(CGFloat radians) {return radians * 180 / M_PI;};
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;弧度通常指定使用的数学常数π（圆周率）的倍数。 π弧度等于180度，所以π除以4是相当于45度。
+C 的&lt;strong&gt;math&lt;/strong&gt;库，方便地提供常数π的公倍数，M&lt;em&gt;PI&lt;/em&gt;4是常数，表示π除以4。如果你想使用弧度时候，你可以直接使用这些宏。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;#define M_E         2.71828182845904523536028747135266250   /* e              */
+#define M_LOG2E     1.44269504088896340735992468100189214   /* log2(e)        */
+#define M_LOG10E    0.434294481903251827651128918916605082  /* log10(e)       */
+#define M_LN2       0.693147180559945309417232121458176568  /* loge(2)        */
+#define M_LN10      2.30258509299404568401799145468436421   /* loge(10)       */
+#define M_PI        3.14159265358979323846264338327950288   /* pi             */
+#define M_PI_2      1.57079632679489661923132169163975144   /* pi/2           */
+#define M_PI_4      0.785398163397448309615660845819875721  /* pi/4           */
+#define M_1_PI      0.318309886183790671537767526745028724  /* 1/pi           */
+#define M_2_PI      0.636619772367581343075535053490057448  /* 2/pi           */
+#define M_2_SQRTPI  1.12837916709551257389615890312154517   /* 2/sqrt(pi)     */
+#define M_SQRT2     1.41421356237309504880168872420969808   /* sqrt(2)        */
+#define M_SQRT1_2   0.707106781186547524400844362104849039  /* 1/sqrt(2)      */
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;组合Transforms&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Core Graphics&lt;/strong&gt; 还提供了另外一系列的函数，使开发者可以方便的组合 &lt;strong&gt;Transforms&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;例如&lt;/p&gt;
+
+&lt;p&gt;函数| 操作 
+------------ | -------------
+GAffineTransformRotate(CGAffineTransform t, CGFloat angle)  | 原始的基础上加上偏移
+CGAffineTransformScale(CGAffineTransform t, CGFloat sx, CGFloat sy) | 加上缩放
+CGAffineTransformTranslate(CGAffineTransform t, CGFloat tx, CGFloat ty) | 加上旋转&lt;/p&gt;
+
+&lt;p&gt;当我们操作 &lt;strong&gt;Transforms&lt;/strong&gt; 的时候，我们经常会创建一个初始的什么也不做的&lt;strong&gt;Transform&lt;/strong&gt;，就像 &lt;strong&gt;point&lt;/strong&gt; 的 &lt;strong&gt;zero&lt;/strong&gt; 或者 &lt;strong&gt;nil&lt;/strong&gt;。在矩阵的世界中，恒等矩阵就是干这个用的。 &lt;strong&gt;Core Graphics&lt;/strong&gt; 为我们提供了 &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGAffineTransformIdentity
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;当我们想组合两个已经存在的 &lt;strong&gt;transform&lt;/strong&gt;的时候，我们可以使用&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGAffineTransformConcat(CGAffineTransform t1, CGAffineTransform t2);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;下面的代码使LLVM的logo 缩小了50% 旋转了45°，并且向下移动了100的位置。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIImage *image = [UIImage imageNamed:@&amp;quot;DragonMedium&amp;quot;];
+UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+imageView.frame = CGRectMake(0, 0 , CGRectGetWidth(imageView.frame), 
+                                    CGRectGetHeight(imageView.frame));
+imageView.center = self.view.center;
+
+CGAffineTransform transform = CGAffineTransformIdentity;
+transform = CGAffineTransformScale(transform, 0.5, 0.5);
+transform = CGAffineTransformTranslate(transform, 0, 100);
+
+imageView.transform = CGAffineTransformRotate(transform, M_PI_4);
+[self.view addSubview:imageView];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://m2.img.libdd.com/farm5/2013/1019/22/CE867462973B6617719D875B002DCE2EFB1FFE54D45AB_594_856.PNG&quot; alt=&quot;image&quot;&gt;      &lt;/p&gt;
+
+&lt;h2&gt;Shear Transform&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Shear Transform&lt;/strong&gt; 是第四种 &lt;strong&gt;Affine Transform&lt;/strong&gt; （我也不知道该怎么翻译这个 Shear Transform）。和旋转 缩放 移动 不同的是 &lt;strong&gt;Core Graphics&lt;/strong&gt;并没有提供现成的函数来做 &lt;strong&gt;Shear Transform&lt;/strong&gt;,不过我们可以自己来实现他。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CGAffineTransform CGAffineTransformMakeShear(CGFloat x, CGFloat y)
+{
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    transform.c = -x;
+    transform.b = y;
+    return transform;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;下面给imageview 添加上 transform&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIImage *image = [UIImage imageNamed:@&amp;quot;DragonMedium&amp;quot;];
+UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+imageView.backgroundColor = [UIColor greenColor];
+imageView.frame = CGRectMake(0, 0 , CGRectGetWidth(imageView.frame), 
+                                    CGRectGetHeight(imageView.frame));
+imageView.center = self.view.center;
+imageView.transform = CGAffineTransformMakeShear(0.6,0);
+
+[self.view addSubview:imageView];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;效果如下&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://m1.img.libdd.com/farm4/2013/1019/22/433CC9E800E500602AB99C94F72ACC8FA3529787B5BEE_594_856.PNG&quot; alt=&quot;image&quot;&gt;  &lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Core Animation (五)Layer Masking</title>
+   <link href="https://github.com/sipdar/2013/10/17/Core_Animation(%E4%BA%94)_Layer_Masking/"/>
+   <updated>2013-10-17T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2013/10/17/Core_Animation(五)_Layer_Masking</id>
+   <content type="html">&lt;h1&gt;Layer Masking (五)&lt;/h1&gt;
+
+&lt;h2&gt;Layer Masking&lt;/h2&gt;
+
+&lt;p&gt;当使用 &lt;strong&gt;masksToBounds&lt;/strong&gt; 的时候，它会沿着layer的边框进行裁切超出的部分。包括使用 &lt;strong&gt;cornerRadius&lt;/strong&gt;也是这样，裁出一个圆角矩形来。但是有时候我们想绘制的并不是一个矩形，或者一个圆角矩形，比如我现在想以五角星的形状来显示一个image对象，在比如我想在滚动一个显示文本的View的时候可以叫他优雅的在屏幕边缘淡出，而不是笔直的切割显示区域的边缘。
+有两种方法可以实现，一种就是用 带 &lt;strong&gt;alpha&lt;/strong&gt; 透明的&lt;strong&gt;PNG&lt;/strong&gt;图片盖在要显示的区域上，当我们在程序中要动态的裁切图片显示区域的时候这个方法可能就不实用了。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;CAlayer&lt;/strong&gt; 有个&lt;strong&gt;mask&lt;/strong&gt;属性， &lt;strong&gt;mask&lt;/strong&gt;本身就是一个&lt;strong&gt;CAlayer&lt;/strong&gt;，它和其他任何的&lt;strong&gt;Layer&lt;/strong&gt;没什么不同。使用&lt;strong&gt;mask layer&lt;/strong&gt;的时候，跟其他的&lt;strong&gt;sublayer&lt;/strong&gt;没什么区别，不同的是它并像一个普通的&lt;strong&gt;subLayer&lt;/strong&gt;那样显示在&lt;strong&gt;superLayer&lt;/strong&gt;上 ，它决定了&lt;strong&gt;superLayer&lt;/strong&gt;的可显示区域。
+&lt;strong&gt;mask Layer&lt;/strong&gt;的color 属性就可以忽略了。&lt;strong&gt;mask&lt;/strong&gt;会把&lt;strong&gt;superLayer&lt;/strong&gt;裁切,只显示符合 &lt;strong&gt;Mask&lt;/strong&gt; 大小的部分.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIView *viewA = [[UIView alloc] initWithFrame:CGRectMake(100, 80, 100, 100)];
+UIView *viewB = [[UIView alloc] initWithFrame:CGRectMake(350, 80, 100, 100)];
+UIImage *image = [UIImage imageNamed:@&amp;quot;kangaroo.png&amp;quot;];
+UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
+imageView.frame = CGRectMake(250, 100 , CGRectGetWidth(imageView.frame), 
+                                         CGRectGetHeight(imageView.frame));
+viewB.backgroundColor = [UIColor greenColor];
+viewA.backgroundColor = [UIColor greenColor];
+
+CALayer *layer = [CALayer layer];
+
+layer.frame = CGRectMake(10, 20, image.size.width, image.size.height);
+layer.contents = (id)image.CGImage;
+viewB.layer.mask = layer;
+
+[self.view addSubview:imageView];
+[self.view addSubview:viewA];
+[self.view addSubview:viewB];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://m3.img.libdd.com/farm5/2013/1018/23/0EEEEA8A23052F8A25B94C45104B54AD29117463794C2_880_532.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Core Animation (四) Visual Effects</title>
+   <link href="https://github.com/sipdar/2013/10/07/Core_Animation(%E5%9B%9B)_visual_effects/"/>
+   <updated>2013-10-07T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2013/10/07/Core_Animation(四)_visual_effects</id>
+   <content type="html">&lt;h1&gt;Visual Effects (四)&lt;/h1&gt;
+
+&lt;h2&gt;圆角&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;IOS&lt;/strong&gt; &lt;strong&gt;UI&lt;/strong&gt; 的一个显著特点就是无处不在的圆角矩形，从主屏的图标，alert，文本输入框。我们也可以在程序中创建圆角矩形，而不需要Photoshop。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;CAlayer&lt;/strong&gt; 有个 &lt;strong&gt;cornerRadius&lt;/strong&gt; 属性可以控制&lt;strong&gt;Layer&lt;/strong&gt; 直角的弯曲度。它是一个默认值为零的浮点值。默认的情况下，圆角的效果只会影&lt;strong&gt;Layer&lt;/strong&gt;的背景颜色，并不会影响你设置的背景图片，或者加在&lt;strong&gt;Layer&lt;/strong&gt;上面的&lt;strong&gt;SubLayer&lt;/strong&gt;，&lt;strong&gt;masksToBounds&lt;/strong&gt;设置为 &lt;strong&gt;YES&lt;/strong&gt; 可以实现裁切&lt;strong&gt;SubLayer&lt;/strong&gt;的功能。代码如下&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(100,100 , 160, 160)];
+greenView.backgroundColor = [UIColor greenColor];
+UIView *redView = [[UIView alloc] initWithFrame:CGRectMake(-20,-20, 60, 60)];
+redView.backgroundColor = [UIColor redColor];
+[greenView addSubview:redView];
+greenView.layer.cornerRadius = 20;
+[self.view addSubview:greenView];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://m3.img.libdd.com/farm4/2013/1016/17/8273E20D2020401960A3FC8DF2CB97692811EACA9BF1C_594_856.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;当设置了&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;    greenView.layer.masksToBounds = YES;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;效果就是这样的，红色的&lt;strong&gt;layer&lt;/strong&gt;的右上角也被剪切了。
+&lt;img src=&quot;http://m1.img.libdd.com/farm4/2013/1016/17/7987618F46E5F587701ED6868A2995412FE51E3F677D6_594_856.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;Layer Borders&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;CALayer&lt;/strong&gt;另外一个非常有用的属性就是 &lt;strong&gt;borderWidth&lt;/strong&gt; 和 &lt;strong&gt;borderColor&lt;/strong&gt; 这两个属性组合起来控制&lt;strong&gt;Layer&lt;/strong&gt;的边框。 &lt;strong&gt;borderColor&lt;/strong&gt; 的类型不是&lt;strong&gt;UIColor&lt;/strong&gt; 是 &lt;strong&gt;CGColorRef&lt;/strong&gt;。
+边框是是绘制在&lt;strong&gt;Layer&lt;/strong&gt;的&lt;strong&gt;bounds&lt;/strong&gt;里面并且覆盖在其他所有的 &lt;strong&gt;SubLayer&lt;/strong&gt; 的上面。我们还用这个&lt;strong&gt;greenView&lt;/strong&gt; 来做实验。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;        greenView.layer.borderWidth = 5.0f;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://m3.img.libdd.com/farm5/2013/1016/17/6F400D5569BE107A9658A55280CADA0362FE7053F3661_825_540.PNG&quot; alt=&quot;image&quot;&gt;          &lt;/p&gt;
+
+&lt;h2&gt;Drop Shadows&lt;/h2&gt;
+
+&lt;p&gt;对于IOS的设计来说，另外一个特征就是阴影。当我们给&lt;strong&gt;Layer&lt;/strong&gt; 的 &lt;strong&gt;shadowOpacity&lt;/strong&gt; 属性设置了一个大于零的值，阴影就会出现在 &lt;strong&gt;Layer&lt;/strong&gt; 的后面。 &lt;strong&gt;shadowOpacity&lt;/strong&gt; 是一个 大于0.0(透明) 小于1.0（全黑） 的浮点数。此外，我们还可以通过 &lt;strong&gt;shadowColor&lt;/strong&gt;, &lt;strong&gt;shadowOffset&lt;/strong&gt;, &lt;strong&gt;shadowRadius&lt;/strong&gt;来调整 阴影的效果。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIView *viewA = [[UIView alloc] initWithFrame:CGRectMake(100, 80, 150, 150)];
+UIView *viewB = [[UIView alloc] initWithFrame:CGRectMake(300, 80, 150, 150)];
+viewA.backgroundColor = [UIColor greenColor];
+viewB.backgroundColor = [UIColor redColor];
+
+viewA.layer.shadowOpacity = 1.0;
+viewB.layer.shadowOpacity = 0.5;
+
+viewA.layer.shadowOffset = CGSizeMake(0, -15);
+viewB.layer.shadowOffset = CGSizeMake(5, 5);
+
+viewA.layer.shadowRadius = 30;
+viewB.layer.shadowRadius = 1;
+
+viewA.layer.shadowColor = [UIColor redColor].CGColor;
+viewB.layer.shadowColor = [UIColor greenColor].CGColor;
+
+
+[self.view addSubview:viewA];
+[self.view addSubview:viewB];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://m1.img.libdd.com/farm5/2013/1016/18/D6A310C8074AEF33D9D4628567E575D7949F2E3D8A83B_596_372.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;Shadow Clipping&lt;/h2&gt;
+
+&lt;p&gt;和&lt;strong&gt;Layer&lt;/strong&gt;的边框不一样，阴影会依照&lt;strong&gt;Layer&lt;/strong&gt;包含的内容的确切的形状来显示。还有一个问题就是当使用 &lt;strong&gt;masksToBounds&lt;/strong&gt; 的时候，阴影的显示也会有问题。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIView *redViewA = [[UIView alloc] initWithFrame:CGRectMake(-20,-20, 70, 70)];
+redViewA.backgroundColor = [UIColor redColor];
+UIView *redViewB = [[UIView alloc] initWithFrame:CGRectMake(-20,-20, 70, 70)];
+redViewB.backgroundColor = [UIColor redColor];
+
+
+UIView *viewA = [[UIView alloc] initWithFrame:CGRectMake(100, 80, 150, 150)];
+UIView *viewB = [[UIView alloc] initWithFrame:CGRectMake(300, 80, 150, 150)];
+viewB.layer.masksToBounds = YES;
+
+[viewA addSubview:redViewA];
+[viewB addSubview:redViewB];
+
+viewB.backgroundColor = [UIColor greenColor];
+viewA.backgroundColor = [UIColor greenColor];
+viewA.layer.shadowOffset = CGSizeMake(0, 10);
+viewB.layer.shadowOffset = CGSizeMake(0, 10);
+viewA.layer.shadowOpacity = 0.7;
+viewB.layer.shadowOpacity = 0.7;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://m1.img.libdd.com/farm4/2013/1016/18/5493C185AEEA6C73FE1DC43B1070CABE667EAC57F2857_682_456.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;viewB因为使用了 &lt;strong&gt;layer.masksToBounds = YES;&lt;/strong&gt; 导致阴影消失了。我们怎么解决这个问题呢？
+给&lt;strong&gt;viewB&lt;/strong&gt;一个同样大小的&lt;strong&gt;superView&lt;/strong&gt; 叫这个&lt;strong&gt;superView&lt;/strong&gt; 添加阴影。下面的代码是这个问题的解决方法。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIView *redViewA = [[UIView alloc] initWithFrame:CGRectMake(-20,-20, 70, 70)];
+UIView *redViewB = [[UIView alloc] initWithFrame:CGRectMake(-20,-20, 70, 70)];
+redViewA.backgroundColor = [UIColor redColor];
+redViewB.backgroundColor = [UIColor redColor];
+
+
+UIView *viewA = [[UIView alloc] initWithFrame:CGRectMake(100, 80, 150, 150)];
+UIView *viewB = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 150)];
+viewB.layer.masksToBounds = YES;
+[viewA addSubview:redViewA];
+[viewB addSubview:redViewB];
+
+viewB.backgroundColor = [UIColor greenColor];
+viewA.backgroundColor = [UIColor greenColor];
+viewA.layer.shadowOffset = CGSizeMake(0, 10);
+viewB.layer.shadowOffset = CGSizeMake(0, 10);
+viewA.layer.shadowOpacity = 0.7;
+viewB.layer.shadowOpacity = 0.7;
+
+
+UIView *shadowViewB = [[UIView alloc] initWithFrame:CGRectMake(300, 80, 150, 150)];
+shadowViewB.layer.shadowOffset = CGSizeMake(0, 10);
+shadowViewB.layer.shadowOpacity = 0.7f;
+[shadowViewB addSubview:viewB];
+
+[self.view addSubview:viewA];
+[self.view addSubview:shadowViewB];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://m2.img.libdd.com/farm5/2013/1016/21/057ECD4FB33D83B407A9388A7DE0E858EA9D801553EBF_682_456.PNG&quot; alt=&quot;image&quot;&gt;
+这样一来 ViewB也有阴影啦。&lt;/p&gt;
+
+&lt;h2&gt;ShadowPath&lt;/h2&gt;
+
+&lt;p&gt;有时候我们给 &lt;strong&gt;Layer&lt;/strong&gt; 添加的阴影并不总是正方形，如果我们想要其他形状的阴影怎么办呢。这时候 &lt;strong&gt;shadowPath&lt;/strong&gt; 就派上用场了。阴影的实时计算是非常消耗手机性能的，尤其是当 &lt;strong&gt;Layer&lt;/strong&gt; 包含大量的 带 &lt;strong&gt;alpha&lt;/strong&gt; 遮罩 &lt;strong&gt;sublayer&lt;/strong&gt; 的时候。
+&lt;strong&gt;ShadowPath&lt;/strong&gt; 是一个 &lt;strong&gt;CGPathRef&lt;/strong&gt; （CGPath 的指针）。&lt;strong&gt;CGPath&lt;/strong&gt; 是一个&lt;strong&gt;Core Graphics&lt;/strong&gt; 的用来表示矢量形状的对象。我们可以用它来定义&lt;strong&gt;shadow&lt;/strong&gt;的形状。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;UIView *viewA = [[UIView alloc] initWithFrame:CGRectMake(100, 80, 100, 100)];
+UIView *viewB = [[UIView alloc] initWithFrame:CGRectMake(300, 80, 100, 100)];
+
+viewB.backgroundColor = [UIColor greenColor];
+viewA.backgroundColor = [UIColor greenColor];
+viewA.layer.shadowOpacity = 0.5;
+viewB.layer.shadowOpacity = 0.5;
+
+
+CGMutablePathRef squarePath = CGPathCreateMutable();
+CGPathAddRect(squarePath, NULL, CGRectMake(-25, -25, 150, 150));
+viewA.layer.shadowPath = squarePath;
+CGPathRelease(squarePath);
+
+
+CGMutablePathRef circlePath = CGPathCreateMutable();
+CGPathAddEllipseInRect(circlePath, NULL,CGRectMake(-25, -25, 150, 150));
+viewB.layer.shadowPath = circlePath;
+CGPathRelease(circlePath);
+
+[self.view addSubview:viewA];
+[self.view addSubview:viewB];
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://m1.img.libdd.com/farm5/2013/1016/22/AF4BC1A1DDB42D92DADD9D9F65D83633FD4F77B65038C_682_456.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;当我们绘制一些简单的矩形或者圆形时可以直接使用&lt;strong&gt;CGPath&lt;/strong&gt;。但是当需要一些复杂的形状的时候，比如圆角矩形 或者 五角星之类的 ，我们可以使用 &lt;strong&gt;UIBezierPath&lt;/strong&gt; ，它是 &lt;strong&gt;UIKit&lt;/strong&gt; 提供的 objc 封装的&lt;strong&gt;CGPath&lt;/strong&gt; 要简单的多。 &lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Core Animation (三)  Layout</title>
+   <link href="https://github.com/sipdar/2013/09/08/core_animation_(%E4%B8%89)/"/>
+   <updated>2013-09-08T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2013/09/08/core_animation_(三)</id>
+   <content type="html">&lt;h1&gt;Core Animation (三)&lt;/h1&gt;
+
+&lt;h2&gt;布局&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;UIView&lt;/strong&gt; 有三个跟布局有关的属性，&lt;strong&gt;frame&lt;/strong&gt; &lt;strong&gt;bounds&lt;/strong&gt; &lt;strong&gt;center&lt;/strong&gt;。 &lt;strong&gt;CALayer&lt;/strong&gt; 也有三个类似的属性，&lt;strong&gt;frame&lt;/strong&gt; &lt;strong&gt;bounds&lt;/strong&gt; &lt;strong&gt;position&lt;/strong&gt; 。view 使用 center ，layer 使用position。实际上他们是一样的。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://m2.img.libdd.com/farm4/2013/0908/15/2875A64D846B3A739E72CBE40653C6C84E8E392A3B4B6_540_309.JPEG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;frame&lt;/strong&gt; 跟&lt;strong&gt;bounds&lt;/strong&gt;的区别就是参照系不一样。 frame是以superView 做参照系。 而bounds 是以自己做参照系。上面这幅图就是个很好的例子。&lt;strong&gt;layer&lt;/strong&gt; 跟&lt;strong&gt;view&lt;/strong&gt;是一样的。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://developer.apple.com/library/ios/documentation/WindowsViews/Conceptual/ViewPG_iPhoneOS/Art/rotated_view.jpg&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;frame 并不是个确定的值。它会根据 bounds center 以及做动画的时候的transform 动态的改变。例如上面这个图片旋转了45度 frame就变大了。这时。frame的size就跟bounds的size 不一样了。
+&lt;img src=&quot;http://m2.img.libdd.com/farm4/2013/0908/15/6B69C122D6E1A980BA9FBE74E20E63D144DA6172230CC_600_400.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;旋转之后的frame 变大了。&lt;/p&gt;
+
+&lt;h2&gt;锚点（anchorPoint）&lt;/h2&gt;
+
+&lt;p&gt;图层的 &lt;strong&gt;anchorPoint&lt;/strong&gt; 属性指定了一个基于图层 &lt;strong&gt;bounds&lt;/strong&gt; 的符合位置坐标系的位置。锚点指定了 &lt;strong&gt;bounds&lt;/strong&gt; 相对于 &lt;strong&gt;position&lt;/strong&gt; 的值,同时也作为变换时候的支点。锚点使用单元空间坐标系表示,&lt;strong&gt;(0.0,0.0)&lt;/strong&gt;点接近图层 的原点,而&lt;strong&gt;(1.0,1.0)&lt;/strong&gt;是原点的对角点。改变图层的父图层的变换属性将会影响到 &lt;strong&gt;anchorPoint&lt;/strong&gt; 的方向,具体变化取决于父图层坐标系的 Y 轴。&lt;/p&gt;
+
+&lt;p&gt;当你设置图层的 &lt;strong&gt;frame&lt;/strong&gt; 属性的时候,&lt;strong&gt;position&lt;/strong&gt; 会根据锚点相应的改变,而当你设置图层的 &lt;strong&gt;position&lt;/strong&gt; 属性的时候,&lt;strong&gt;bounds&lt;/strong&gt;会根据锚点做相应的改变。锚点的默认值是&lt;strong&gt;(0.5,0.5)&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;下面几幅图片展示了锚点的位置对于 &lt;strong&gt;position&lt;/strong&gt;的影响。
+&lt;img src=&quot;http://m3.img.libdd.com/farm4/2013/0908/15/C9DA0E164914D457005A246C534030BD82A87510B80BC_657_726.PNG&quot; alt=&quot;image&quot;&gt;
+&lt;img src=&quot;http://m1.img.libdd.com/farm4/2013/0908/15/7F64FC799F69C56600175ACAF10941B6BF93D381B4E36_657_639.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;图层的坐标系&lt;/h2&gt;
+
+&lt;p&gt;我们可以通过 CALayer的方法 在进行坐标转换。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;- (CGPoint)convertPoint:(CGPoint)point fromLayer:(CALayer *)layer;
+- (CGPoint)convertPoint:(CGPoint)point toLayer:(CALayer *)layer;
+- (CGRect)convertRect:(CGRect)rect fromLayer:(CALayer *)layer;
+- (CGRect)convertRect:(CGRect)rect toLayer:(CALayer *)layer;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</content>
+ </entry>
+ 
+ <entry>
+   <title>Core Animation (二)  The Backing Image</title>
+   <link href="https://github.com/sipdar/2013/08/23/core_animation_(%E4%BA%8C)/"/>
+   <updated>2013-08-23T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2013/08/23/core_animation_(二)</id>
+   <content type="html">&lt;h1&gt;Core Animation (二)&lt;/h1&gt;
+
+&lt;h2&gt;The contents Image&lt;/h2&gt;
+
+&lt;p&gt;CALayer 有个属性叫做 &lt;strong&gt;contents&lt;/strong&gt; 是个&lt;strong&gt;id&lt;/strong&gt;类型mac平台 core animation 的产物，用这个属性我们可以非常简单的使一个CALayer 显示一张image。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;CALayer *layer = [CALayer layer];
+layer.frame = CGRectMake(50, 50, 220, 220);
+[self.view.layer addSublayer:layer];
+
+UIImage *image = [UIImage imageNamed:@&amp;quot;testImage.png&amp;quot;];
+layer.contents = (__bridge id)image.CGImage;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://m2.img.libdd.com/farm4/2013/0823/15/0AB56D6360A02199E06D0ED0964B8A46628D602B64D5A_320_480.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;contentsGravity&lt;/h2&gt;
+
+&lt;p&gt;额 宝马车被砸扁了。这有点不正常，怎么办呢，我的图片是个长方形，但是我的layer是个正方形。
+当我们使用UIImageView显示图片的时候遇到这种情况下，我们可以使用&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;view.contentMode = UIViewContentModeScaleAspectFit;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;layer 也有类似的属性，它叫做 &lt;strong&gt;contentsGravity&lt;/strong&gt; 跟UIView的contentMode enum 定义不一样，&lt;strong&gt;contentsGravity&lt;/strong&gt;是&lt;strong&gt;NSString&lt;/strong&gt;类型。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt; NSString * const kCAGravityCenter
+ NSString * const kCAGravityTop
+ NSString * const kCAGravityBottom
+ NSString * const kCAGravityLeft
+ NSString * const kCAGravityRight
+ NSString * const kCAGravityTopLeft
+ NSString * const kCAGravityTopRight
+ NSString * const kCAGravityBottomLeft
+ NSString * const kCAGravityBottomRight
+ NSString * const kCAGravityResize
+ NSString * const kCAGravityResizeAspect
+ NSString * const kCAGravityResizeAspectFill
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;我们可以使用 &lt;strong&gt;kCAGravityResizeAspect&lt;/strong&gt; 等同于
+ &lt;strong&gt;UIViewContentModeScaleAspectFit&lt;/strong&gt; 我们可以是图片适应 layer的大小 而不会生变形。汽车就不会被拍瘪了。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;layer.contentsGravity = kCAGravityResizeAspect;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://m2.img.libdd.com/farm4/2013/0823/15/E73BE61AD8A39DBCB263AD10238C1C8286303EC8A9942_320_480.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;contentsScale&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;contentsScale&lt;/strong&gt;定义了两个像素点之间的距离的比例。是个float类型 默认值为1.0；
+contentScale的用在我的汽车图片的时候并没有效果，因为 &lt;strong&gt;contents&lt;/strong&gt;的图片已经被 &lt;strong&gt;contentsGravity&lt;/strong&gt; 进行过缩放处理了，已适应，layer的bounds。&lt;/p&gt;
+
+&lt;p&gt;如果我们想简单的缩放layer 的 contents 图片，我们可以使用 &lt;strong&gt;transform&lt;/strong&gt;或者 &lt;strong&gt;affinetransform&lt;/strong&gt; .&lt;/p&gt;
+
+&lt;p&gt;contentsScale 到底是用来干嘛的呢？他其实是用来支持高分屏的。它用来查看当image绘制的时候应该绘制的大小。前提是图片没有被 &lt;strong&gt;contentsGravity&lt;/strong&gt;压缩过，UIView 有个类似的很少用的属性 &lt;strong&gt;contentScaleFactor&lt;/strong&gt;。&lt;/p&gt;
+
+&lt;p&gt;当&lt;strong&gt;contentsScale&lt;/strong&gt;设为 1.0 时，在屏幕上绘制的每个点一个像素，2.0 就是每个点 2个像素。这就是Apple 对Retina的解决方案。&lt;/p&gt;
+
+&lt;p&gt;kCAGravityResizeAspect会压缩我们的图片。当我们换成 kCAGravityCenter 看看会发生什么&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://m1.img.libdd.com/farm5/2013/0823/15/8A958479617C50A39DDC729ED3700C56E62F98F27FDC3_320_480.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;额 只能看见车头的一点点，并且整张图片被像素化了。当我们给contents 设置CGImage 对象的时候，缩放机制就失去作用，我们现在可以使用 &lt;strong&gt;contentsScale&lt;/strong&gt;来修正我们的image 显示了&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;self.layerView.layer.contentsScale = image.scale;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://m2.img.libdd.com/farm4/2013/0823/15/351C15DD6BF6119F1BC1E73ABA073282EC32F96105F78_320_480.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;当我们在程序中使用 layer显示图片的时候。我们要记着，设置layer的&lt;strong&gt;contentsScale&lt;/strong&gt;符合屏幕的scale；否则我们的图片会像素画在高分屏上。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;layer.contentsScale = [UIScreen mainScreen].scale;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;masksToBounds&lt;/h2&gt;
+
+&lt;p&gt;我们的汽车图片现在显示的正确的大小了。但是我们不想显示超出layer 大小的部分。 UIView 有个叫属性叫做 clipsToBounds 用来决定是否显示超出自身大小的部分。CALayer 也有个类似的属性叫做 &lt;strong&gt;masksToBounds&lt;/strong&gt; 当我们设置成 YES的时候，就是这样。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://m2.img.libdd.com/farm4/2013/0823/16/DE921EFD2ADAFB25D4181D37D078F48A007118E36E9E4_320_480.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;contentsRect&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;contentsRect&lt;/strong&gt;是个CALayer的属性 可以指定layer显示image的某个区域。和 bounds frame 不一样的是 &lt;strong&gt;contentsRect&lt;/strong&gt; 的度量单位并不是 points，而是坐标。坐标的范围是 （0 ~ 1.0）而且取得是相对值。&lt;/p&gt;
+
+&lt;p&gt;默认的&lt;strong&gt;contentsRect&lt;/strong&gt;的值 是 {0,0,1,1}如果我们设置contentsRect为{0，0，0.5，0，5}
+则layer显示的image如下
+&lt;img src=&quot;http://m1.img.libdd.com/farm5/2013/0823/16/664DD0B4DA6B108AEC962505FDBA9FE49EEE6FBC2B9AE_513_338.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;h2&gt;contentsCenter&lt;/h2&gt;
+
+&lt;p&gt;最后一个和内容相关的属性就是 &lt;strong&gt;contentsCenter&lt;/strong&gt;。看名字大家觉得这个东西可能是个中心点之类的。但是实际上他是一个 &lt;strong&gt;CGRect&lt;/strong&gt;  ，它指定图片的拉伸区域。默认情况下， contentsCenter 是{0，0，1，1}，当layer 改变大小的时候，image将会均匀的拉伸。当我们增加起始的位置，减小size的时候，我们就围着图片产生了一个边界。下面这个图显示了 &lt;strong&gt;contentsCenter&lt;/strong&gt;的值为 {0.25，0.25，0.5，0.5}的时候缩放的行为 是什么样儿的。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://m2.img.libdd.com/farm4/2013/0823/16/2E140BC9F6DC79A0A3DFABEA83C40F9B3FF7A74C9602C_601_247.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;这个跟UIImage的&lt;strong&gt;resizableImageWithCapInsets&lt;/strong&gt;是一样的效果&lt;/p&gt;
+
+&lt;h2&gt;Custom Drawing&lt;/h2&gt;
+
+&lt;p&gt;设置 layer 的contents 并不是唯一的显示Image 的方法， UIView的子类实现了  &lt;strong&gt;-drawRect:&lt;/strong&gt; 方法 可以自定义UI。drawRect 方法会给View创建一个新的 背景image 对象， ，所以如果我们不需要这个image的话，就不要实现空的drawRect 方法。会浪费内存和CPU资源。&lt;/p&gt;
+
+&lt;p&gt;CAlayer 还有个 optional delegate 实现了 &lt;strong&gt;CALayerDelegate&lt;/strong&gt;的协议。当CALayer 需要特殊信息的时候可以通过delegate 获得。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;- (void)displayLayer:(CALayer *)layer;
+- (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx;
+- (void)layoutSublayersOfLayer:(CALayer *)layer;
+- (id&amp;lt;CAAction&amp;gt;)actionForLayer:(CALayer *)layer forKey:(NSString *)event;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;当layer 重绘之前会依次调用这几个方法。&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    CALayer *layer = [[CALayer alloc] init];
+    layer.frame = CGRectMake(50, 50, 100, 100);
+    layer.masksToBounds = YES;
+    layer.delegate = self;
+    layer.backgroundColor = [UIColor blueColor].CGColor;
+    [self.view.layer addSublayer:layer];
+    [layer display];
+
+}
+
+-(void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx{
+    CGContextSetLineWidth(ctx, 10.0f);
+    CGContextSetStrokeColorWithColor(ctx, [UIColor redColor].CGColor);
+    CGContextStrokeEllipseInRect(ctx, layer.bounds);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;img src=&quot;http://m3.img.libdd.com/farm5/2013/0823/17/66D57F267854F694235FDC96BD2884EA5F9F5573E317F_320_480.PNG&quot; alt=&quot;image&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;我们主动的调用了 layer的 display方法，来强制它刷新，跟UIView不一样的是 CALayer 当它显示在屏幕上之后，它不会自动的重绘。需要程序员自己小心的决定他的重绘时机。&lt;/p&gt;
+
+&lt;p&gt;我们画的圆圈儿超出layer 大小的部分呗剪切掉了没有显示，尽管我们没有使用&lt;strong&gt;masksToBounds&lt;/strong&gt;属性。这是因为我们绘制的时候调用的 &lt;strong&gt;CALayerDelegate&lt;/strong&gt; CALayer 创建的绘制区域 conext的大小是由layer的大小决定的。所以没有可能在超出的区域绘制。&lt;/p&gt;
+
+&lt;p&gt;除非我们创建了单独的layer 否则尽量不要使用delegate,尽量不要实现delegate的协议方法，这是因为UIView 会创建一个他自己的背景层，自动的设置自己是layer的delegate，并且实现了 -displayLayer：方法。这就是问题的所在，当我们使用 View的背景层的时候，不需要实现 -displayLayer:方法 或者drawLayer:inContext:方法来绘制层的图片，我们只需要实现 drawRect：方法， UIView 会帮我们处理一切，包括layer需要重绘的时候 自动调用 display。&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>Core Animation (一)</title>
+   <link href="https://github.com/sipdar/2013/08/23/core_animation/"/>
+   <updated>2013-08-23T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2013/08/23/core_animation</id>
+   <content type="html">&lt;h1&gt;Core Animation (一)&lt;/h1&gt;
+
+&lt;p&gt;一直很羡慕 github 上很多人写的炫酷的动画跟UI的特效。有时候自己想搞一个动画的时候就去 github 搜一下。作为一个iOS 开发人员 我决定从头学习 Core animation。&lt;/p&gt;
+
+&lt;h2&gt;Layer &amp;amp; View&lt;/h2&gt;
+
+&lt;p&gt;Core animation 是一个误导人的名字，大家都觉得看这个名字，这个库应该是主要用来实现动画效果的。实际上，动画只是很小的一部分，更贴切的名字应该叫做 Layer kit。大部分都是关于图层的。屏幕上显示的不同图形图像 其实就是不同的Layer。 Layer 有自己的父图层 也有自己的子图层，它们构成了一个树形的层次结构。这个树形结构构成了UIKit的底层，和屏幕上我们所见的一切。
+我们都用过 UIView ，view 就是屏幕上显示文本 图片或者视频的一个矩形区域，并且它可以相应我们的各种手势操作，每个View 可以包含多个view从而构成一种层级结构。父View 管理子View的位置。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://m1.img.libdd.com/farm4/2013/0823/11/731FE6D6A68C3C1013ED9C66E49567D2102577ED96875_652_387.JPEG&quot; alt=&quot;view layer&quot;&gt;&lt;/p&gt;
+
+&lt;p&gt;在iOS中 所有的View 都继承自UIView，UIView 处理触摸事件，并且支持基于 &lt;strong&gt;Core Graphics&lt;/strong&gt;的显示，仿射变换，例如旋转跟缩放，以及简单的滑动或者翻转动画。但是UIView 并不是处理所有的这些细节，渲染 布局和动画其实是 &lt;strong&gt;CALayer&lt;/strong&gt; 来做的。&lt;/p&gt;
+
+&lt;h2&gt;CALayer&lt;/h2&gt;
+
+&lt;p&gt;CALayer其实跟UIView 非常相似，他是一个矩形的方块，在一个层级结构中，包含图片文字或者背景颜色，也是由父类来管理显示的位置。CALayer 有专门的方法和属性来实现动画和几何变换。和UIView 唯一不同的一点就是 Layer 不处理和用户的交互逻辑。
+CALayer并不是响应连的一部分，所以无法响应用户的交互，但是它提供了方法来检查用户点击的位置是否在Layer中。&lt;/p&gt;
+
+&lt;h2&gt;平行的层级结构&lt;/h2&gt;
+
+&lt;p&gt;每个UIView 都有一个CALayer 对象，UIView可以创建或者删除这个CALayer。CALayer 的层级结构就像是UIView结构的一个镜像。事实上是图层负责显示UI跟动画以及其他你在屏幕上所见到的东西。UIView 只是简单地封装了一下，处理IOS特有的touch事件，并把底层的Core Animation 接口封装成高级接口。
+iOS 之所以有UIView 和 CALayer 两套平行的层级结构，是为了更好的解耦代码，将UI和用户的交互逻辑分离开来。因为iOS的多点触控的处理比起Mac OS的键盘鼠标来要复杂的多。事实上如果你的UI布局使用 Core Animation 的框架来写，是可以在iOS和Mac OS  上通用的&lt;/p&gt;
+
+&lt;h2&gt;图层的作用&lt;/h2&gt;
+
+&lt;p&gt;CALayer 提供了 UIView没有提供的一些属性，例如&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;阴影，矩形的圆角，边框的颜色&lt;/li&gt;
+&lt;li&gt;3D矩阵变换&lt;/li&gt;
+&lt;li&gt;非矩形的边框&lt;/li&gt;
+&lt;li&gt;透明的遮罩&lt;/li&gt;
+&lt;li&gt;多步，非线性的动画。&lt;/li&gt;
+&lt;/ul&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>iOS开发单例模式</title>
+   <link href="https://github.com/sipdar/2013/04/14/ios%E5%BC%80%E5%8F%91%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/"/>
+   <updated>2013-04-14T00:00:00+08:00</updated>
+   <id>https://github.com/sipdar/2013/04/14/ios开发单例模式</id>
+   <content type="html">&lt;h2&gt;什么是单例&lt;/h2&gt;
+
+&lt;p&gt;单例模式是一种常用的软件设计模式。在它的核心结构中只包含一个被称为单例类的特殊类。通过单例模式可以保证系统中一个类只有一个实例而且该实例易于外界访问，从而方便对实例个数的控制并节约系统资源。如果希望在系统中某个类的对象只能存在一个，单例模式是最好的解决方案。&lt;/p&gt;
+
+&lt;h2&gt;iOS开发中如何使用单例&lt;/h2&gt;
+
+&lt;p&gt;传统的单例构造方法&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;sharedInstance&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sharedInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedInstance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;sharedInstance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[]&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sharedInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;多线程下的隐患&lt;/h2&gt;
+
+&lt;p&gt;在多线程的情况下，如果两个线程几乎同时调用sharedInstance()方法会发生什么呢？有可能会创建出两个该类的实例。 为了防止这种情况 我们通常会加上锁&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;sharedInstance&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sharedInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;@synchronized&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sharedInstance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;nil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;sharedInstance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[]&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;            
+        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sharedInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;dispatch_once&lt;/h2&gt;
+
+&lt;p&gt;iOS 4.0 引进了 &lt;strong&gt;GCD&lt;/strong&gt; ，其中的 &lt;strong&gt;dispatch_once&lt;/strong&gt;，它即使是在多线程环境中也能安全地工作，非常安全。dispatch&lt;em&gt;once是用来确保指定的任务将在应用的生命周期期间，仅执行一次。以下是一个典型的源代码以初始化的东西。它可以优雅通过使用dispatch&lt;/em&gt;once来创建一个单例。&lt;/p&gt;
+
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-objc&quot; data-lang=&quot;objc&quot;&gt;&lt;span class=&quot;p&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;sharedInstance&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;dispatch_once_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;once&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;id&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sharedInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;dispatch_once&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;once&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;sharedInstance&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;self&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;alloc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;init&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sharedInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+</content>
+ </entry>
+ 
+
+</feed>

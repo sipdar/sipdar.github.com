@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Core Animation (三)  Layout &middot; Sunny
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body class="theme-base-0c">
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          Sunny
+        </a>
+      </h1>
+      <p class="lead">This is my personal blog Welcome ！<a href="https://twitter.com/sipdar" target="_blank">@sunny</a>.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/archive/">Archives</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      
+<!--       <a class="sidebar-nav-item" href="https://github.com/sipdar/archive/v2.1.0.zip">Download</a> -->
+      <a class="sidebar-nav-item" href="https://github.com/sipdar">GitHub project</a>
+      <a class="sidebar-nav-item" href="mailto:sipdar@163.com">Email</a>
+<!--       <span class="sidebar-nav-item">Currently v2.1.0</span> -->
+
+    </nav>
+
+    <p>&copy; 2015. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Core Animation (三)  Layout</h1>
+  <span class="post-date">08 Sep 2013</span>
+  <h1>Core Animation (三)</h1>
+
+<h2>布局</h2>
+
+<p><strong>UIView</strong> 有三个跟布局有关的属性，<strong>frame</strong> <strong>bounds</strong> <strong>center</strong>。 <strong>CALayer</strong> 也有三个类似的属性，<strong>frame</strong> <strong>bounds</strong> <strong>position</strong> 。view 使用 center ，layer 使用position。实际上他们是一样的。</p>
+
+<p><img src="http://m2.img.libdd.com/farm4/2013/0908/15/2875A64D846B3A739E72CBE40653C6C84E8E392A3B4B6_540_309.JPEG" alt="image"></p>
+
+<p><strong>frame</strong> 跟<strong>bounds</strong>的区别就是参照系不一样。 frame是以superView 做参照系。 而bounds 是以自己做参照系。上面这幅图就是个很好的例子。<strong>layer</strong> 跟<strong>view</strong>是一样的。</p>
+
+<p><img src="https://developer.apple.com/library/ios/documentation/WindowsViews/Conceptual/ViewPG_iPhoneOS/Art/rotated_view.jpg" alt="image"></p>
+
+<p>frame 并不是个确定的值。它会根据 bounds center 以及做动画的时候的transform 动态的改变。例如上面这个图片旋转了45度 frame就变大了。这时。frame的size就跟bounds的size 不一样了。
+<img src="http://m2.img.libdd.com/farm4/2013/0908/15/6B69C122D6E1A980BA9FBE74E20E63D144DA6172230CC_600_400.PNG" alt="image"></p>
+
+<p>旋转之后的frame 变大了。</p>
+
+<h2>锚点（anchorPoint）</h2>
+
+<p>图层的 <strong>anchorPoint</strong> 属性指定了一个基于图层 <strong>bounds</strong> 的符合位置坐标系的位置。锚点指定了 <strong>bounds</strong> 相对于 <strong>position</strong> 的值,同时也作为变换时候的支点。锚点使用单元空间坐标系表示,<strong>(0.0,0.0)</strong>点接近图层 的原点,而<strong>(1.0,1.0)</strong>是原点的对角点。改变图层的父图层的变换属性将会影响到 <strong>anchorPoint</strong> 的方向,具体变化取决于父图层坐标系的 Y 轴。</p>
+
+<p>当你设置图层的 <strong>frame</strong> 属性的时候,<strong>position</strong> 会根据锚点相应的改变,而当你设置图层的 <strong>position</strong> 属性的时候,<strong>bounds</strong>会根据锚点做相应的改变。锚点的默认值是<strong>(0.5,0.5)</strong>.</p>
+
+<p>下面几幅图片展示了锚点的位置对于 <strong>position</strong>的影响。
+<img src="http://m3.img.libdd.com/farm4/2013/0908/15/C9DA0E164914D457005A246C534030BD82A87510B80BC_657_726.PNG" alt="image">
+<img src="http://m1.img.libdd.com/farm4/2013/0908/15/7F64FC799F69C56600175ACAF10941B6BF93D381B4E36_657_639.PNG" alt="image"></p>
+
+<h2>图层的坐标系</h2>
+
+<p>我们可以通过 CALayer的方法 在进行坐标转换。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">- (CGPoint)convertPoint:(CGPoint)point fromLayer:(CALayer *)layer;
+- (CGPoint)convertPoint:(CGPoint)point toLayer:(CALayer *)layer;
+- (CGRect)convertRect:(CGRect)rect fromLayer:(CALayer *)layer;
+- (CGRect)convertRect:(CGRect)rect toLayer:(CALayer *)layer;
+</code></pre></div>
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/01/24/Swift%20%E9%97%AD%E5%8C%85/">
+            Swift
+            <small>24 Jan 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/03/30/%E6%97%A7%E8%83%B6%E7%89%87%E6%95%88%E6%9E%9C/">
+            Core Image 旧胶片效果
+            <small>30 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/03/29/%E7%A7%BB%E8%BD%B4%E6%95%88%E6%9E%9C%E5%92%8C%E6%B8%90%E5%8F%98/">
+            Core Image 移轴效果和渐变
+            <small>29 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

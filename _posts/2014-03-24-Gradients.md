@@ -9,18 +9,20 @@ title: Gradients
 #CGGradientRef
 
 ###Painting an axial gradient using a CGGradient object
+{% highlight objc linenos %}
 
-	UIGraphicsBeginImageContextWithOptions(CGSizeMake(200, 200),NO ,[UIScreen mainScreen].scale);
-	CGContextRef context = UIGraphicsGetCurrentContext();
-	size_t locations = 2;
-	CGFloat location[2] ={0.0,1.0};
-	CGFloat components[8] = {1.0,0.5,0.4,1.0,
-							0.8,0.8,0.3,1.0};
-	CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-	CGGradientRef mygradient  = CGGradientCreateWithColorComponents(colorSpace, components, location, locations);
-	CGContextDrawLinearGradient (context,mygradient,CGPointMake(0.0, 0.0),CGPointMake(200.0, 200.0), 0);
-	UIImage *image = UIGraphicsGetImageFromCurrentImageContext();	UIGraphicsEndImageContext();
-	
+UIGraphicsBeginImageContextWithOptions(CGSizeMake(200, 200),NO ,[UIScreen mainScreen].scale);
+CGContextRef context = UIGraphicsGetCurrentContext();
+size_t locations = 2;
+CGFloat location[2] ={0.0,1.0};
+CGFloat components[8] = {1.0,0.5,0.4,1.0,
+						0.8,0.8,0.3,1.0};
+CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+CGGradientRef mygradient  = CGGradientCreateWithColorComponents(colorSpace, components, location, locations);
+CGContextDrawLinearGradient (context,mygradient,CGPointMake(0.0, 0.0),CGPointMake(200.0, 200.0), 0);
+UIImage *image = UIGraphicsGetImageFromCurrentImageContext();UIGraphicsEndImageContext();
+
+{% endhighlight %}	
 ![image](http://sipdar.github.io/image/2014/03/24/gradient2.png)
 
 ###Painting a radial gradient using a CGGradient object

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Core Image 移轴效果和渐变 &middot; Sunny
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body class="theme-base-0c">
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          Sunny
+        </a>
+      </h1>
+      <p class="lead">This is my personal blog Welcome ！<a href="https://twitter.com/sipdar" target="_blank">@sunny</a>.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/archive/">Archives</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      
+<!--       <a class="sidebar-nav-item" href="https://github.com/sipdar/archive/v2.1.0.zip">Download</a> -->
+      <a class="sidebar-nav-item" href="https://github.com/sipdar">GitHub project</a>
+      <a class="sidebar-nav-item" href="mailto:sipdar@163.com">Email</a>
+<!--       <span class="sidebar-nav-item">Currently v2.1.0</span> -->
+
+    </nav>
+
+    <p>&copy; 2015. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Core Image 移轴效果和渐变</h1>
+  <span class="post-date">29 Mar 2014</span>
+  <p>围绕着脸部周围添加一个白色阴影渐变</p>
+
+<ul>
+<li>找到图像中的人脸</li>
+<li>在CIRadialGradient上以人脸为中心，创建一个遮罩图片</li>
+<li>将这遮罩图片与原始图片混合</li>
+</ul>
+
+<p><img src="http://sipdar.github.io/image/2014/03/29/1.png" alt="image"></p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="lineno"> 1</span> <span class="bp">CIContext</span> <span class="o">*</span><span class="n">context</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIContext</span> <span class="nl">contextWithOptions</span><span class="p">:</span><span class="nb">nil</span><span class="p">];</span>
+<span class="lineno"> 2</span> <span class="bp">UIImage</span> <span class="o">*</span><span class="n">baby</span> <span class="o">=</span> <span class="p">[</span><span class="bp">UIImage</span> <span class="nl">imageNamed</span><span class="p">:</span><span class="s">@&quot;baby.jpg&quot;</span><span class="p">];</span>
+<span class="lineno"> 3</span> <span class="bp">CIImage</span> <span class="o">*</span><span class="n">myImage</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIImage</span> <span class="nl">imageWithCGImage</span><span class="p">:</span><span class="n">baby</span><span class="p">.</span><span class="bp">CGImage</span><span class="p">];</span>
+<span class="lineno"> 4</span> <span class="bp">CIDetector</span> <span class="o">*</span><span class="n">detector</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIDetector</span> <span class="nl">detectorOfType</span><span class="p">:</span><span class="n">CIDetectorTypeFace</span> <span class="nl">context</span><span class="p">:</span><span class="n">context</span> <span class="nl">options</span><span class="p">:</span><span class="l">@{</span><span class="nl">CIDetectorAccuracy</span><span class="p">:</span><span class="n">CIDetectorAccuracyHigh</span><span class="l">}</span><span class="p">];</span>
+<span class="lineno"> 5</span> <span class="bp">NSArray</span> <span class="o">*</span><span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="n">detector</span> <span class="nl">featuresInImage</span><span class="p">:</span><span class="n">myImage</span><span class="p">];</span>
+<span class="lineno"> 6</span> <span class="bp">CIFaceFeature</span> <span class="o">*</span><span class="n">faceFeature</span> <span class="o">=</span> <span class="p">[</span><span class="n">features</span> <span class="n">firstObject</span><span class="p">];</span>
+<span class="lineno"> 7</span> <span class="n">CGFloat</span> <span class="n">centerX</span> <span class="o">=</span> <span class="n">faceFeature</span><span class="p">.</span><span class="n">bounds</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">x</span><span class="o">+</span><span class="n">faceFeature</span><span class="p">.</span><span class="n">bounds</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">;</span>
+<span class="lineno"> 8</span> <span class="n">CGFloat</span> <span class="n">centerY</span> <span class="o">=</span> <span class="n">faceFeature</span><span class="p">.</span><span class="n">bounds</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">y</span><span class="o">+</span><span class="n">faceFeature</span><span class="p">.</span><span class="n">bounds</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">;</span>
+<span class="lineno"> 9</span> <span class="n">CGFloat</span> <span class="n">radius</span> <span class="o">=</span> <span class="n">MIN</span><span class="p">(</span><span class="n">faceFeature</span><span class="p">.</span><span class="n">bounds</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">,</span><span class="n">faceFeature</span><span class="p">.</span><span class="n">bounds</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">)</span> <span class="o">/</span> <span class="mf">1.5</span><span class="p">;</span>
+<span class="lineno">10</span> <span class="bp">CIFilter</span> <span class="o">*</span><span class="n">radialGradient</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIFilter</span> <span class="nl">filterWithName</span><span class="p">:</span><span class="s">@&quot;CIRadialGradient&quot;</span><span class="nl">keysAndValues</span><span class="p">:</span>
+<span class="lineno">11</span>                          <span class="s">@&quot;inputRadius0&quot;</span><span class="p">,</span> <span class="l">@(</span><span class="n">baby</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="o">*</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="l">)</span><span class="p">,</span>
+<span class="lineno">12</span>                          <span class="s">@&quot;inputRadius1&quot;</span><span class="p">,</span> <span class="l">@(</span><span class="n">radius</span> <span class="o">+</span> <span class="mf">10.0f</span><span class="l">)</span><span class="p">,</span>
+<span class="lineno">13</span>                          <span class="s">@&quot;inputColor0&quot;</span><span class="p">,</span> <span class="p">[</span><span class="bp">CIColor</span> <span class="nl">colorWithRed</span><span class="p">:</span><span class="mf">1.0</span> <span class="nl">green</span><span class="p">:</span><span class="mf">1.0</span> <span class="nl">blue</span><span class="p">:</span><span class="mf">1.0</span> <span class="nl">alpha</span><span class="p">:</span><span class="mf">1.0</span><span class="p">],</span>
+<span class="lineno">14</span>                          <span class="s">@&quot;inputColor1&quot;</span><span class="p">,</span> <span class="p">[</span><span class="bp">CIColor</span> <span class="nl">colorWithRed</span><span class="p">:</span><span class="mf">1.0</span> <span class="nl">green</span><span class="p">:</span><span class="mf">1.0</span> <span class="nl">blue</span><span class="p">:</span><span class="mf">1.0</span> <span class="nl">alpha</span><span class="p">:</span><span class="mf">0.0</span><span class="p">],</span>
+<span class="lineno">15</span>                          <span class="n">kCIInputCenterKey</span><span class="p">,</span> <span class="p">[</span><span class="bp">CIVector</span> <span class="nl">vectorWithX</span><span class="p">:</span><span class="n">centerX</span> <span class="nl">Y</span><span class="p">:</span><span class="n">centerY</span><span class="p">],</span><span class="nb">nil</span><span class="p">];</span>
+<span class="lineno">16</span> <span class="bp">CIFilter</span> <span class="o">*</span><span class="n">compositing</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIFilter</span> <span class="nl">filterWithName</span><span class="p">:</span><span class="s">@&quot;CISourceOverCompositing&quot;</span> <span class="nl">keysAndValues</span><span class="p">:</span>
+<span class="lineno">17</span>                          <span class="n">kCIInputImageKey</span><span class="p">,</span><span class="n">radialGradient</span><span class="p">.</span><span class="n">outputImage</span><span class="p">,</span>
+<span class="lineno">18</span>                          <span class="n">kCIInputBackgroundImageKey</span><span class="p">,</span><span class="n">myImage</span><span class="p">,</span><span class="nb">nil</span><span class="p">];</span>
+<span class="lineno">19</span> <span class="n">CGImageRef</span> <span class="n">cgImage</span> <span class="o">=</span> <span class="p">[</span><span class="n">context</span> <span class="nl">createCGImage</span><span class="p">:</span><span class="n">compositing</span><span class="p">.</span><span class="n">outputImage</span> <span class="nl">fromRect</span><span class="p">:</span><span class="n">CGRectMake</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">baby</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span><span class="p">,</span> <span class="n">baby</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">)];</span>
+<span class="lineno">20</span> <span class="bp">UIImage</span> <span class="o">*</span><span class="n">maskImage2</span> <span class="o">=</span> <span class="p">[</span><span class="bp">UIImage</span> <span class="nl">imageWithCGImage</span><span class="p">:</span><span class="n">cgImage</span><span class="p">];</span></code></pre></div>
+
+<p><img src="http://sipdar.github.io/image/2014/03/29/2.png" alt="image"></p>
+
+<h2>移轴效果的实现</h2>
+
+<ul>
+<li>实现移轴效果首先要生成一张模糊的图像。</li>
+<li>然后生成两个线性渐变透明的图像，把它们拼在一起生成一张遮罩图像。</li>
+<li>将原始图像模糊图像和遮罩图像混合在一起。</li>
+</ul>
+
+<p><img src="http://sipdar.github.io/image/2014/03/29/3.png" alt="image"></p>
+
+<h3>模糊的图像使用<strong>CIGaussianBlur</strong>生成</h3>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="lineno">1</span> <span class="bp">CIContext</span> <span class="o">*</span><span class="n">context</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIContext</span> <span class="nl">contextWithOptions</span><span class="p">:</span><span class="nb">nil</span><span class="p">];</span>
+<span class="lineno">2</span> <span class="bp">UIImage</span> <span class="o">*</span><span class="n">baby</span> <span class="o">=</span> <span class="p">[</span><span class="bp">UIImage</span> <span class="nl">imageNamed</span><span class="p">:</span><span class="s">@&quot;baby.jpg&quot;</span><span class="p">];</span>
+<span class="lineno">3</span> <span class="bp">CIImage</span> <span class="o">*</span><span class="n">myImage</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIImage</span> <span class="nl">imageWithCGImage</span><span class="p">:</span><span class="n">baby</span><span class="p">.</span><span class="bp">CGImage</span><span class="p">];</span>
+<span class="lineno">4</span> <span class="bp">CIFilter</span> <span class="o">*</span><span class="n">filter</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIFilter</span> <span class="nl">filterWithName</span><span class="p">:</span><span class="s">@&quot;CIGaussianBlur&quot;</span><span class="p">];</span>
+<span class="lineno">5</span> <span class="p">[</span><span class="n">filter</span> <span class="nl">setValue</span><span class="p">:</span><span class="n">myImage</span> <span class="nl">forKey</span><span class="p">:</span><span class="n">kCIInputImageKey</span><span class="p">];</span>
+<span class="lineno">6</span> <span class="p">[</span><span class="n">filter</span> <span class="nl">setValue</span><span class="p">:</span><span class="mi">@20</span> <span class="nl">forKey</span><span class="p">:</span><span class="n">kCIInputRadiusKey</span><span class="p">];</span></code></pre></div>
+
+<p><img src="http://sipdar.github.io/image/2014/03/29/4.png" alt="image"></p>
+
+<h3>两个线性渐变的图像使用 <strong>CILinearGradient</strong></h3>
+
+<p>从一个单色（如绿色或灰色）创建一个线性渐变，一幅从上倒下变化，另一幅从下到上渐变。然后把它们两个合成一张图像</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="lineno"> 1</span> <span class="bp">CIFilter</span> <span class="o">*</span><span class="n">gradientfilter</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIFilter</span> <span class="nl">filterWithName</span><span class="p">:</span><span class="s">@&quot;CILinearGradient&quot;</span><span class="p">];</span>
+<span class="lineno"> 2</span> <span class="p">[</span><span class="n">gradientfilter</span> <span class="nl">setValue</span><span class="p">:[</span><span class="bp">CIVector</span> <span class="nl">vectorWithX</span><span class="p">:</span><span class="mi">0</span> <span class="nl">Y</span><span class="p">:</span><span class="mf">0.75</span><span class="o">*</span><span class="n">baby</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">]</span>    <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;inputPoint0&quot;</span><span class="p">];</span>
+<span class="lineno"> 3</span> <span class="p">[</span><span class="n">gradientfilter</span> <span class="nl">setValue</span><span class="p">:[</span><span class="bp">CIColor</span> <span class="nl">colorWithRed</span><span class="p">:</span><span class="mi">0</span> <span class="nl">green</span><span class="p">:</span><span class="mi">1</span> <span class="nl">blue</span><span class="p">:</span><span class="mi">0</span> <span class="nl">alpha</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;inputColor0&quot;</span><span class="p">];</span>
+<span class="lineno"> 4</span> <span class="p">[</span><span class="n">gradientfilter</span> <span class="nl">setValue</span><span class="p">:[</span><span class="bp">CIVector</span> <span class="nl">vectorWithX</span><span class="p">:</span><span class="mi">0</span> <span class="nl">Y</span><span class="p">:</span><span class="mf">0.5</span> <span class="o">*</span><span class="n">baby</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">]</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;inputPoint1&quot;</span><span class="p">];</span>
+<span class="lineno"> 5</span> <span class="p">[</span><span class="n">gradientfilter</span> <span class="nl">setValue</span><span class="p">:[</span><span class="bp">CIColor</span> <span class="nl">colorWithRed</span><span class="p">:</span><span class="mi">0</span> <span class="nl">green</span><span class="p">:</span><span class="mi">1</span> <span class="nl">blue</span><span class="p">:</span><span class="mi">0</span> <span class="nl">alpha</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;inputColor1&quot;</span><span class="p">];</span>
+<span class="lineno"> 6</span> 
+<span class="lineno"> 7</span> <span class="bp">CIFilter</span> <span class="o">*</span><span class="n">gradientfilter2</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIFilter</span> <span class="nl">filterWithName</span><span class="p">:</span><span class="s">@&quot;CILinearGradient&quot;</span><span class="p">];</span>
+<span class="lineno"> 8</span> <span class="p">[</span><span class="n">gradientfilter2</span> <span class="nl">setValue</span><span class="p">:[</span><span class="bp">CIVector</span> <span class="nl">vectorWithX</span><span class="p">:</span><span class="mi">0</span> <span class="nl">Y</span><span class="p">:</span><span class="mf">0.25</span><span class="o">*</span><span class="n">baby</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">]</span>   <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;inputPoint0&quot;</span><span class="p">];</span>
+<span class="lineno"> 9</span> <span class="p">[</span><span class="n">gradientfilter2</span> <span class="nl">setValue</span><span class="p">:[</span><span class="bp">CIColor</span> <span class="nl">colorWithRed</span><span class="p">:</span><span class="mi">0</span> <span class="nl">green</span><span class="p">:</span><span class="mi">1</span> <span class="nl">blue</span><span class="p">:</span><span class="mi">0</span> <span class="nl">alpha</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;inputColor0&quot;</span><span class="p">];</span>
+<span class="lineno">10</span> <span class="p">[</span><span class="n">gradientfilter2</span> <span class="nl">setValue</span><span class="p">:[</span><span class="bp">CIVector</span> <span class="nl">vectorWithX</span><span class="p">:</span><span class="mi">0</span> <span class="nl">Y</span><span class="p">:</span><span class="mf">0.5</span> <span class="o">*</span><span class="n">baby</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">height</span><span class="p">]</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;inputPoint1&quot;</span><span class="p">];</span>
+<span class="lineno">11</span> <span class="p">[</span><span class="n">gradientfilter2</span> <span class="nl">setValue</span><span class="p">:[</span><span class="bp">CIColor</span> <span class="nl">colorWithRed</span><span class="p">:</span><span class="mi">0</span> <span class="nl">green</span><span class="p">:</span><span class="mi">1</span> <span class="nl">blue</span><span class="p">:</span><span class="mi">0</span> <span class="nl">alpha</span><span class="p">:</span><span class="mi">0</span><span class="p">]</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;inputColor1&quot;</span><span class="p">];</span>
+<span class="lineno">12</span> 
+<span class="lineno">13</span> <span class="bp">CIFilter</span> <span class="o">*</span><span class="n">compositingFilter</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIFilter</span> <span class="nl">filterWithName</span><span class="p">:</span><span class="s">@&quot;CIAdditionCompositing&quot;</span><span class="p">];</span>
+<span class="lineno">14</span> <span class="p">[</span><span class="n">compositingFilter</span> <span class="nl">setValue</span><span class="p">:</span><span class="n">gradientfilter</span><span class="p">.</span><span class="n">outputImage</span> <span class="nl">forKey</span><span class="p">:</span><span class="n">kCIInputImageKey</span><span class="p">];</span>
+<span class="lineno">15</span> <span class="p">[</span><span class="n">compositingFilter</span> <span class="nl">setValue</span><span class="p">:</span><span class="n">gradientfilter2</span><span class="p">.</span><span class="n">outputImage</span>    <span class="nl">forKey</span><span class="p">:</span><span class="n">kCIInputBackgroundImageKey</span><span class="p">];</span></code></pre></div>
+
+<p><img src="http://sipdar.github.io/image/2014/03/29/5.png" alt="image"></p>
+
+<p>然后将模糊图像 原图 跟遮罩图像合成在一起。移轴效果比较合适处理建筑物照片人像效果不太好。</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="lineno">1</span> <span class="bp">CIFilter</span> <span class="o">*</span><span class="n">blendFilter</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIFilter</span> <span class="nl">filterWithName</span><span class="p">:</span><span class="s">@&quot;CIBlendWithMask&quot;</span><span class="p">];</span>
+<span class="lineno">2</span> <span class="p">[</span><span class="n">blendFilter</span> <span class="nl">setValue</span><span class="p">:</span><span class="n">blurFilter</span><span class="p">.</span><span class="n">outputImage</span>    <span class="nl">forKey</span><span class="p">:</span><span class="n">kCIInputImageKey</span><span class="p">];</span>
+<span class="lineno">3</span> <span class="p">[</span><span class="n">blendFilter</span> <span class="nl">setValue</span><span class="p">:</span><span class="n">myImage</span> <span class="nl">forKey</span><span class="p">:</span><span class="n">kCIInputBackgroundImageKey</span><span class="p">];</span>
+<span class="lineno">4</span> <span class="p">[</span><span class="n">blendFilter</span> <span class="nl">setValue</span><span class="p">:</span><span class="n">compositingFilter</span><span class="p">.</span><span class="n">outputImage</span> <span class="nl">forKey</span><span class="p">:</span><span class="n">kCIInputMaskImageKey</span><span class="p">];</span></code></pre></div>
+
+<p><img src="http://sipdar.github.io/image/2014/03/29/6.png" alt="image"></p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/01/24/Swift%20%E9%97%AD%E5%8C%85/">
+            Swift
+            <small>24 Jan 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/03/30/%E6%97%A7%E8%83%B6%E7%89%87%E6%95%88%E6%9E%9C/">
+            Core Image 旧胶片效果
+            <small>30 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/03/27/%E4%BA%BA%E8%84%B8%E6%A3%80%E6%B5%8B/">
+            Core Image 人脸检测
+            <small>27 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

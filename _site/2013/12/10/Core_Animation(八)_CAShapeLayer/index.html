@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Core Animation CAShapeLayer &middot; Sunny
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body class="theme-base-0c">
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          Sunny
+        </a>
+      </h1>
+      <p class="lead">This is my personal blog Welcome ！<a href="https://twitter.com/sipdar" target="_blank">@sunny</a>.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/archive/">Archives</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      
+<!--       <a class="sidebar-nav-item" href="https://github.com/sipdar/archive/v2.1.0.zip">Download</a> -->
+      <a class="sidebar-nav-item" href="https://github.com/sipdar">GitHub project</a>
+      <a class="sidebar-nav-item" href="mailto:sipdar@163.com">Email</a>
+<!--       <span class="sidebar-nav-item">Currently v2.1.0</span> -->
+
+    </nav>
+
+    <p>&copy; 2015. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="post">
+  <h1 class="post-title">Core Animation CAShapeLayer</h1>
+  <span class="post-date">10 Dec 2013</span>
+  <h1>CAShapeLayer</h1>
+
+<p>我们在上面曾经用过<strong>CGPath</strong>代替图片来绘制阴影，同样的我们可以使用<strong>CGPath</strong>来绘制各种我们想要的图形，用来代替图片使用。</p>
+
+<p><strong>CAShapeLayer</strong>是 <strong>CALayer</strong>的子类，在绘制的时候它使用的是矢量图形，而不是 <strong>Bitmap Image</strong>，因此效率非常高。在使用的时候 只要我们定义好颜色 线条的宽度，然后用<strong>CGPath</strong>来定义出形状，剩下的 <strong>CAShapeLayer</strong>会自动渲染。当然我们也可以使用 <strong>Core Graphics</strong>在<strong>CALayer</strong>中绘制我们想要的内容，但是有使用 <strong>CAShapeLayer</strong>有它的好处，</p>
+
+<ul>
+<li>首先它速度非常快，<strong>CAShaplayer</strong>使用的是硬件加速，比起用 <strong>Core Graphics</strong>画一个图来会快很多</li>
+<li>节省内存 它不象<strong>CALayer</strong>那样会创建背景图片，所以无论它有多大，都不会太消耗内存</li>
+<li>不会剪切超出自己<strong>bounds</strong>的部分， 但是使用<strong>CALayer</strong>的时候我们就会被<strong>CGPath</strong>剪切掉超出的部分</li>
+<li>没有像素画，在做缩放变幻的时候，不会出现像素化的情况。</li>
+</ul>
+
+<p>我们看个小栗子 怎么使用 <strong>CASapeLayer</strong></p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">UIBezierPath *path = [[UIBezierPath alloc] init];
+[path moveToPoint:CGPointMake(175, 100)];
+[path addArcWithCenter:CGPointMake(150, 100) 
+                radius:25 
+            startAngle:0 
+              endAngle:2*M_PI
+             clockwise:YES];
+
+[path moveToPoint:CGPointMake(150, 125)];
+[path addLineToPoint:CGPointMake(150, 175)]; 
+[path addLineToPoint:CGPointMake(125, 225)];
+[path moveToPoint:CGPointMake(150, 175)]; 
+[path addLineToPoint:CGPointMake(175, 225)];
+[path moveToPoint:CGPointMake(100, 150)];
+[path addLineToPoint:CGPointMake(200, 150)];
+
+CAShapeLayer *shapeLayer = [CAShapeLayer layer]; 
+shapeLayer.strokeColor =    [UIColor redColor].CGColor; 
+shapeLayer.fillColor = [UIColor clearColor].CGColor;
+shapeLayer.lineWidth = 5;
+shapeLayer.lineJoin = kCALineJoinRound; 
+shapeLayer.lineCap = kCALineCapRound;   
+shapeLayer.path = path.CGPath;
+[self.containerView.layer addSublayer:shapeLayer];
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/shaplayer1.png" alt="image">
+<strong>lineWidth</strong> 就是线的宽度    </p>
+
+<p><strong>lineCap</strong> 线头的效果</p>
+
+<p><strong>lineJoin</strong> 不同的线相交的地方的效果</p>
+
+<h2>圆角</h2>
+
+<p>我们曾经使用过 <strong>CALayer</strong> 的 <strong>cornerRadius</strong>属性来绘制圆角矩形，我们使用 <strong>CAShaplayer</strong>也可以实现这个效果，但是<strong>CAShaplayer</strong>更好的地方在于它可以定义每个角实现不同的效果。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGRect rect = CGRectMake(50, 50, 150, 150);
+UIView *testView = [[UIView alloc] initWithFrame:rect];
+testView.backgroundColor = [UIColor redColor];
+[self.view addSubview:testView];
+
+CGSize radii = CGSizeMake(20, 20);
+UIRectCorner corners = UIRectCornerTopRight |
+UIRectCornerBottomRight | UIRectCornerBottomLeft;
+//create path
+UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:testView.bounds
+                                            byRoundingCorners:corners 
+                                                  cornerRadii:radii];
+CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+shapeLayer.strokeColor = [UIColor greenColor].CGColor;
+shapeLayer.fillColor=[UIColor redColor].CGColor;
+shapeLayer.lineWidth = 1;
+shapeLayer.lineJoin = kCALineJoinRound;
+shapeLayer.lineCap = kCALineCapRound;
+shapeLayer.path = path.CGPath;
+testView.layer.mask =shapeLayer;
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/shaplayer2.png" alt="image"></p>
+
+</div>
+
+<div class="related">
+  <h2>Related Posts</h2>
+  <ul class="related-posts">
+    
+      <li>
+        <h3>
+          <a href="/2015/01/24/Swift%20%E9%97%AD%E5%8C%85/">
+            Swift
+            <small>24 Jan 2015</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/03/30/%E6%97%A7%E8%83%B6%E7%89%87%E6%95%88%E6%9E%9C/">
+            Core Image 旧胶片效果
+            <small>30 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+      <li>
+        <h3>
+          <a href="/2014/03/29/%E7%A7%BB%E8%BD%B4%E6%95%88%E6%9E%9C%E5%92%8C%E6%B8%90%E5%8F%98/">
+            Core Image 移轴效果和渐变
+            <small>29 Mar 2014</small>
+          </a>
+        </h3>
+      </li>
+    
+  </ul>
+</div>
+
+    </div>
+
+  </body>
+</html>

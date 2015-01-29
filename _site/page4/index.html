@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
+
+  <head>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Sunny &middot; A iOS tech blog
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/public/css/poole.css">
+  <link rel="stylesheet" href="/public/css/syntax.css">
+  <link rel="stylesheet" href="/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+</head>
+
+
+  <body class="theme-base-0c">
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+    <div class="sidebar-about">
+      <h1>
+        <a href="/">
+          Sunny
+        </a>
+      </h1>
+      <p class="lead">This is my personal blog Welcome ！<a href="https://twitter.com/sipdar" target="_blank">@sunny</a>.</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="/">Home</a>
+      
+
+      
+      
+        
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/about/">About</a>
+          
+        
+      
+        
+          
+            <a class="sidebar-nav-item" href="/archive/">Archives</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+      
+<!--       <a class="sidebar-nav-item" href="https://github.com/sipdar/archive/v2.1.0.zip">Download</a> -->
+      <a class="sidebar-nav-item" href="https://github.com/sipdar">GitHub project</a>
+      <a class="sidebar-nav-item" href="mailto:sipdar@163.com">Email</a>
+<!--       <span class="sidebar-nav-item">Currently v2.1.0</span> -->
+
+    </nav>
+
+    <p>&copy; 2015. All rights reserved.</p>
+  </div>
+</div>
+
+
+    <div class="content container">
+      <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2013/10/07/Core_Animation(%E5%9B%9B)_visual_effects/">
+        Core Animation (四) Visual Effects
+      </a>
+    </h1>
+
+    <span class="post-date">07 Oct 2013</span>
+
+     <h1>Visual Effects (四)</h1>
+
+<h2>圆角</h2>
+
+<p><strong>IOS</strong> <strong>UI</strong> 的一个显著特点就是无处不在的圆角矩形，从主屏的图标，alert，文本输入框。我们也可以在程序中创建圆角矩形，而不需要Photoshop。</p>
+
+<p><strong>CAlayer</strong> 有个 <strong>cornerRadius</strong> 属性可以控制<strong>Layer</strong> 直角的弯曲度。它是一个默认值为零的浮点值。默认的情况下，圆角的效果只会影<strong>Layer</strong>的背景颜色，并不会影响你设置的背景图片，或者加在<strong>Layer</strong>上面的<strong>SubLayer</strong>，<strong>masksToBounds</strong>设置为 <strong>YES</strong> 可以实现裁切<strong>SubLayer</strong>的功能。代码如下</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">UIView *greenView = [[UIView alloc] initWithFrame:CGRectMake(100,100 , 160, 160)];
+greenView.backgroundColor = [UIColor greenColor];
+UIView *redView = [[UIView alloc] initWithFrame:CGRectMake(-20,-20, 60, 60)];
+redView.backgroundColor = [UIColor redColor];
+[greenView addSubview:redView];
+greenView.layer.cornerRadius = 20;
+[self.view addSubview:greenView];
+</code></pre></div>
+<p><img src="http://m3.img.libdd.com/farm4/2013/1016/17/8273E20D2020401960A3FC8DF2CB97692811EACA9BF1C_594_856.PNG" alt="image"></p>
+
+<p>当设置了</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    greenView.layer.masksToBounds = YES;
+</code></pre></div>
+<p>效果就是这样的，红色的<strong>layer</strong>的右上角也被剪切了。
+<img src="http://m1.img.libdd.com/farm4/2013/1016/17/7987618F46E5F587701ED6868A2995412FE51E3F677D6_594_856.PNG" alt="image"></p>
+
+<h2>Layer Borders</h2>
+
+<p><strong>CALayer</strong>另外一个非常有用的属性就是 <strong>borderWidth</strong> 和 <strong>borderColor</strong> 这两个属性组合起来控制<strong>Layer</strong>的边框。 <strong>borderColor</strong> 的类型不是<strong>UIColor</strong> 是 <strong>CGColorRef</strong>。
+边框是是绘制在<strong>Layer</strong>的<strong>bounds</strong>里面并且覆盖在其他所有的 <strong>SubLayer</strong> 的上面。我们还用这个<strong>greenView</strong> 来做实验。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">        greenView.layer.borderWidth = 5.0f;
+</code></pre></div>
+<p><img src="http://m3.img.libdd.com/farm5/2013/1016/17/6F400D5569BE107A9658A55280CADA0362FE7053F3661_825_540.PNG" alt="image">          </p>
+
+<h2>Drop Shadows</h2>
+
+<p>对于IOS的设计来说，另外一个特征就是阴影。当我们给<strong>Layer</strong> 的 <strong>shadowOpacity</strong> 属性设置了一个大于零的值，阴影就会出现在 <strong>Layer</strong> 的后面。 <strong>shadowOpacity</strong> 是一个 大于0.0(透明) 小于1.0（全黑） 的浮点数。此外，我们还可以通过 <strong>shadowColor</strong>, <strong>shadowOffset</strong>, <strong>shadowRadius</strong>来调整 阴影的效果。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">UIView *viewA = [[UIView alloc] initWithFrame:CGRectMake(100, 80, 150, 150)];
+UIView *viewB = [[UIView alloc] initWithFrame:CGRectMake(300, 80, 150, 150)];
+viewA.backgroundColor = [UIColor greenColor];
+viewB.backgroundColor = [UIColor redColor];
+
+viewA.layer.shadowOpacity = 1.0;
+viewB.layer.shadowOpacity = 0.5;
+
+viewA.layer.shadowOffset = CGSizeMake(0, -15);
+viewB.layer.shadowOffset = CGSizeMake(5, 5);
+
+viewA.layer.shadowRadius = 30;
+viewB.layer.shadowRadius = 1;
+
+viewA.layer.shadowColor = [UIColor redColor].CGColor;
+viewB.layer.shadowColor = [UIColor greenColor].CGColor;
+
+
+[self.view addSubview:viewA];
+[self.view addSubview:viewB];
+</code></pre></div>
+<p><img src="http://m1.img.libdd.com/farm5/2013/1016/18/D6A310C8074AEF33D9D4628567E575D7949F2E3D8A83B_596_372.PNG" alt="image"></p>
+
+<h2>Shadow Clipping</h2>
+
+<p>和<strong>Layer</strong>的边框不一样，阴影会依照<strong>Layer</strong>包含的内容的确切的形状来显示。还有一个问题就是当使用 <strong>masksToBounds</strong> 的时候，阴影的显示也会有问题。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">UIView *redViewA = [[UIView alloc] initWithFrame:CGRectMake(-20,-20, 70, 70)];
+redViewA.backgroundColor = [UIColor redColor];
+UIView *redViewB = [[UIView alloc] initWithFrame:CGRectMake(-20,-20, 70, 70)];
+redViewB.backgroundColor = [UIColor redColor];
+
+
+UIView *viewA = [[UIView alloc] initWithFrame:CGRectMake(100, 80, 150, 150)];
+UIView *viewB = [[UIView alloc] initWithFrame:CGRectMake(300, 80, 150, 150)];
+viewB.layer.masksToBounds = YES;
+
+[viewA addSubview:redViewA];
+[viewB addSubview:redViewB];
+
+viewB.backgroundColor = [UIColor greenColor];
+viewA.backgroundColor = [UIColor greenColor];
+viewA.layer.shadowOffset = CGSizeMake(0, 10);
+viewB.layer.shadowOffset = CGSizeMake(0, 10);
+viewA.layer.shadowOpacity = 0.7;
+viewB.layer.shadowOpacity = 0.7;
+</code></pre></div>
+<p><img src="http://m1.img.libdd.com/farm4/2013/1016/18/5493C185AEEA6C73FE1DC43B1070CABE667EAC57F2857_682_456.PNG" alt="image"></p>
+
+<p>viewB因为使用了 <strong>layer.masksToBounds = YES;</strong> 导致阴影消失了。我们怎么解决这个问题呢？
+给<strong>viewB</strong>一个同样大小的<strong>superView</strong> 叫这个<strong>superView</strong> 添加阴影。下面的代码是这个问题的解决方法。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">UIView *redViewA = [[UIView alloc] initWithFrame:CGRectMake(-20,-20, 70, 70)];
+UIView *redViewB = [[UIView alloc] initWithFrame:CGRectMake(-20,-20, 70, 70)];
+redViewA.backgroundColor = [UIColor redColor];
+redViewB.backgroundColor = [UIColor redColor];
+
+
+UIView *viewA = [[UIView alloc] initWithFrame:CGRectMake(100, 80, 150, 150)];
+UIView *viewB = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 150, 150)];
+viewB.layer.masksToBounds = YES;
+[viewA addSubview:redViewA];
+[viewB addSubview:redViewB];
+
+viewB.backgroundColor = [UIColor greenColor];
+viewA.backgroundColor = [UIColor greenColor];
+viewA.layer.shadowOffset = CGSizeMake(0, 10);
+viewB.layer.shadowOffset = CGSizeMake(0, 10);
+viewA.layer.shadowOpacity = 0.7;
+viewB.layer.shadowOpacity = 0.7;
+
+
+UIView *shadowViewB = [[UIView alloc] initWithFrame:CGRectMake(300, 80, 150, 150)];
+shadowViewB.layer.shadowOffset = CGSizeMake(0, 10);
+shadowViewB.layer.shadowOpacity = 0.7f;
+[shadowViewB addSubview:viewB];
+
+[self.view addSubview:viewA];
+[self.view addSubview:shadowViewB];
+</code></pre></div>
+<p><img src="http://m2.img.libdd.com/farm5/2013/1016/21/057ECD4FB33D83B407A9388A7DE0E858EA9D801553EBF_682_456.PNG" alt="image">
+这样一来 ViewB也有阴影啦。</p>
+
+<h2>ShadowPath</h2>
+
+<p>有时候我们给 <strong>Layer</strong> 添加的阴影并不总是正方形，如果我们想要其他形状的阴影怎么办呢。这时候 <strong>shadowPath</strong> 就派上用场了。阴影的实时计算是非常消耗手机性能的，尤其是当 <strong>Layer</strong> 包含大量的 带 <strong>alpha</strong> 遮罩 <strong>sublayer</strong> 的时候。
+<strong>ShadowPath</strong> 是一个 <strong>CGPathRef</strong> （CGPath 的指针）。<strong>CGPath</strong> 是一个<strong>Core Graphics</strong> 的用来表示矢量形状的对象。我们可以用它来定义<strong>shadow</strong>的形状。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">UIView *viewA = [[UIView alloc] initWithFrame:CGRectMake(100, 80, 100, 100)];
+UIView *viewB = [[UIView alloc] initWithFrame:CGRectMake(300, 80, 100, 100)];
+
+viewB.backgroundColor = [UIColor greenColor];
+viewA.backgroundColor = [UIColor greenColor];
+viewA.layer.shadowOpacity = 0.5;
+viewB.layer.shadowOpacity = 0.5;
+
+
+CGMutablePathRef squarePath = CGPathCreateMutable();
+CGPathAddRect(squarePath, NULL, CGRectMake(-25, -25, 150, 150));
+viewA.layer.shadowPath = squarePath;
+CGPathRelease(squarePath);
+
+
+CGMutablePathRef circlePath = CGPathCreateMutable();
+CGPathAddEllipseInRect(circlePath, NULL,CGRectMake(-25, -25, 150, 150));
+viewB.layer.shadowPath = circlePath;
+CGPathRelease(circlePath);
+
+[self.view addSubview:viewA];
+[self.view addSubview:viewB];
+</code></pre></div>
+<p><img src="http://m1.img.libdd.com/farm5/2013/1016/22/AF4BC1A1DDB42D92DADD9D9F65D83633FD4F77B65038C_682_456.PNG" alt="image"></p>
+
+<p>当我们绘制一些简单的矩形或者圆形时可以直接使用<strong>CGPath</strong>。但是当需要一些复杂的形状的时候，比如圆角矩形 或者 五角星之类的 ，我们可以使用 <strong>UIBezierPath</strong> ，它是 <strong>UIKit</strong> 提供的 objc 封装的<strong>CGPath</strong> 要简单的多。 </p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2013/09/08/core_animation_(%E4%B8%89)/">
+        Core Animation (三)  Layout
+      </a>
+    </h1>
+
+    <span class="post-date">08 Sep 2013</span>
+
+     <h1>Core Animation (三)</h1>
+
+<h2>布局</h2>
+
+<p><strong>UIView</strong> 有三个跟布局有关的属性，<strong>frame</strong> <strong>bounds</strong> <strong>center</strong>。 <strong>CALayer</strong> 也有三个类似的属性，<strong>frame</strong> <strong>bounds</strong> <strong>position</strong> 。view 使用 center ，layer 使用position。实际上他们是一样的。</p>
+
+<p><img src="http://m2.img.libdd.com/farm4/2013/0908/15/2875A64D846B3A739E72CBE40653C6C84E8E392A3B4B6_540_309.JPEG" alt="image"></p>
+
+<p><strong>frame</strong> 跟<strong>bounds</strong>的区别就是参照系不一样。 frame是以superView 做参照系。 而bounds 是以自己做参照系。上面这幅图就是个很好的例子。<strong>layer</strong> 跟<strong>view</strong>是一样的。</p>
+
+<p><img src="https://developer.apple.com/library/ios/documentation/WindowsViews/Conceptual/ViewPG_iPhoneOS/Art/rotated_view.jpg" alt="image"></p>
+
+<p>frame 并不是个确定的值。它会根据 bounds center 以及做动画的时候的transform 动态的改变。例如上面这个图片旋转了45度 frame就变大了。这时。frame的size就跟bounds的size 不一样了。
+<img src="http://m2.img.libdd.com/farm4/2013/0908/15/6B69C122D6E1A980BA9FBE74E20E63D144DA6172230CC_600_400.PNG" alt="image"></p>
+
+<p>旋转之后的frame 变大了。</p>
+
+<h2>锚点（anchorPoint）</h2>
+
+<p>图层的 <strong>anchorPoint</strong> 属性指定了一个基于图层 <strong>bounds</strong> 的符合位置坐标系的位置。锚点指定了 <strong>bounds</strong> 相对于 <strong>position</strong> 的值,同时也作为变换时候的支点。锚点使用单元空间坐标系表示,<strong>(0.0,0.0)</strong>点接近图层 的原点,而<strong>(1.0,1.0)</strong>是原点的对角点。改变图层的父图层的变换属性将会影响到 <strong>anchorPoint</strong> 的方向,具体变化取决于父图层坐标系的 Y 轴。</p>
+
+<p>当你设置图层的 <strong>frame</strong> 属性的时候,<strong>position</strong> 会根据锚点相应的改变,而当你设置图层的 <strong>position</strong> 属性的时候,<strong>bounds</strong>会根据锚点做相应的改变。锚点的默认值是<strong>(0.5,0.5)</strong>.</p>
+
+<p>下面几幅图片展示了锚点的位置对于 <strong>position</strong>的影响。
+<img src="http://m3.img.libdd.com/farm4/2013/0908/15/C9DA0E164914D457005A246C534030BD82A87510B80BC_657_726.PNG" alt="image">
+<img src="http://m1.img.libdd.com/farm4/2013/0908/15/7F64FC799F69C56600175ACAF10941B6BF93D381B4E36_657_639.PNG" alt="image"></p>
+
+<h2>图层的坐标系</h2>
+
+<p>我们可以通过 CALayer的方法 在进行坐标转换。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">- (CGPoint)convertPoint:(CGPoint)point fromLayer:(CALayer *)layer;
+- (CGPoint)convertPoint:(CGPoint)point toLayer:(CALayer *)layer;
+- (CGRect)convertRect:(CGRect)rect fromLayer:(CALayer *)layer;
+- (CGRect)convertRect:(CGRect)rect toLayer:(CALayer *)layer;
+</code></pre></div>
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2013/08/23/core_animation_(%E4%BA%8C)/">
+        Core Animation (二)  The Backing Image
+      </a>
+    </h1>
+
+    <span class="post-date">23 Aug 2013</span>
+
+     <h1>Core Animation (二)</h1>
+
+<h2>The contents Image</h2>
+
+<p>CALayer 有个属性叫做 <strong>contents</strong> 是个<strong>id</strong>类型mac平台 core animation 的产物，用这个属性我们可以非常简单的使一个CALayer 显示一张image。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CALayer *layer = [CALayer layer];
+layer.frame = CGRectMake(50, 50, 220, 220);
+[self.view.layer addSublayer:layer];
+
+UIImage *image = [UIImage imageNamed:@&quot;testImage.png&quot;];
+layer.contents = (__bridge id)image.CGImage;
+</code></pre></div>
+<p><img src="http://m2.img.libdd.com/farm4/2013/0823/15/0AB56D6360A02199E06D0ED0964B8A46628D602B64D5A_320_480.PNG" alt="image"></p>
+
+<h2>contentsGravity</h2>
+
+<p>额 宝马车被砸扁了。这有点不正常，怎么办呢，我的图片是个长方形，但是我的layer是个正方形。
+当我们使用UIImageView显示图片的时候遇到这种情况下，我们可以使用</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">view.contentMode = UIViewContentModeScaleAspectFit;
+</code></pre></div>
+<p>layer 也有类似的属性，它叫做 <strong>contentsGravity</strong> 跟UIView的contentMode enum 定义不一样，<strong>contentsGravity</strong>是<strong>NSString</strong>类型。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text"> NSString * const kCAGravityCenter
+ NSString * const kCAGravityTop
+ NSString * const kCAGravityBottom
+ NSString * const kCAGravityLeft
+ NSString * const kCAGravityRight
+ NSString * const kCAGravityTopLeft
+ NSString * const kCAGravityTopRight
+ NSString * const kCAGravityBottomLeft
+ NSString * const kCAGravityBottomRight
+ NSString * const kCAGravityResize
+ NSString * const kCAGravityResizeAspect
+ NSString * const kCAGravityResizeAspectFill
+</code></pre></div>
+<p>我们可以使用 <strong>kCAGravityResizeAspect</strong> 等同于
+ <strong>UIViewContentModeScaleAspectFit</strong> 我们可以是图片适应 layer的大小 而不会生变形。汽车就不会被拍瘪了。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">layer.contentsGravity = kCAGravityResizeAspect;
+</code></pre></div>
+<p><img src="http://m2.img.libdd.com/farm4/2013/0823/15/E73BE61AD8A39DBCB263AD10238C1C8286303EC8A9942_320_480.PNG" alt="image"></p>
+
+<h2>contentsScale</h2>
+
+<p><strong>contentsScale</strong>定义了两个像素点之间的距离的比例。是个float类型 默认值为1.0；
+contentScale的用在我的汽车图片的时候并没有效果，因为 <strong>contents</strong>的图片已经被 <strong>contentsGravity</strong> 进行过缩放处理了，已适应，layer的bounds。</p>
+
+<p>如果我们想简单的缩放layer 的 contents 图片，我们可以使用 <strong>transform</strong>或者 <strong>affinetransform</strong> .</p>
+
+<p>contentsScale 到底是用来干嘛的呢？他其实是用来支持高分屏的。它用来查看当image绘制的时候应该绘制的大小。前提是图片没有被 <strong>contentsGravity</strong>压缩过，UIView 有个类似的很少用的属性 <strong>contentScaleFactor</strong>。</p>
+
+<p>当<strong>contentsScale</strong>设为 1.0 时，在屏幕上绘制的每个点一个像素，2.0 就是每个点 2个像素。这就是Apple 对Retina的解决方案。</p>
+
+<p>kCAGravityResizeAspect会压缩我们的图片。当我们换成 kCAGravityCenter 看看会发生什么</p>
+
+<p><img src="http://m1.img.libdd.com/farm5/2013/0823/15/8A958479617C50A39DDC729ED3700C56E62F98F27FDC3_320_480.PNG" alt="image"></p>
+
+<p>额 只能看见车头的一点点，并且整张图片被像素化了。当我们给contents 设置CGImage 对象的时候，缩放机制就失去作用，我们现在可以使用 <strong>contentsScale</strong>来修正我们的image 显示了</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">self.layerView.layer.contentsScale = image.scale;
+</code></pre></div>
+<p><img src="http://m2.img.libdd.com/farm4/2013/0823/15/351C15DD6BF6119F1BC1E73ABA073282EC32F96105F78_320_480.PNG" alt="image"></p>
+
+<p>当我们在程序中使用 layer显示图片的时候。我们要记着，设置layer的<strong>contentsScale</strong>符合屏幕的scale；否则我们的图片会像素画在高分屏上。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">layer.contentsScale = [UIScreen mainScreen].scale;
+</code></pre></div>
+<h2>masksToBounds</h2>
+
+<p>我们的汽车图片现在显示的正确的大小了。但是我们不想显示超出layer 大小的部分。 UIView 有个叫属性叫做 clipsToBounds 用来决定是否显示超出自身大小的部分。CALayer 也有个类似的属性叫做 <strong>masksToBounds</strong> 当我们设置成 YES的时候，就是这样。</p>
+
+<p><img src="http://m2.img.libdd.com/farm4/2013/0823/16/DE921EFD2ADAFB25D4181D37D078F48A007118E36E9E4_320_480.PNG" alt="image"></p>
+
+<h2>contentsRect</h2>
+
+<p><strong>contentsRect</strong>是个CALayer的属性 可以指定layer显示image的某个区域。和 bounds frame 不一样的是 <strong>contentsRect</strong> 的度量单位并不是 points，而是坐标。坐标的范围是 （0 ~ 1.0）而且取得是相对值。</p>
+
+<p>默认的<strong>contentsRect</strong>的值 是 {0,0,1,1}如果我们设置contentsRect为{0，0，0.5，0，5}
+则layer显示的image如下
+<img src="http://m1.img.libdd.com/farm5/2013/0823/16/664DD0B4DA6B108AEC962505FDBA9FE49EEE6FBC2B9AE_513_338.PNG" alt="image"></p>
+
+<h2>contentsCenter</h2>
+
+<p>最后一个和内容相关的属性就是 <strong>contentsCenter</strong>。看名字大家觉得这个东西可能是个中心点之类的。但是实际上他是一个 <strong>CGRect</strong>  ，它指定图片的拉伸区域。默认情况下， contentsCenter 是{0，0，1，1}，当layer 改变大小的时候，image将会均匀的拉伸。当我们增加起始的位置，减小size的时候，我们就围着图片产生了一个边界。下面这个图显示了 <strong>contentsCenter</strong>的值为 {0.25，0.25，0.5，0.5}的时候缩放的行为 是什么样儿的。</p>
+
+<p><img src="http://m2.img.libdd.com/farm4/2013/0823/16/2E140BC9F6DC79A0A3DFABEA83C40F9B3FF7A74C9602C_601_247.PNG" alt="image"></p>
+
+<p>这个跟UIImage的<strong>resizableImageWithCapInsets</strong>是一样的效果</p>
+
+<h2>Custom Drawing</h2>
+
+<p>设置 layer 的contents 并不是唯一的显示Image 的方法， UIView的子类实现了  <strong>-drawRect:</strong> 方法 可以自定义UI。drawRect 方法会给View创建一个新的 背景image 对象， ，所以如果我们不需要这个image的话，就不要实现空的drawRect 方法。会浪费内存和CPU资源。</p>
+
+<p>CAlayer 还有个 optional delegate 实现了 <strong>CALayerDelegate</strong>的协议。当CALayer 需要特殊信息的时候可以通过delegate 获得。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">- (void)displayLayer:(CALayer *)layer;
+- (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx;
+- (void)layoutSublayersOfLayer:(CALayer *)layer;
+- (id&lt;CAAction&gt;)actionForLayer:(CALayer *)layer forKey:(NSString *)event;
+</code></pre></div>
+<p>当layer 重绘之前会依次调用这几个方法。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    CALayer *layer = [[CALayer alloc] init];
+    layer.frame = CGRectMake(50, 50, 100, 100);
+    layer.masksToBounds = YES;
+    layer.delegate = self;
+    layer.backgroundColor = [UIColor blueColor].CGColor;
+    [self.view.layer addSublayer:layer];
+    [layer display];
+
+}
+
+-(void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx{
+    CGContextSetLineWidth(ctx, 10.0f);
+    CGContextSetStrokeColorWithColor(ctx, [UIColor redColor].CGColor);
+    CGContextStrokeEllipseInRect(ctx, layer.bounds);
+}
+</code></pre></div>
+<p><img src="http://m3.img.libdd.com/farm5/2013/0823/17/66D57F267854F694235FDC96BD2884EA5F9F5573E317F_320_480.PNG" alt="image"></p>
+
+<p>我们主动的调用了 layer的 display方法，来强制它刷新，跟UIView不一样的是 CALayer 当它显示在屏幕上之后，它不会自动的重绘。需要程序员自己小心的决定他的重绘时机。</p>
+
+<p>我们画的圆圈儿超出layer 大小的部分呗剪切掉了没有显示，尽管我们没有使用<strong>masksToBounds</strong>属性。这是因为我们绘制的时候调用的 <strong>CALayerDelegate</strong> CALayer 创建的绘制区域 conext的大小是由layer的大小决定的。所以没有可能在超出的区域绘制。</p>
+
+<p>除非我们创建了单独的layer 否则尽量不要使用delegate,尽量不要实现delegate的协议方法，这是因为UIView 会创建一个他自己的背景层，自动的设置自己是layer的delegate，并且实现了 -displayLayer：方法。这就是问题的所在，当我们使用 View的背景层的时候，不需要实现 -displayLayer:方法 或者drawLayer:inContext:方法来绘制层的图片，我们只需要实现 drawRect：方法， UIView 会帮我们处理一切，包括layer需要重绘的时候 自动调用 display。</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2013/08/23/core_animation/">
+        Core Animation (一)
+      </a>
+    </h1>
+
+    <span class="post-date">23 Aug 2013</span>
+
+     <h1>Core Animation (一)</h1>
+
+<p>一直很羡慕 github 上很多人写的炫酷的动画跟UI的特效。有时候自己想搞一个动画的时候就去 github 搜一下。作为一个iOS 开发人员 我决定从头学习 Core animation。</p>
+
+<h2>Layer &amp; View</h2>
+
+<p>Core animation 是一个误导人的名字，大家都觉得看这个名字，这个库应该是主要用来实现动画效果的。实际上，动画只是很小的一部分，更贴切的名字应该叫做 Layer kit。大部分都是关于图层的。屏幕上显示的不同图形图像 其实就是不同的Layer。 Layer 有自己的父图层 也有自己的子图层，它们构成了一个树形的层次结构。这个树形结构构成了UIKit的底层，和屏幕上我们所见的一切。
+我们都用过 UIView ，view 就是屏幕上显示文本 图片或者视频的一个矩形区域，并且它可以相应我们的各种手势操作，每个View 可以包含多个view从而构成一种层级结构。父View 管理子View的位置。</p>
+
+<p><img src="http://m1.img.libdd.com/farm4/2013/0823/11/731FE6D6A68C3C1013ED9C66E49567D2102577ED96875_652_387.JPEG" alt="view layer"></p>
+
+<p>在iOS中 所有的View 都继承自UIView，UIView 处理触摸事件，并且支持基于 <strong>Core Graphics</strong>的显示，仿射变换，例如旋转跟缩放，以及简单的滑动或者翻转动画。但是UIView 并不是处理所有的这些细节，渲染 布局和动画其实是 <strong>CALayer</strong> 来做的。</p>
+
+<h2>CALayer</h2>
+
+<p>CALayer其实跟UIView 非常相似，他是一个矩形的方块，在一个层级结构中，包含图片文字或者背景颜色，也是由父类来管理显示的位置。CALayer 有专门的方法和属性来实现动画和几何变换。和UIView 唯一不同的一点就是 Layer 不处理和用户的交互逻辑。
+CALayer并不是响应连的一部分，所以无法响应用户的交互，但是它提供了方法来检查用户点击的位置是否在Layer中。</p>
+
+<h2>平行的层级结构</h2>
+
+<p>每个UIView 都有一个CALayer 对象，UIView可以创建或者删除这个CALayer。CALayer 的层级结构就像是UIView结构的一个镜像。事实上是图层负责显示UI跟动画以及其他你在屏幕上所见到的东西。UIView 只是简单地封装了一下，处理IOS特有的touch事件，并把底层的Core Animation 接口封装成高级接口。
+iOS 之所以有UIView 和 CALayer 两套平行的层级结构，是为了更好的解耦代码，将UI和用户的交互逻辑分离开来。因为iOS的多点触控的处理比起Mac OS的键盘鼠标来要复杂的多。事实上如果你的UI布局使用 Core Animation 的框架来写，是可以在iOS和Mac OS  上通用的</p>
+
+<h2>图层的作用</h2>
+
+<p>CALayer 提供了 UIView没有提供的一些属性，例如</p>
+
+<ul>
+<li>阴影，矩形的圆角，边框的颜色</li>
+<li>3D矩阵变换</li>
+<li>非矩形的边框</li>
+<li>透明的遮罩</li>
+<li>多步，非线性的动画。</li>
+</ul>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2013/04/14/ios%E5%BC%80%E5%8F%91%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F/">
+        iOS开发单例模式
+      </a>
+    </h1>
+
+    <span class="post-date">14 Apr 2013</span>
+
+     <h2>什么是单例</h2>
+
+<p>单例模式是一种常用的软件设计模式。在它的核心结构中只包含一个被称为单例类的特殊类。通过单例模式可以保证系统中一个类只有一个实例而且该实例易于外界访问，从而方便对实例个数的控制并节约系统资源。如果希望在系统中某个类的对象只能存在一个，单例模式是最好的解决方案。</p>
+
+<h2>iOS开发中如何使用单例</h2>
+
+<p>传统的单例构造方法</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">+</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">sharedInstance</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="kt">id</span> <span class="n">sharedInstance</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">sharedInstance</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">){</span>
+        <span class="n">sharedInstance</span> <span class="o">=</span> <span class="p">[[]</span><span class="nb">self</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">]</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">sharedInstance</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<h2>多线程下的隐患</h2>
+
+<p>在多线程的情况下，如果两个线程几乎同时调用sharedInstance()方法会发生什么呢？有可能会创建出两个该类的实例。 为了防止这种情况 我们通常会加上锁</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">+</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">sharedInstance</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="kt">id</span> <span class="n">sharedInstance</span><span class="p">;</span>
+    <span class="k">@synchronized</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">sharedInstance</span> <span class="o">==</span> <span class="nb">nil</span><span class="p">){</span>
+            <span class="n">sharedInstance</span> <span class="o">=</span> <span class="p">[[]</span><span class="nb">self</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">]</span>
+        <span class="p">}</span>            
+        <span class="p">}</span>
+    <span class="k">return</span> <span class="n">sharedInstance</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+<h2>dispatch_once</h2>
+
+<p>iOS 4.0 引进了 <strong>GCD</strong> ，其中的 <strong>dispatch_once</strong>，它即使是在多线程环境中也能安全地工作，非常安全。dispatch<em>once是用来确保指定的任务将在应用的生命周期期间，仅执行一次。以下是一个典型的源代码以初始化的东西。它可以优雅通过使用dispatch</em>once来创建一个单例。</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="p">+</span> <span class="p">(</span><span class="kt">id</span><span class="p">)</span><span class="nf">sharedInstance</span>
+<span class="p">{</span>
+    <span class="k">static</span> <span class="kt">dispatch_once_t</span> <span class="n">once</span><span class="p">;</span>
+    <span class="k">static</span> <span class="kt">id</span> <span class="n">sharedInstance</span><span class="p">;</span>
+    <span class="n">dispatch_once</span><span class="p">(</span><span class="o">&amp;</span><span class="n">once</span><span class="p">,</span> <span class="o">^</span><span class="p">{</span>
+        <span class="n">sharedInstance</span> <span class="o">=</span> <span class="p">[[</span><span class="nb">self</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+    <span class="p">});</span>
+    <span class="k">return</span> <span class="n">sharedInstance</span><span class="p">;</span>
+<span class="p">}</span></code></pre></div>
+
+  </div>
+  
+</div>
+
+<div class="pagination">
+  
+    <span class="pagination-item older">Older</span>
+  
+  
+    
+      <a class="pagination-item newer" href="/page3">Newer</a>
+    
+  
+</div>
+    </div>
+
+  </body>
+</html>
