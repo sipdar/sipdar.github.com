@@ -10,7 +10,7 @@ relative_permalinks: true
 title:            Sunny
 tagline:          'A iOS tech blog'
 description:      'This is my personal blog Welcome ！<a href="https://twitter.com/sipdar" target="_blank">@sunny</a>.'
-url:              https://github.com/sipdar
+url:               http://sipdar.github.com
 baseurl:          /
 
 author:
