@@ -83,6 +83,10 @@
           
         
       
+        
+          
+        
+      
       
 <!--       <a class="sidebar-nav-item" href="https://github.com/sipdar/archive/v2.1.0.zip">Download</a> -->
       <a class="sidebar-nav-item" href="https://github.com/sipdar">GitHub project</a>
@@ -98,6 +102,198 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2014/03/18/Blend_Models/">
+        Blend Modes
+      </a>
+    </h1>
+
+    <span class="post-date">18 Mar 2014</span>
+
+     <h1>Blend Modes</h1>
+
+<p>我们在使用<strong>Quartz 2D</strong>画图的时候，经常遇到图形叠加的情况。在多个图形重叠的时候有时候我们想重叠的部分透明阿，或者重叠的部分颜色混合在一起阿。这时候就要用到 <strong>Quartz 2D</strong> 的混合模式了
+<strong>Blend Modes</strong>。通过 <strong>Blend Modes</strong> 我们可以把几个图片组合起来绘制到已经有图形的
+ <strong>graphic context</strong>上。</p>
+
+<h2>How to use Blend Modes</h2>
+
+<ol>
+<li>首先先画背景。</li>
+<li>使用 <strong>CGContextSetBlendMode</strong> 设置 <strong>Blend Modes</strong> </li>
+<li>在画我们想和背景图形合成的图片 用 <strong>CGContextDrawImage</strong> 绘制。其实不只是图片。接下来绘制的无论是图片 矩形 文字都会使用  <strong>Blend Modes</strong> 和背景组合在一起。</li>
+</ol>
+
+<p>下面我们把左边的图片跟右边的条纹背景用不同的 <strong>Blend Modes</strong> 混合在一起看看都有什么效果
+<img src="http://sipdar.github.io/image/2014/03/18/1.png" alt="image"></p>
+
+<h3>Normal Blend Mode</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">UIImage *foregroundImage = [UIImage imageNamed:@&quot;abc.jpg&quot;];
+UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 320),NO ,[UIScreen mainScreen].scale);
+CGContextRef context = UIGraphicsGetCurrentContext();
+CGFloat y = 0;
+CGFloat height = 50 ;
+for (int i = 0; i&lt;5; i++) {
+    y  += height ;
+    CGRect rect = CGRectMake(0, y, 320, height);
+    UIColor *color = [self colorWihtIndex:i];
+    CGContextSetFillColorWithColor(context, color.CGColor);
+    CGContextFillRect(context, rect);
+    CGContextSaveGState(context);
+}
+
+CGContextScaleCTM(context, 1.0f, -1.0f);
+CGContextTranslateCTM(context, 0.0f, -320);
+
+CGContextSetBlendMode(context, kCGBlendModeNormal);
+CGContextDrawImage(context, CGRectMake(0, 50, 320, 240), foregroundImage.CGImage);
+UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+self.imageView.image = image;
+UIGraphicsEndImageContext();
+
+
+-(UIColor *)colorWihtIndex:(NSInteger) index{
+    if (index == 0)
+        return [[UIColor yellowColor] colorWithAlphaComponent:0.8];
+    else if (index== 1)
+        return [[UIColor purpleColor] colorWithAlphaComponent:0.8];
+    else if (index== 2)
+        return [[UIColor redColor]colorWithAlphaComponent:0.8];
+    else if (index== 3)
+        return [[UIColor greenColor] colorWithAlphaComponent:0.8];
+    else if (index== 4)
+        return [[UIColor blueColor] colorWithAlphaComponent:0.8];
+    return [UIColor purpleColor];
+}
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/18/normal.png" alt="image"></p>
+
+<h3>Multiply Blend Mode</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeMultiply);
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/18/Multiply.png" alt="image"></p>
+
+<h3>Screen Blend Mode</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeScreen);
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/18/Screen.png" alt="image"></p>
+
+<h2>Overlay Blend Mode</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeOverlay);
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/18/Overlay.png" alt="image"></p>
+
+<h2>Lighten Blend Mode</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeLighten);
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/18/Lighten.png" alt="image"></p>
+
+<h2>Color Dodge Blend Mode</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeColorDodge);
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/18/Overlay.png" alt="image"></p>
+
+<h2>Color Burn Blend Mode</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeColorBurn);
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/18/ColorBurn.png" alt="image"></p>
+
+<h2>Soft Light Blend Mode</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeSoftLight);
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/18/SoftLight.png" alt="image"></p>
+
+<h2>Hard Light Blend Mode</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeHardLight);
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/18/HardLight.png" alt="image"></p>
+
+<h2>Difference Blend Mode</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeDifference);
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/18/Difference.png" alt="image"></p>
+
+<h2>Exclusion Blend Mode</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeExclusion);
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/18/Exclusion.png" alt="image"></p>
+
+<h2>Hue Blend Mode</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeHue);
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/18/Hue.png" alt="image"></p>
+
+<h2>Saturation Blend Mode</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeSaturation);
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/18/Saturation.png" alt="image"></p>
+
+<h2>Color Blend Mode</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeColor);
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/18/Color.png" alt="image"></p>
+
+<h2>Luminosity Blend Mode</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeLuminosity);
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/18/Luminosity.png" alt="image"></p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2014/03/17/Transparency_Layers/">
+        Transparency Layers
+      </a>
+    </h1>
+
+    <span class="post-date">17 Mar 2014</span>
+
+     <p><strong>Transparency Layer</strong> 是由多个对象组合在一起拼成的图形，它在图形绘制的过程中会被当作一个对象来处理。 <strong>Transparency Layer</strong> 最常见的用处就是在我们想对一组图形添加效果的时候。比如像下面这样对三个叠加在一起的三个圆形添加阴影。</p>
+
+<p><img src="http://sipdar.github.io/image/2014/03/17/circlesWithShadow.png" alt="image"></p>
+
+<p>如果我们添加阴影的时候没用把这三个圆形绘制在 <strong>Transparency Layer</strong> 上的话 那么阴影则将会添加在每个圆形周围上。</p>
+
+<p><img src="http://sipdar.github.io/image/2014/03/17/circlesInnerShadow.png" alt="image"></p>
+
+<p>使用 <strong>Transparency Layer</strong> 的时候，我们首先要在绘制 <strong>Transparency Layer</strong> 开始的地方调用
+<strong>CGContextBeginTransparencyLayer</strong> 它需要两个参数，一个就是我们绘制图形的<strong>graphics context</strong> 另外一个是个<strong>CFDictionary</strong>对象，通过第二个参数我们可以控制一些绘制图形的属性，比如 阴影的开关 图形混合的类型 和图形的alpha值。一般的情况下都是传<strong>NULL</strong>。接下来我们就可以执行我们绘图的代码了。 画完之后在   <strong>UIGraphicsEndImageContext</strong> 或者 <strong>UIGraphicsPopContext</strong> 之前我们需要调用 <strong>CGContextEndTransparencyLayer</strong>来结束 <strong>Transparency Layer</strong>的绘制。此外，我们还可以使用 <strong>CGContextBeginTransparencyLayerWithRect</strong> 来制定区域来绘制 <strong>Transparency Layer</strong></p>
+
+<p>我们看下面这个例子代码</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 320),NO ,[UIScreen mainScreen].scale);
+CGContextRef myContext = UIGraphicsGetCurrentContext();
+CGFloat wd = 250;
+CGFloat ht = 250;
+CGSize myShadowOffset = CGSizeMake (5, -5);
+CGContextSetShadow (myContext, myShadowOffset, 3);
+CGContextBeginTransparencyLayer (myContext, NULL);
+CGContextSetRGBFillColor (myContext, 0, 1, 0, 1);
+CGContextFillRect (myContext, CGRectMake (wd/3+ 20,ht/2 ,wd/4,ht/4));
+CGContextSetRGBFillColor (myContext, 0, 0, 1, 1);
+CGContextFillRect (myContext, CGRectMake (wd/3-20,ht/2-50,wd/4,ht/4));
+CGContextSetRGBFillColor (myContext, 1, 0, 0, 1);
+CGContextFillRect (myContext, CGRectMake (wd/3,ht/2-20,wd/4,ht/4));
+CGContextEndTransparencyLayer (myContext);
+UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+self.imageView.image = image;
+UIGraphicsEndImageContext();
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/17/a.png" alt="image"></p>
+
+<p>三个矩形被当作一个整体添加了阴影，如果注释掉 </p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextBeginTransparencyLayer (myContext, NULL);
+</code></pre></div>
+<p>和</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextEndTransparencyLayer (myContext);
+</code></pre></div>
+<p>那么阴影就会单独的添加在每个图形上。</p>
+
+<p><img src="http://sipdar.github.io/image/2014/03/17/b.png" alt="image"></p>
+
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -427,230 +623,6 @@ imageView.layer.transform = transformRight;
 </code></pre></div>
 <p><img src="http://m3.img.libdd.com/farm4/2013/1021/22/84AA693C9690E7E26F750C11EA1C1718866B603CA9410_594_856.PNG" alt="image">
 我们发现绿色部分的变换比以前例子中的效果来变形的非常厉害，这是因为在做3D变换的时候每个<strong>Layer</strong>的坐标系都是以<strong>superLayer</strong>为参照的。也就是说 红色<strong>Layer</strong>跟绿色<strong>Layer</strong>并不在同一个参照系里。当我们要用 <strong>Core Animation</strong>创建一些复杂的3D效果的时候，要注意这点。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2013/10/19/Core_Animation(%E5%85%AD)_AffineTransform/">
-        Core Animation (六)CGAffineTransform
-      </a>
-    </h1>
-
-    <span class="post-date">19 Oct 2013</span>
-
-     <h1>变换</h1>
-
-<p>图层一旦创建,你就可以通过矩阵变换来改变一个图层的几何形状。<strong>CGAffineTransform</strong> ,用于 图层的旋转,缩放,位移，还有 <strong>CATransform3D</strong> 它可以把二维的平面转换到三维矩阵中。</p>
-
-<h2>Affine Transforms</h2>
-
-<p><strong>UIView</strong>  有个属性是 <strong>transform</strong>,<strong>transform</strong> 的类型就是 <strong>CGAffineTransform</strong> 通过它我们可以对<strong>UIView</strong>做一些二维的旋转缩放之类的操作。<strong>CGAffineTransform</strong> 的定义如下</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">struct CGAffineTransform {
-      CGFloat a, b, c, d;
-      CGFloat tx, ty;
-};
-</code></pre></div>
-<p>它其实表示的是一个矩阵       </p>
-
-<p><img src="https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation01.gif" alt="image"></p>
-
-<p>因为最后一列总是是(0,0,1)，所以有用的信息就是前面两列，对一个view进行仿射变化就相当于对view上的每个点做一个乘法，结果就是</p>
-
-<p><img src="https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation02.gif" alt="image"></p>
-
-<p>下面举例说明几个转换运算的数学实现，x y 是原先点的坐标，下面是矩阵转换的计算公式</p>
-
-<p><img src="https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation03.gif" alt="image"></p>
-
-<h3>恒等矩阵</h3>
-
-<p>恒等矩阵就是输入什么坐标，出来什么坐标，没有转换</p>
-
-<p><img src="https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation04.gif" alt="image"></p>
-
-<p>计算的结果如下，计算之前的x y 跟计算之后的 x‘ y’ 是相等的。</p>
-
-<p><img src="https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation05.gif" alt="image"></p>
-
-<h3>平移矩阵</h3>
-
-<p><img src="https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation06.gif" alt="image"></p>
-
-<p>通过平移矩阵的计算公式如下</p>
-
-<p><img src="https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation07.gif" alt="image"></p>
-
-<h3>缩放矩阵</h3>
-
-<p><img src="https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation08.gif" alt="image"></p>
-
-<p>缩放矩阵的计算公式</p>
-
-<p><img src="https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation09.gif" alt="image"></p>
-
-<h3>旋转矩阵</h3>
-
-<p><img src="https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation10.gif" alt="image"></p>
-
-<p>旋转矩阵的计算公式</p>
-
-<p><img src="https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation11.gif" alt="image"></p>
-
-<h3>旋转加平移矩阵</h3>
-
-<p><img src="https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation12.gif" alt="image"></p>
-
-<p>下面就是组合起来的计算公式</p>
-
-<p><img src="https://developer.apple.com/library/ios/documentation/GraphicsImaging/Conceptual/drawingwithquartz2d/Art/equation13.gif" alt="image"></p>
-
-<p>AffineTransform类描述了一种二维仿射变换的功能，它是一种二维坐标到二维坐标之间的线性变换，保持二维图形的“平直性”（即变换后直线还是直线不会打弯，圆弧还是圆弧）和“平行性”（是指保二维图形间的相对位置关系不变，平行线还是平行线，而直线上点的位置顺序不变，另特别注意向量间夹角可能会发生变化。）仿射变换可以通过一系列的原子变换的复合来实现，包括：平移（Translation）、缩放（Scale）、翻转（Flip）、旋转（Rotation）和错切（Shear）</p>
-
-<p><img src="http://m1.img.libdd.com/farm5/2013/1019/20/8B45FAAB1B7FF35E7BBDFB6BF60F0B1CCE48596C04FAE_482_342.PNG" alt="image"></p>
-
-<h2>创建一个 <strong>CGAffineTransform</strong></h2>
-
-<p>看了上面的的矩阵和计算有点叫人挠头。 不过 <strong>Core Graphics</strong>为了方便开发者，提供了好多内建的函数，可以使我们不必学习复杂的数学知识，就可以实现上面的操作。
-下面的方法都可以创建 <strong>CGAffineTransform</strong></p>
-
-<p>函数| 操作 
------------- | -------------
-CGAffineTransformMakeTranslation | 新的平移矩阵要移动到距离远点的位置<br>
-CGAffineTransformMakeRotation | 构建一个新的旋转矩阵 参数是旋转的弧度。
-CGAffineTransformMakeScale | 构建一个新的缩放矩阵指定多少拉伸或收缩坐标x和y值。</p>
-
-<p>我们看下面这个例子，它把LLVM的logo 旋转了 45°：</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">UIImage *image = [UIImage imageNamed:@&quot;DragonMedium&quot;];
-UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-imageView.frame = CGRectMake(0, 0 , CGRectGetWidth(imageView.frame),
-                                     CGRectGetHeight(imageView.frame));
-imageView.center = self.view.center;
-imageView.transform = CGAffineTransformMakeRotation(M_PI_4);
-[self.view addSubview:imageView];
-</code></pre></div>
-<p><img src="http://m3.img.libdd.com/farm4/2013/1019/21/D78163CE65A5BDE31AFB5899ABBECB2C63DFCF8CA2CCB_594_856.PNG" alt="image"></p>
-
-<p>我们在旋转ImageView的时候 传给 <strong>CGAffineTransformMakeRotation</strong> 的参数是一个宏定义 <strong>M<em>PI</em>4</strong>,并不是 45°。旋转的单位采用弧度(radians),而不是角度(degress)。以下两个函数,你可以在 弧度和角度之间切换。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGFloat DegreesToRadians(CGFloat degrees) {return degrees * M_PI / 180;};
-￼CGFloat RadiansToDegrees(CGFloat radians) {return radians * 180 / M_PI;};
-</code></pre></div>
-<p>弧度通常指定使用的数学常数π（圆周率）的倍数。 π弧度等于180度，所以π除以4是相当于45度。
-C 的<strong>math</strong>库，方便地提供常数π的公倍数，M<em>PI</em>4是常数，表示π除以4。如果你想使用弧度时候，你可以直接使用这些宏。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">#define M_E         2.71828182845904523536028747135266250   /* e              */
-#define M_LOG2E     1.44269504088896340735992468100189214   /* log2(e)        */
-#define M_LOG10E    0.434294481903251827651128918916605082  /* log10(e)       */
-#define M_LN2       0.693147180559945309417232121458176568  /* loge(2)        */
-#define M_LN10      2.30258509299404568401799145468436421   /* loge(10)       */
-#define M_PI        3.14159265358979323846264338327950288   /* pi             */
-#define M_PI_2      1.57079632679489661923132169163975144   /* pi/2           */
-#define M_PI_4      0.785398163397448309615660845819875721  /* pi/4           */
-#define M_1_PI      0.318309886183790671537767526745028724  /* 1/pi           */
-#define M_2_PI      0.636619772367581343075535053490057448  /* 2/pi           */
-#define M_2_SQRTPI  1.12837916709551257389615890312154517   /* 2/sqrt(pi)     */
-#define M_SQRT2     1.41421356237309504880168872420969808   /* sqrt(2)        */
-#define M_SQRT1_2   0.707106781186547524400844362104849039  /* 1/sqrt(2)      */
-</code></pre></div>
-<h2>组合Transforms</h2>
-
-<p><strong>Core Graphics</strong> 还提供了另外一系列的函数，使开发者可以方便的组合 <strong>Transforms</strong></p>
-
-<p>例如</p>
-
-<p>函数| 操作 
------------- | -------------
-GAffineTransformRotate(CGAffineTransform t, CGFloat angle)  | 原始的基础上加上偏移
-CGAffineTransformScale(CGAffineTransform t, CGFloat sx, CGFloat sy) | 加上缩放
-CGAffineTransformTranslate(CGAffineTransform t, CGFloat tx, CGFloat ty) | 加上旋转</p>
-
-<p>当我们操作 <strong>Transforms</strong> 的时候，我们经常会创建一个初始的什么也不做的<strong>Transform</strong>，就像 <strong>point</strong> 的 <strong>zero</strong> 或者 <strong>nil</strong>。在矩阵的世界中，恒等矩阵就是干这个用的。 <strong>Core Graphics</strong> 为我们提供了 </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGAffineTransformIdentity
-</code></pre></div>
-<p>当我们想组合两个已经存在的 <strong>transform</strong>的时候，我们可以使用</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGAffineTransformConcat(CGAffineTransform t1, CGAffineTransform t2);
-</code></pre></div>
-<p>下面的代码使LLVM的logo 缩小了50% 旋转了45°，并且向下移动了100的位置。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">UIImage *image = [UIImage imageNamed:@&quot;DragonMedium&quot;];
-UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-imageView.frame = CGRectMake(0, 0 , CGRectGetWidth(imageView.frame), 
-                                    CGRectGetHeight(imageView.frame));
-imageView.center = self.view.center;
-
-CGAffineTransform transform = CGAffineTransformIdentity;
-transform = CGAffineTransformScale(transform, 0.5, 0.5);
-transform = CGAffineTransformTranslate(transform, 0, 100);
-
-imageView.transform = CGAffineTransformRotate(transform, M_PI_4);
-[self.view addSubview:imageView];
-</code></pre></div>
-<p><img src="http://m2.img.libdd.com/farm5/2013/1019/22/CE867462973B6617719D875B002DCE2EFB1FFE54D45AB_594_856.PNG" alt="image">      </p>
-
-<h2>Shear Transform</h2>
-
-<p><strong>Shear Transform</strong> 是第四种 <strong>Affine Transform</strong> （我也不知道该怎么翻译这个 Shear Transform）。和旋转 缩放 移动 不同的是 <strong>Core Graphics</strong>并没有提供现成的函数来做 <strong>Shear Transform</strong>,不过我们可以自己来实现他。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGAffineTransform CGAffineTransformMakeShear(CGFloat x, CGFloat y)
-{
-    CGAffineTransform transform = CGAffineTransformIdentity;
-    transform.c = -x;
-    transform.b = y;
-    return transform;
-}
-</code></pre></div>
-<p>下面给imageview 添加上 transform</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">UIImage *image = [UIImage imageNamed:@&quot;DragonMedium&quot;];
-UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-imageView.backgroundColor = [UIColor greenColor];
-imageView.frame = CGRectMake(0, 0 , CGRectGetWidth(imageView.frame), 
-                                    CGRectGetHeight(imageView.frame));
-imageView.center = self.view.center;
-imageView.transform = CGAffineTransformMakeShear(0.6,0);
-
-[self.view addSubview:imageView];
-</code></pre></div>
-<p>效果如下</p>
-
-<p><img src="http://m1.img.libdd.com/farm4/2013/1019/22/433CC9E800E500602AB99C94F72ACC8FA3529787B5BEE_594_856.PNG" alt="image">  </p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2013/10/17/Core_Animation(%E4%BA%94)_Layer_Masking/">
-        Core Animation (五)Layer Masking
-      </a>
-    </h1>
-
-    <span class="post-date">17 Oct 2013</span>
-
-     <h1>Layer Masking (五)</h1>
-
-<h2>Layer Masking</h2>
-
-<p>当使用 <strong>masksToBounds</strong> 的时候，它会沿着layer的边框进行裁切超出的部分。包括使用 <strong>cornerRadius</strong>也是这样，裁出一个圆角矩形来。但是有时候我们想绘制的并不是一个矩形，或者一个圆角矩形，比如我现在想以五角星的形状来显示一个image对象，在比如我想在滚动一个显示文本的View的时候可以叫他优雅的在屏幕边缘淡出，而不是笔直的切割显示区域的边缘。
-有两种方法可以实现，一种就是用 带 <strong>alpha</strong> 透明的<strong>PNG</strong>图片盖在要显示的区域上，当我们在程序中要动态的裁切图片显示区域的时候这个方法可能就不实用了。</p>
-
-<p><strong>CAlayer</strong> 有个<strong>mask</strong>属性， <strong>mask</strong>本身就是一个<strong>CAlayer</strong>，它和其他任何的<strong>Layer</strong>没什么不同。使用<strong>mask layer</strong>的时候，跟其他的<strong>sublayer</strong>没什么区别，不同的是它并像一个普通的<strong>subLayer</strong>那样显示在<strong>superLayer</strong>上 ，它决定了<strong>superLayer</strong>的可显示区域。
-<strong>mask Layer</strong>的color 属性就可以忽略了。<strong>mask</strong>会把<strong>superLayer</strong>裁切,只显示符合 <strong>Mask</strong> 大小的部分.</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">UIView *viewA = [[UIView alloc] initWithFrame:CGRectMake(100, 80, 100, 100)];
-UIView *viewB = [[UIView alloc] initWithFrame:CGRectMake(350, 80, 100, 100)];
-UIImage *image = [UIImage imageNamed:@&quot;kangaroo.png&quot;];
-UIImageView *imageView = [[UIImageView alloc] initWithImage:image];
-imageView.frame = CGRectMake(250, 100 , CGRectGetWidth(imageView.frame), 
-                                         CGRectGetHeight(imageView.frame));
-viewB.backgroundColor = [UIColor greenColor];
-viewA.backgroundColor = [UIColor greenColor];
-
-CALayer *layer = [CALayer layer];
-
-layer.frame = CGRectMake(10, 20, image.size.width, image.size.height);
-layer.contents = (id)image.CGImage;
-viewB.layer.mask = layer;
-
-[self.view addSubview:imageView];
-[self.view addSubview:viewA];
-[self.view addSubview:viewB];
-</code></pre></div>
-<p><img src="http://m3.img.libdd.com/farm5/2013/1018/23/0EEEEA8A23052F8A25B94C45104B54AD29117463794C2_880_532.PNG" alt="image"></p>
 
   </div>
   

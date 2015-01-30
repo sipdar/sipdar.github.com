@@ -83,6 +83,10 @@
           
         
       
+        
+          
+        
+      
       
 <!--       <a class="sidebar-nav-item" href="https://github.com/sipdar/archive/v2.1.0.zip">Download</a> -->
       <a class="sidebar-nav-item" href="https://github.com/sipdar">GitHub project</a>
@@ -98,6 +102,163 @@
 
     <div class="content container">
       <div class="posts">
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2014/03/27/%E4%BA%BA%E8%84%B8%E6%A3%80%E6%B5%8B/">
+        Core Image 人脸检测
+      </a>
+    </h1>
+
+    <span class="post-date">27 Mar 2014</span>
+
+     <p><strong>Core Image</strong>可以对图像进行分析，并找到图片中人脸的位置。<strong>Core Image</strong>检测出人脸后，可以提供面部特性，比如眼睛和嘴的位置。它还可以跟踪视频中人脸的位置。</p>
+
+<p><img src="http://sipdar.github.io/image/2014/03/27/1.png" alt="image"></p>
+
+<p>下面我们看看如何实现人脸检测。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">UIImage *baby = [UIImage imageNamed:@&quot;1.jpg&quot;];
+CGFloat scale = 320.0/baby.size.width;
+CIImage *myimage = [CIImage imageWithCGImage:baby.CGImage];
+CIContext *context = [CIContext contextWithOptions:nil];
+CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace context:context options:@{CIDetectorAccuracy:CIDetectorAccuracyHigh}];
+NSArray *features = [detector featuresInImage:myimage];
+for (CIFaceFeature *faceFeature in features){
+    CGRect bounds = faceFeature.bounds;
+    bounds.origin.x *= scale;
+    bounds.origin.y *= scale;
+    bounds.size.width *= scale;
+    bounds.size.height *= scale;
+    UIView *faceView = [[UIView alloc] initWithFrame:bounds];
+    faceView.backgroundColor = [UIColor clearColor];
+    faceView.layer.borderWidth = 1;
+    faceView.layer.borderColor = [UIColor redColor].CGColor;
+    [self.imageView addSubview:faceView];
+}
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/27/2.png" alt="image"></p>
+
+<p>此外，我们还可以拿到眼睛跟嘴巴的位置</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">if (faceFeature.hasLeftEyePosition)
+    NSLog(@&quot;Left eye %@&quot;,NSStringFromCGPoint(faceFeature.leftEyePosition));
+if (faceFeature.hasRightEyePosition)
+    NSLog(@&quot;Right eye %@&quot;,NSStringFromCGPoint(faceFeature.rightEyePosition));
+if (faceFeature.hasMouthPosition)
+    NSLog(@&quot;Mouth %@&quot;, NSStringFromCGPoint(faceFeature.mouthPosition));
+</code></pre></div>
+<h2>利用<strong>Core Image</strong> 进行脸部打码</h2>
+
+<p><img src="http://sipdar.github.io/image/2014/03/27/4.png" alt="image">
+要实现这个效果，分下面几步。</p>
+
+<ul>
+<li>首先我们要生成一张像素化的图像。</li>
+<li>然后我们找到图像中人脸的位置，生成一张遮罩图片。</li>
+<li>然后我们把像素图片和遮罩图片合成一张图片并且使用原图做为背景。</li>
+</ul>
+
+<h3>像素图片</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">UIImage *baby = [UIImage imageNamed:@&quot;1.jpg&quot;];
+CIImage *myimage = [CIImage imageWithCGImage:baby.CGImage];
+CGFloat scale = MAX(baby.size.width, baby.size.height)/60;
+CIImage *pixlImage =[CIFilter filterWithName:@&quot;CIPixellate&quot; keysAndValues:kCIInputImageKey,myimage,kCIInputScaleKey,@(scale),nil].outputImage;
+</code></pre></div>
+<h3>脸部遮罩图片</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CIImage *maskImage = nil;
+CIContext *context = [CIContext contextWithOptions:nil];
+CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace context:context options:@{CIDetectorAccuracy:CIDetectorAccuracyHigh}];
+NSArray *features = [detector featuresInImage:myimage];
+
+for (CIFaceFeature *faceFeature in features){
+    CGFloat centerX = faceFeature.bounds.origin.x + faceFeature.bounds.size.width / 2.0;
+    CGFloat centerY = faceFeature.bounds.origin.y + faceFeature.bounds.size.height / 2.0;
+    CGFloat radius = MIN(faceFeature.bounds.size.width, faceFeature.bounds.size.height) / 1.5;
+    CIFilter *radialGradient = [CIFilter filterWithName:@&quot;CIRadialGradient&quot; keysAndValues:@&quot;inputRadius0&quot;, @(radius),@&quot;inputRadius1&quot;, @(radius + 1.0f),@&quot;inputColor0&quot;, [CIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0],@&quot;inputColor1&quot;, [CIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0],kCIInputCenterKey, [CIVector vectorWithX:centerX Y:centerY],nil];
+    CIImage *circleImage = [radialGradient valueForKey:kCIOutputImageKey];
+    if (nil == maskImage)
+        maskImage = circleImage;
+    else
+        maskImage = [[CIFilter filterWithName:@&quot;CISourceOverCompositing&quot; keysAndValues:kCIInputImageKey, circleImage,kCIInputBackgroundImageKey, maskImage,nil] valueForKey:kCIOutputImageKey];
+    }
+}
+</code></pre></div>
+<h3>合成最终的图片</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">CIImage *resultImage =[CIFilter filterWithName:@&quot;CIBlendWithMask&quot; keysAndValues:kCIInputImageKey,pixlImage,@&quot;inputMaskImage&quot;,maskImage,@&quot;inputBackgroundImage&quot;,myimage,nil].outputImage;
+</code></pre></div>
+<p><img src="http://sipdar.github.io/image/2014/03/27/3.png" alt="image">    </p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2014/03/26/CoreImage%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93/">
+        Core Image 实时渲染
+      </a>
+    </h1>
+
+    <span class="post-date">26 Mar 2014</span>
+
+     <p>我们在使用 <strong>AVFoundation</strong> 显示视频的时候，也可以使用 Core Image 进行事实渲染。</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">#import &lt;UIKit/UIKit.h&gt;
+#import &lt;GLKit/GLKit.h&gt;
+#import &lt;AVFoundation/AVFoundation.h&gt;
+#import &lt;CoreImage/CoreImage.h&gt;
+@interface ViewController : GLKViewController &lt;AVCaptureVideoDataOutputSampleBufferDelegate&gt; {
+    AVCaptureSession *session;
+    CIContext *coreImageContext;
+}
+@property (strong, nonatomic) EAGLContext *context;
+@end
+
+@implementation ViewController
+@synthesize context = _context;
+- (void)viewDidLoad{
+    [super viewDidLoad];
+    self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    GLKView *view = (GLKView *)self.view;
+    view.frame = CGRectMake(0, 0, 640, 1136);
+    view.context = self.context;
+    view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
+    coreImageContext = [CIContext contextWithEAGLContext:self.context];
+
+    NSError * error;
+    session = [[AVCaptureSession alloc] init];
+    [session beginConfiguration];
+    [session setSessionPreset:AVCaptureSessionPreset640x480];
+    AVCaptureDevice * videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&amp;error];
+    [session addInput:input];
+
+    AVCaptureVideoDataOutput * dataOutput = [[AVCaptureVideoDataOutput alloc] init];
+    [dataOutput setAlwaysDiscardsLateVideoFrames:YES]; 
+    [dataOutput setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];   
+    [dataOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
+
+    [session addOutput:dataOutput];
+    [session commitConfiguration];
+    NSArray *array = [[session.outputs objectAtIndex:0] connections];
+    for (AVCaptureConnection *connection in array){
+        connection.videoOrientation = AVCaptureVideoOrientationPortrait;
+    }
+    [session startRunning];
+}
+
+-(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+    CVPixelBufferRef pixelBuffer = (CVPixelBufferRef)CMSampleBufferGetImageBuffer(sampleBuffer);
+    CIImage *image = [CIImage imageWithCVPixelBuffer:pixelBuffer];
+    CGRect rect = [image extent];
+    rect.origin.y = 200;
+    rect.size.width  =  640;
+    rect.size.height  =  (640.0/480.0)*640;
+    CIFilter *filter =[CIFilter filterWithName:@&quot;CISepiaTone&quot;];
+    [filter setValue:image forKey:kCIInputImageKey];
+    [filter setValue:@0.8 forKey:kCIInputIntensityKey];
+    image = filter.outputImage;
+    [coreImageContext drawImage:image inRect:rect fromRect:[image extent] ];
+}
+@end
+</code></pre></div>
+  </div>
   
   <div class="post">
     <h1 class="post-title">
@@ -388,198 +549,6 @@ UIBezierPath* bezier3Path = [UIBezierPath bezierPath];
 <h5>图像遮罩(image mask)</h5>
 
 <p><strong>image mask</strong> 也是由一組像素组成的特殊的位图，能指定图片的绘制区域，常见就通过<strong>image mask</strong>来绘制各种各样的形状，在iOS实际开发中用到的最多的可能就是圆角矩形了。 说白了就是就是我们通过<strong>image mask</strong>想让图片怎么显示，就怎么显示。</p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/03/18/Blend_Models/">
-        Blend Modes
-      </a>
-    </h1>
-
-    <span class="post-date">18 Mar 2014</span>
-
-     <h1>Blend Modes</h1>
-
-<p>我们在使用<strong>Quartz 2D</strong>画图的时候，经常遇到图形叠加的情况。在多个图形重叠的时候有时候我们想重叠的部分透明阿，或者重叠的部分颜色混合在一起阿。这时候就要用到 <strong>Quartz 2D</strong> 的混合模式了
-<strong>Blend Modes</strong>。通过 <strong>Blend Modes</strong> 我们可以把几个图片组合起来绘制到已经有图形的
- <strong>graphic context</strong>上。</p>
-
-<h2>How to use Blend Modes</h2>
-
-<ol>
-<li>首先先画背景。</li>
-<li>使用 <strong>CGContextSetBlendMode</strong> 设置 <strong>Blend Modes</strong> </li>
-<li>在画我们想和背景图形合成的图片 用 <strong>CGContextDrawImage</strong> 绘制。其实不只是图片。接下来绘制的无论是图片 矩形 文字都会使用  <strong>Blend Modes</strong> 和背景组合在一起。</li>
-</ol>
-
-<p>下面我们把左边的图片跟右边的条纹背景用不同的 <strong>Blend Modes</strong> 混合在一起看看都有什么效果
-<img src="http://sipdar.github.io/image/2014/03/18/1.png" alt="image"></p>
-
-<h3>Normal Blend Mode</h3>
-<div class="highlight"><pre><code class="language-text" data-lang="text">UIImage *foregroundImage = [UIImage imageNamed:@&quot;abc.jpg&quot;];
-UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 320),NO ,[UIScreen mainScreen].scale);
-CGContextRef context = UIGraphicsGetCurrentContext();
-CGFloat y = 0;
-CGFloat height = 50 ;
-for (int i = 0; i&lt;5; i++) {
-    y  += height ;
-    CGRect rect = CGRectMake(0, y, 320, height);
-    UIColor *color = [self colorWihtIndex:i];
-    CGContextSetFillColorWithColor(context, color.CGColor);
-    CGContextFillRect(context, rect);
-    CGContextSaveGState(context);
-}
-
-CGContextScaleCTM(context, 1.0f, -1.0f);
-CGContextTranslateCTM(context, 0.0f, -320);
-
-CGContextSetBlendMode(context, kCGBlendModeNormal);
-CGContextDrawImage(context, CGRectMake(0, 50, 320, 240), foregroundImage.CGImage);
-UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-self.imageView.image = image;
-UIGraphicsEndImageContext();
-
-
--(UIColor *)colorWihtIndex:(NSInteger) index{
-    if (index == 0)
-        return [[UIColor yellowColor] colorWithAlphaComponent:0.8];
-    else if (index== 1)
-        return [[UIColor purpleColor] colorWithAlphaComponent:0.8];
-    else if (index== 2)
-        return [[UIColor redColor]colorWithAlphaComponent:0.8];
-    else if (index== 3)
-        return [[UIColor greenColor] colorWithAlphaComponent:0.8];
-    else if (index== 4)
-        return [[UIColor blueColor] colorWithAlphaComponent:0.8];
-    return [UIColor purpleColor];
-}
-</code></pre></div>
-<p><img src="http://sipdar.github.io/image/2014/03/18/normal.png" alt="image"></p>
-
-<h3>Multiply Blend Mode</h3>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeMultiply);
-</code></pre></div>
-<p><img src="http://sipdar.github.io/image/2014/03/18/Multiply.png" alt="image"></p>
-
-<h3>Screen Blend Mode</h3>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeScreen);
-</code></pre></div>
-<p><img src="http://sipdar.github.io/image/2014/03/18/Screen.png" alt="image"></p>
-
-<h2>Overlay Blend Mode</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeOverlay);
-</code></pre></div>
-<p><img src="http://sipdar.github.io/image/2014/03/18/Overlay.png" alt="image"></p>
-
-<h2>Lighten Blend Mode</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeLighten);
-</code></pre></div>
-<p><img src="http://sipdar.github.io/image/2014/03/18/Lighten.png" alt="image"></p>
-
-<h2>Color Dodge Blend Mode</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeColorDodge);
-</code></pre></div>
-<p><img src="http://sipdar.github.io/image/2014/03/18/Overlay.png" alt="image"></p>
-
-<h2>Color Burn Blend Mode</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeColorBurn);
-</code></pre></div>
-<p><img src="http://sipdar.github.io/image/2014/03/18/ColorBurn.png" alt="image"></p>
-
-<h2>Soft Light Blend Mode</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeSoftLight);
-</code></pre></div>
-<p><img src="http://sipdar.github.io/image/2014/03/18/SoftLight.png" alt="image"></p>
-
-<h2>Hard Light Blend Mode</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeHardLight);
-</code></pre></div>
-<p><img src="http://sipdar.github.io/image/2014/03/18/HardLight.png" alt="image"></p>
-
-<h2>Difference Blend Mode</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeDifference);
-</code></pre></div>
-<p><img src="http://sipdar.github.io/image/2014/03/18/Difference.png" alt="image"></p>
-
-<h2>Exclusion Blend Mode</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeExclusion);
-</code></pre></div>
-<p><img src="http://sipdar.github.io/image/2014/03/18/Exclusion.png" alt="image"></p>
-
-<h2>Hue Blend Mode</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeHue);
-</code></pre></div>
-<p><img src="http://sipdar.github.io/image/2014/03/18/Hue.png" alt="image"></p>
-
-<h2>Saturation Blend Mode</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeSaturation);
-</code></pre></div>
-<p><img src="http://sipdar.github.io/image/2014/03/18/Saturation.png" alt="image"></p>
-
-<h2>Color Blend Mode</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeColor);
-</code></pre></div>
-<p><img src="http://sipdar.github.io/image/2014/03/18/Color.png" alt="image"></p>
-
-<h2>Luminosity Blend Mode</h2>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextSetBlendMode(context, kCGBlendModeLuminosity);
-</code></pre></div>
-<p><img src="http://sipdar.github.io/image/2014/03/18/Luminosity.png" alt="image"></p>
-
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/03/17/Transparency_Layers/">
-        Transparency Layers
-      </a>
-    </h1>
-
-    <span class="post-date">17 Mar 2014</span>
-
-     <p><strong>Transparency Layer</strong> 是由多个对象组合在一起拼成的图形，它在图形绘制的过程中会被当作一个对象来处理。 <strong>Transparency Layer</strong> 最常见的用处就是在我们想对一组图形添加效果的时候。比如像下面这样对三个叠加在一起的三个圆形添加阴影。</p>
-
-<p><img src="http://sipdar.github.io/image/2014/03/17/circlesWithShadow.png" alt="image"></p>
-
-<p>如果我们添加阴影的时候没用把这三个圆形绘制在 <strong>Transparency Layer</strong> 上的话 那么阴影则将会添加在每个圆形周围上。</p>
-
-<p><img src="http://sipdar.github.io/image/2014/03/17/circlesInnerShadow.png" alt="image"></p>
-
-<p>使用 <strong>Transparency Layer</strong> 的时候，我们首先要在绘制 <strong>Transparency Layer</strong> 开始的地方调用
-<strong>CGContextBeginTransparencyLayer</strong> 它需要两个参数，一个就是我们绘制图形的<strong>graphics context</strong> 另外一个是个<strong>CFDictionary</strong>对象，通过第二个参数我们可以控制一些绘制图形的属性，比如 阴影的开关 图形混合的类型 和图形的alpha值。一般的情况下都是传<strong>NULL</strong>。接下来我们就可以执行我们绘图的代码了。 画完之后在   <strong>UIGraphicsEndImageContext</strong> 或者 <strong>UIGraphicsPopContext</strong> 之前我们需要调用 <strong>CGContextEndTransparencyLayer</strong>来结束 <strong>Transparency Layer</strong>的绘制。此外，我们还可以使用 <strong>CGContextBeginTransparencyLayerWithRect</strong> 来制定区域来绘制 <strong>Transparency Layer</strong></p>
-
-<p>我们看下面这个例子代码</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 320),NO ,[UIScreen mainScreen].scale);
-CGContextRef myContext = UIGraphicsGetCurrentContext();
-CGFloat wd = 250;
-CGFloat ht = 250;
-CGSize myShadowOffset = CGSizeMake (5, -5);
-CGContextSetShadow (myContext, myShadowOffset, 3);
-CGContextBeginTransparencyLayer (myContext, NULL);
-CGContextSetRGBFillColor (myContext, 0, 1, 0, 1);
-CGContextFillRect (myContext, CGRectMake (wd/3+ 20,ht/2 ,wd/4,ht/4));
-CGContextSetRGBFillColor (myContext, 0, 0, 1, 1);
-CGContextFillRect (myContext, CGRectMake (wd/3-20,ht/2-50,wd/4,ht/4));
-CGContextSetRGBFillColor (myContext, 1, 0, 0, 1);
-CGContextFillRect (myContext, CGRectMake (wd/3,ht/2-20,wd/4,ht/4));
-CGContextEndTransparencyLayer (myContext);
-UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-self.imageView.image = image;
-UIGraphicsEndImageContext();
-</code></pre></div>
-<p><img src="http://sipdar.github.io/image/2014/03/17/a.png" alt="image"></p>
-
-<p>三个矩形被当作一个整体添加了阴影，如果注释掉 </p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextBeginTransparencyLayer (myContext, NULL);
-</code></pre></div>
-<p>和</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CGContextEndTransparencyLayer (myContext);
-</code></pre></div>
-<p>那么阴影就会单独的添加在每个图形上。</p>
-
-<p><img src="http://sipdar.github.io/image/2014/03/17/b.png" alt="image"></p>
 
   </div>
   

@@ -83,6 +83,10 @@
           
         
       
+        
+          
+        
+      
       
 <!--       <a class="sidebar-nav-item" href="https://github.com/sipdar/archive/v2.1.0.zip">Download</a> -->
       <a class="sidebar-nav-item" href="https://github.com/sipdar">GitHub project</a>
@@ -231,6 +235,90 @@
 <h2>闭包跟函数是引用类型</h2>
 
 <p>无论您将函数/闭包赋值给一个常量还是变量，您实际上都是将常量/变量的值设置为对应函数/闭包的引用。这也意味着如果您将闭包赋值给了两个不同的常量/变量，两个值都会指向同一个闭包：</p>
+
+  </div>
+  
+  <div class="post">
+    <h1 class="post-title">
+      <a href="/2015/01/23/ios%E5%BA%94%E7%94%A8%E4%B8%AD%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E6%BB%A4%E9%95%9C%E7%9A%84%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E6%96%B9%E6%B3%95/">
+        iOS应用中实现图片滤镜的一个简单方法
+      </a>
+    </h1>
+
+    <span class="post-date">23 Jan 2015</span>
+
+     <h1>iOS应用中实现图片滤镜的一个简单方法</h1>
+
+<p>最近做的一个项目要用到图片滤镜，我对于<code>OpenGL</code>和图形图片处理完全是外行。当然，在iOS上做图片处理绕不开的两个框架<code>GPUImage</code> 和苹果自家的<code>Core Image</code>。根据以前的项目经验 <code>GPUImage</code> 因为内存还有其他一些问题，一直高居崩溃排行榜的榜首。但是<code>Core Image</code>在没有技术积累的情况下我又没有把握在一周之内写出一个框架可以叫产品和UI同学自由调整滤镜效果。偶然中发现了 <code>GPUImage</code> 中的一个滤镜 <code>GPUImageLookupFilter</code>。简直是神器，对于码农的工作量来说 瞬间降到0，分分钟搞定，然后将效果调试的任务丢给产品和UI就可以了。</p>
+
+<h2>滤镜的原理</h2>
+
+<p>首先我们了解一下关于图片滤镜的基本知识，也就是应该怎么实现一个图片滤镜。
+整个滤镜的计算过程一般可以拆解成几个步骤。
+1. 在原图上做一对一的像素彩色转换。
+    对于<code>RGB</code>的颜色通道调整都是独立的，不会相互影响。
+    <img src="http://sipdar.github.io/image/2014/10/27/DraggedImage.png" alt="">
+     由于这个方法可以表述成<code>[0, 255] -&gt; [0, 255]</code>的映射数组, 那么使用255个不同灰度的全灰图片很简单的就把instagram的图片滤镜功能了解清楚了.记下所有计算结果.
+    如果你只是想看到一个大概的结果, 这个解码过程可以这样用一张图简化
+    <img src="http://sipdar.github.io/image/2014/10/27/DraggedImage-1.png" alt="">
+2. 暗脚风格的Mask。通常只需要设计师生成一张带暗角的透明PNG 然后和图片合成在一起。
+    合成的方式有很多种 [ Insight into Photoshop 7.0 Blending Modes ] 这片文章中有详细的介绍。所有的合成方式<code>GPUImage</code>基本上都实现了。
+3. 还有就是材质和相框，使用方法和给图片添加暗脚是一样的。</p>
+
+<h2><code>GPUImageLookupFilter</code>的使用</h2>
+
+<p><code>GPUImageLookupFilter</code>通过一个颜色映射表来实现颜色转换。这种查表法的原理就是在一张表中为每种颜色纪录一个对应的映射目标的颜色。当用查表法对一张照片做颜色映射时，只需要遍历照片的每个像素点，然后在表中找到该像素颜色对应的目标颜色，最后将该像素设置为目标颜色即可。查表法实现的前提是颜色的映射与周围的颜色无关，即一种颜色无论周围的颜色为何、无论其位于照片的哪个位置，其目标颜色都应该是相同的。</p>
+
+<p><code>RGB</code>的颜色数量表示为<code>255*255*2555 = 16777216</code>如果要记录每种颜色的映射结果，那么需要一千六百多万条记录，这显然无法应用到实际的工程中。为了简化起见，一般每相近的 4 种颜色采用一条记录存储，这样颜色表只需要 <code>64*64*64 = 262144</code> 条记录。
+    <img src="http://sipdar.github.io/image/2014/10/27/DraggedImage-2.png" alt="">
+这是一张基准颜色表。设计师或产品经理在<code>PS</code>中调整好的效果可能是这样的一组<code>Action</code>
+    <img src="http://sipdar.github.io/image/2014/10/27/Screen%20Shot%202012-07-27%20at%2011.30.04%20PM.png" alt=""></p>
+
+<p>将这些调整应用到基准颜色表上就得到了一张映射表。
+    <img src="http://sipdar.github.io/image/2014/10/27/DraggedImage-3.png" alt="">
+上表将 262144 种颜色分为 8 个块，每块<code>64*64</code>格，每一格的颜色都不同。进行颜色映射时，首先使用数字图像处理软件对该基准颜色表应用要模拟的滤镜来生成映射表（如下图），然后对要处理的照片的每个像素，从基准颜色表中找到该像素颜色的位置，然后在映射表的相应位置就可以得到目的颜色。</p>
+
+<h2>暗角的添加</h2>
+
+<p>暗角我没有使用PNG素材而是使用了<code>GPUImage</code>中的另外一个滤镜 <code>GPUImageVignetteFilter</code></p>
+
+<h2>Demo Code</h2>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="lineno"> 1</span> <span class="p">-(</span><span class="bp">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nf">lookkupImageFilterWithFilterName:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">filterName</span> <span class="nf">originImage:</span><span class="p">(</span><span class="bp">UIImage</span> <span class="o">*</span><span class="p">)</span><span class="nv">originImage</span><span class="p">{</span>
+<span class="lineno"> 2</span> 
+<span class="lineno"> 3</span>  <span class="n">GPUImagePicture</span> <span class="o">*</span><span class="n">stillImageSource</span> <span class="o">=</span> <span class="p">[[</span><span class="n">GPUImagePicture</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithImage</span><span class="p">:</span><span class="n">originImage</span><span class="p">];</span>
+<span class="lineno"> 4</span>  <span class="n">GPUImagePicture</span> <span class="o">*</span><span class="n">lookupImageSource</span> <span class="o">=</span> <span class="p">[[</span><span class="n">GPUImagePicture</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithImage</span><span class="p">:[</span><span class="bp">UIImage</span> <span class="nl">imageNamed</span><span class="p">:</span><span class="n">filterName</span><span class="p">]];</span>
+<span class="lineno"> 5</span>  <span class="n">GPUImageLookupFilter</span> <span class="o">*</span><span class="n">lookupFilter</span> <span class="o">=</span> <span class="p">[[</span><span class="n">GPUImageLookupFilter</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+<span class="lineno"> 6</span>  
+<span class="lineno"> 7</span>  <span class="p">[</span><span class="n">stillImageSource</span> <span class="nl">addTarget</span><span class="p">:</span><span class="n">lookupFilter</span><span class="p">];</span>
+<span class="lineno"> 8</span>  <span class="p">[</span><span class="n">lookupImageSource</span> <span class="nl">addTarget</span><span class="p">:</span><span class="n">lookupFilter</span><span class="p">];</span>
+<span class="lineno"> 9</span>  <span class="k">if</span> <span class="p">(</span><span class="nb">self</span><span class="p">.</span><span class="n">hasVignetteEffect</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno">10</span>      <span class="p">[</span><span class="n">lookupFilter</span> <span class="n">useNextFrameForImageCapture</span><span class="p">];</span>
+<span class="lineno">11</span>      <span class="n">GPUImageVignetteFilter</span> <span class="o">*</span><span class="n">vignettefilter</span> <span class="o">=</span> <span class="p">[[</span><span class="n">GPUImageVignetteFilter</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+<span class="lineno">12</span>      <span class="n">vignettefilter</span><span class="p">.</span><span class="n">vignetteEnd</span> <span class="o">=</span> <span class="n">kAlohaImageVignetteEnd</span><span class="p">;</span>
+<span class="lineno">13</span>      <span class="n">vignettefilter</span><span class="p">.</span><span class="n">vignetteStart</span> <span class="o">=</span> <span class="n">kAlohaImageVignetteStart</span><span class="p">;</span>
+<span class="lineno">14</span>      
+<span class="lineno">15</span>      <span class="p">[</span><span class="n">lookupFilter</span> <span class="nl">addTarget</span><span class="p">:</span><span class="n">vignettefilter</span><span class="p">];</span>
+<span class="lineno">16</span>      <span class="p">[</span><span class="n">stillImageSource</span> <span class="n">processImage</span><span class="p">];</span>
+<span class="lineno">17</span>      <span class="p">[</span><span class="n">lookupImageSource</span> <span class="n">processImage</span><span class="p">];</span>
+<span class="lineno">18</span>      <span class="p">[</span><span class="n">vignettefilter</span> <span class="n">useNextFrameForImageCapture</span><span class="p">];</span>
+<span class="lineno">19</span>      <span class="bp">UIImage</span> <span class="o">*</span><span class="n">filteredimage</span> <span class="o">=</span> <span class="p">[</span><span class="n">vignettefilter</span> <span class="n">imageFromCurrentFramebuffer</span><span class="p">];</span>
+<span class="lineno">20</span>      <span class="k">return</span> <span class="n">filteredimage</span><span class="p">;</span>
+<span class="lineno">21</span>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<span class="lineno">22</span>      <span class="p">[</span><span class="n">stillImageSource</span> <span class="n">processImage</span><span class="p">];</span>
+<span class="lineno">23</span>      <span class="p">[</span><span class="n">lookupImageSource</span> <span class="n">processImage</span><span class="p">];</span>
+<span class="lineno">24</span>      <span class="p">[</span><span class="n">lookupFilter</span> <span class="n">useNextFrameForImageCapture</span><span class="p">];</span>
+<span class="lineno">25</span>      <span class="bp">UIImage</span> <span class="o">*</span><span class="n">filteredimage</span> <span class="o">=</span> <span class="p">[</span><span class="n">lookupFilter</span> <span class="n">imageFromCurrentFramebuffer</span><span class="p">];</span>
+<span class="lineno">26</span>      <span class="k">return</span> <span class="n">filteredimage</span><span class="p">;</span>
+<span class="lineno">27</span>  <span class="p">}</span>
+<span class="lineno">28</span> <span class="p">}</span></code></pre></div>
+
+<h2>参考</h2>
+
+<p><a href="http://liovch.blogspot.com/2012/07/add-instagram-like-effects-to-your-ios.html"> Add Instagram-like effects to your iOS app. </a>
+<a href="http://dunnbypaul.net/blends/" title="Insight into Photoshop 7.0 Blending Modes"> Insight into Photoshop 7.0 Blending Modes </a>
+<a href="http://www.zhihu.com/question/20242095">Instagram 是用什么语言编写的？为什么它的图片滤镜效果那么出众？</a>
+<a href="https://github.com/BradLarson/GPUImage" title="GPUImage"> GPUImage </a></p>
 
   </div>
   
@@ -396,159 +484,192 @@
   
   <div class="post">
     <h1 class="post-title">
-      <a href="/2014/03/27/%E4%BA%BA%E8%84%B8%E6%A3%80%E6%B5%8B/">
-        Core Image 人脸检测
+      <a href="/2014/03/28/%E5%9B%BE%E7%89%87%E8%87%AA%E5%8A%A8%E5%A2%9E%E5%BC%BA/">
+        自动增强图片效果
       </a>
     </h1>
 
-    <span class="post-date">27 Mar 2014</span>
+    <span class="post-date">28 Mar 2014</span>
 
-     <p><strong>Core Image</strong>可以对图像进行分析，并找到图片中人脸的位置。<strong>Core Image</strong>检测出人脸后，可以提供面部特性，比如眼睛和嘴的位置。它还可以跟踪视频中人脸的位置。</p>
+     <p><strong>Core Image</strong>的自动强图片效果，会分析图像的直方图，图像属性，脸部区域，然后通过一组滤镜来改善图片效果。</p>
 
-<p><img src="http://sipdar.github.io/image/2014/03/27/1.png" alt="image"></p>
+<h2>自动增强滤镜</h2>
 
-<p>下面我们看看如何实现人脸检测。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">UIImage *baby = [UIImage imageNamed:@&quot;1.jpg&quot;];
-CGFloat scale = 320.0/baby.size.width;
-CIImage *myimage = [CIImage imageWithCGImage:baby.CGImage];
-CIContext *context = [CIContext contextWithOptions:nil];
-CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace context:context options:@{CIDetectorAccuracy:CIDetectorAccuracyHigh}];
-NSArray *features = [detector featuresInImage:myimage];
-for (CIFaceFeature *faceFeature in features){
-    CGRect bounds = faceFeature.bounds;
-    bounds.origin.x *= scale;
-    bounds.origin.y *= scale;
-    bounds.size.width *= scale;
-    bounds.size.height *= scale;
-    UIView *faceView = [[UIView alloc] initWithFrame:bounds];
-    faceView.backgroundColor = [UIColor clearColor];
-    faceView.layer.borderWidth = 1;
-    faceView.layer.borderColor = [UIColor redColor].CGColor;
-    [self.imageView addSubview:faceView];
-}
-</code></pre></div>
-<p><img src="http://sipdar.github.io/image/2014/03/27/2.png" alt="image"></p>
+<p>下面这些滤镜可以修正照片中的大部分问题：</p>
 
-<p>此外，我们还可以拿到眼睛跟嘴巴的位置</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">if (faceFeature.hasLeftEyePosition)
-    NSLog(@&quot;Left eye %@&quot;,NSStringFromCGPoint(faceFeature.leftEyePosition));
-if (faceFeature.hasRightEyePosition)
-    NSLog(@&quot;Right eye %@&quot;,NSStringFromCGPoint(faceFeature.rightEyePosition));
-if (faceFeature.hasMouthPosition)
-    NSLog(@&quot;Mouth %@&quot;, NSStringFromCGPoint(faceFeature.mouthPosition));
-</code></pre></div>
-<h2>利用<strong>Core Image</strong> 进行脸部打码</h2>
+<table>
+<thead>
+<tr>
+<th>Filter </th>
+<th> Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CIRedEyeCorrection </td>
+<td> Repairs red/amber/white eye due to camera flash</td>
+</tr>
+<tr>
+<td>CIFaceBalance </td>
+<td> Adjusts the color of a face to give pleasing skin tones</td>
+</tr>
+<tr>
+<td>CIVibrance </td>
+<td> Increases the saturation of an image without distorting the skin tones</td>
+</tr>
+<tr>
+<td>CIToneCurve </td>
+<td> Adjusts image contrast</td>
+</tr>
+<tr>
+<td>CIHighlightShadowAdjust </td>
+<td> Adjusts shadow details</td>
+</tr>
+</tbody>
+</table>
 
-<p><img src="http://sipdar.github.io/image/2014/03/27/4.png" alt="image">
-要实现这个效果，分下面几步。</p>
+<p>自动增强API仅有2个方法:<code>autoAdjustmentFilters</code> 和 <code>autoAdjustmentFiltersWithOptions:</code> . 多数情况下，我们使用带参数的方法。</p>
 
 <ul>
-<li>首先我们要生成一张像素化的图像。</li>
-<li>然后我们找到图像中人脸的位置，生成一张遮罩图片。</li>
-<li>然后我们把像素图片和遮罩图片合成一张图片并且使用原图做为背景。</li>
+<li>图像的方向 :对于<code>CIRedEyeCorrection</code>和<code>CIFaceBalance</code>滤镜，提供图像方向可以使<code>Core Image</code> 更精确的定位到脸的位置。</li>
+<li>是否应用红眼校正把<code>kCIImageAutoAdjustEnhance</code>设置为false）</li>
+<li>是否使用红眼校正以外的全部其他滤镜。（把<code>kCIImageAutoAdjustRedEye</code>设置为false）</li>
 </ul>
 
-<h3>像素图片</h3>
-<div class="highlight"><pre><code class="language-text" data-lang="text">UIImage *baby = [UIImage imageNamed:@&quot;1.jpg&quot;];
-CIImage *myimage = [CIImage imageWithCGImage:baby.CGImage];
-CGFloat scale = MAX(baby.size.width, baby.size.height)/60;
-CIImage *pixlImage =[CIFilter filterWithName:@&quot;CIPixellate&quot; keysAndValues:kCIInputImageKey,myimage,kCIInputScaleKey,@(scale),nil].outputImage;
+<p>通过<strong>autoAdjustmentFiltersWithOptions</strong>我们会得到一个包含图像增强的所有的滤镜的数组。依次调用它们处理图像。</p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="lineno">1</span> <span class="bp">CIContext</span> <span class="o">*</span><span class="n">context</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIContext</span> <span class="nl">contextWithOptions</span><span class="p">:</span><span class="nb">nil</span><span class="p">];</span>
+<span class="lineno">2</span> <span class="bp">UIImage</span> <span class="o">*</span><span class="n">baby</span> <span class="o">=</span> <span class="p">[</span><span class="bp">UIImage</span> <span class="nl">imageNamed</span><span class="p">:</span><span class="s">@&quot;1.jpg&quot;</span><span class="p">];</span>
+<span class="lineno">3</span> <span class="bp">CIImage</span> <span class="o">*</span><span class="n">myImage</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIImage</span> <span class="nl">imageWithCGImage</span><span class="p">:</span><span class="n">baby</span><span class="p">.</span><span class="bp">CGImage</span><span class="p">];</span>
+<span class="lineno">4</span> <span class="bp">NSArray</span> <span class="o">*</span><span class="n">adjustments</span> <span class="o">=</span> <span class="p">[</span><span class="n">myImage</span> <span class="n">autoAdjustmentFilters</span><span class="p">];</span>
+<span class="lineno">5</span> <span class="k">for</span> <span class="p">(</span><span class="bp">CIFilter</span> <span class="o">*</span><span class="n">filter</span> <span class="k">in</span> <span class="n">adjustments</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno">6</span>   <span class="p">[</span><span class="n">filter</span> <span class="nl">setValue</span><span class="p">:</span><span class="n">myImage</span> <span class="nl">forKey</span><span class="p">:</span><span class="n">kCIInputImageKey</span><span class="p">];</span>
+<span class="lineno">7</span>   <span class="n">myImage</span> <span class="o">=</span> <span class="n">filter</span><span class="p">.</span><span class="n">outputImage</span><span class="p">;</span>
+<span class="lineno">8</span> <span class="p">}</span></code></pre></div>
+
+<p><img src="http://sipdar.github.io/image/2014/03/28/5.png" alt="image"></p>
+
+<p>左图就是自动增强之后的效果。</p>
+
+<h2>负片滤镜</h2>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="lineno">1</span> <span class="bp">CIFilter</span> <span class="o">*</span><span class="n">filter</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIFilter</span> <span class="nl">filterWithName</span><span class="p">:</span><span class="s">@&quot;CIColorMatrix&quot;</span> <span class="nl">keysAndValues</span><span class="p">:</span>
+<span class="lineno">2</span>                   <span class="n">kCIInputImageKey</span><span class="p">,</span> <span class="n">myImage</span><span class="p">,</span>
+<span class="lineno">3</span>                   <span class="s">@&quot;inputRVector&quot;</span><span class="p">,</span> <span class="p">[</span><span class="bp">CIVector</span> <span class="nl">vectorWithX</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span> <span class="nl">Y</span><span class="p">:</span><span class="mi">0</span> <span class="nl">Z</span><span class="p">:</span><span class="mi">0</span><span class="p">],</span>
+<span class="lineno">4</span>                   <span class="s">@&quot;inputGVector&quot;</span><span class="p">,</span> <span class="p">[</span><span class="bp">CIVector</span> <span class="nl">vectorWithX</span><span class="p">:</span><span class="mi">0</span> <span class="nl">Y</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span> <span class="nl">Z</span><span class="p">:</span><span class="mi">0</span> <span class="p">],</span>
+<span class="lineno">5</span>                   <span class="s">@&quot;inputBVector&quot;</span><span class="p">,</span> <span class="p">[</span><span class="bp">CIVector</span> <span class="nl">vectorWithX</span><span class="p">:</span> <span class="mi">0</span> <span class="nl">Y</span><span class="p">:</span><span class="mi">0</span> <span class="nl">Z</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+<span class="lineno">6</span>                   <span class="s">@&quot;inputBiasVector&quot;</span><span class="p">,</span> <span class="p">[</span><span class="bp">CIVector</span> <span class="nl">vectorWithX</span><span class="p">:</span><span class="mi">1</span> <span class="nl">Y</span><span class="p">:</span><span class="mi">1</span> <span class="nl">Z</span><span class="p">:</span><span class="mi">1</span><span class="p">],</span><span class="nb">nil</span><span class="p">];</span></code></pre></div>
+
+<p><img src="http://sipdar.github.io/image/2014/03/28/1.png" alt="image"></p>
+
+<h2>扣图滤镜</h2>
+
+<p>我们可以删除一幅图像中指定的颜色，然后填充一个背景。类似好莱坞大片的背景合成。
+<img src="http://sipdar.github.io/image/2014/03/28/2.png" alt="image"></p>
+
+<p>要实现上面图片的效果有下面几个步骤</p>
+
+<ul>
+<li>首先我们要从图像中删除我们要删掉的颜色，通过创建一个颜色矩阵，将要删除的颜色变换成透明色。</li>
+<li>用<code>CICOlorCube</code> 滤镜删除图像中通过矩阵变换过的颜色。</li>
+<li>最后用 <code>CISourceOverCompositing</code> 合成图片。</li>
+</ul>
+
+<h3>创建一个 color Cube Map</h3>
+
+<p>一个color cube是一个3D颜色查找表（lookup table）。Core Image 滤镜 CIColorCube 使用色值作为输入，并应用一个查找表到这些色值。
+<code>CIColorCube</code>从图像中删除所有的绿色。就是要把图中的把绿色的<code>alpha</code>值设置为0.0（透明）。</p>
+
+<p>“绿色”包括一定范围内的颜色。最直接的处理方式是把图像的色值从RGBA转为HSV。HSV把颜色描述在圆柱坐标系内的点。</p>
+
+<p><img src="http://sipdar.github.io/image/2014/03/28/4.png" alt="image"></p>
+
+<p>要删除绿色，你需要定义围绕中心点的最小和最大的角度。之后，对于任何的绿色，将其alpha值设置为0.0。纯绿的相对角度是120º。最小值和最大值要以这个值为中心。
+<img src="http://sipdar.github.io/image/2014/03/28/3.png" alt="image"></p>
+
+<p>Cube map数据必须预乘alpha，所以创建cube map的最后一步是把RGB值乘以你刚刚计算出的alpha值（如果是绿色，就是0，如果不是就是1.0） 下面是例子代码。 </p>
+
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="lineno"> 1</span> <span class="bp">CIContext</span> <span class="o">*</span><span class="n">context</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIContext</span> <span class="nl">contextWithOptions</span><span class="p">:</span><span class="nb">nil</span><span class="p">];</span>
+<span class="lineno"> 2</span> <span class="bp">UIImage</span> <span class="o">*</span><span class="n">baby</span> <span class="o">=</span> <span class="p">[</span><span class="bp">UIImage</span> <span class="nl">imageNamed</span><span class="p">:</span><span class="s">@&quot;2.jpg&quot;</span><span class="p">];</span>
+<span class="lineno"> 3</span> <span class="bp">CIImage</span> <span class="o">*</span><span class="n">myImage</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIImage</span> <span class="nl">imageWithCGImage</span><span class="p">:</span><span class="n">baby</span><span class="p">.</span><span class="bp">CGImage</span><span class="p">];</span>
+<span class="lineno"> 4</span> <span class="c1">// Allocate memory</span>
+<span class="lineno"> 5</span> <span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">size</span> <span class="o">=</span> <span class="mi">64</span><span class="p">;</span>
+<span class="lineno"> 6</span> <span class="kt">float</span> <span class="o">*</span><span class="n">cubeData</span> <span class="o">=</span> <span class="p">(</span><span class="kt">float</span> <span class="o">*</span><span class="p">)</span><span class="n">malloc</span> <span class="p">(</span><span class="n">size</span> <span class="o">*</span> <span class="n">size</span> <span class="o">*</span> <span class="n">size</span> <span class="o">*</span> <span class="k">sizeof</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span><span class="p">);</span>
+<span class="lineno"> 7</span> <span class="kt">float</span> <span class="n">rgb</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">hsv</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="o">*</span><span class="n">c</span> <span class="o">=</span> <span class="n">cubeData</span><span class="p">;</span>
+<span class="lineno"> 8</span> 
+<span class="lineno"> 9</span> <span class="c1">// Populate cube with a simple gradient going from 0 to 1</span>
+<span class="lineno">10</span> <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">z</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">z</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="n">z</span><span class="o">++</span><span class="p">){</span>
+<span class="lineno">11</span>  <span class="n">rgb</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="kt">double</span><span class="p">)</span><span class="n">z</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// Blue value</span>
+<span class="lineno">12</span>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="n">y</span><span class="o">++</span><span class="p">){</span>
+<span class="lineno">13</span>      <span class="n">rgb</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="kt">double</span><span class="p">)</span><span class="n">y</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// Green value</span>
+<span class="lineno">14</span>      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">size</span><span class="p">;</span> <span class="n">x</span> <span class="o">++</span><span class="p">){</span>
+<span class="lineno">15</span>          <span class="n">rgb</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="kt">double</span><span class="p">)</span><span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">);</span> <span class="c1">// Red value</span>
+<span class="lineno">16</span>          <span class="c1">// Convert RGB to HSV</span>
+<span class="lineno">17</span>          <span class="c1">// You can find publicly available rgbToHSV functions on the Internet</span>
+<span class="lineno">18</span>          <span class="n">RGBtoHSV</span><span class="p">(</span><span class="n">rgb</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">rgb</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">rgb</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">hsv</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="o">&amp;</span><span class="n">hsv</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="o">&amp;</span><span class="n">hsv</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+<span class="lineno">19</span> 
+<span class="lineno">20</span>          <span class="kt">float</span> <span class="n">alpha</span> <span class="o">=</span> <span class="p">(</span><span class="n">hsv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">80</span> <span class="o">&amp;&amp;</span> <span class="n">hsv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">130</span><span class="p">)</span> <span class="o">?</span> <span class="mf">0.0f</span><span class="o">:</span><span class="mf">1.0f</span><span class="p">;</span>
+<span class="lineno">21</span>          <span class="c1">// Calculate premultiplied alpha values for the cube</span>
+<span class="lineno">22</span>          <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">rgb</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">;</span>
+<span class="lineno">23</span>          <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">rgb</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">;</span>
+<span class="lineno">24</span>          <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">rgb</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">alpha</span><span class="p">;</span>
+<span class="lineno">25</span>          <span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">alpha</span><span class="p">;</span>
+<span class="lineno">26</span>          <span class="n">c</span> <span class="o">+=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="lineno">27</span>      <span class="p">}</span>
+<span class="lineno">28</span>  <span class="p">}</span>
+<span class="lineno">29</span> <span class="p">}</span>
+<span class="lineno">30</span> <span class="c1">// Create memory with the cube data</span>
+<span class="lineno">31</span> <span class="bp">NSData</span> <span class="o">*</span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSData</span> <span class="nl">dataWithBytesNoCopy</span><span class="p">:</span><span class="n">cubeData</span> <span class="nl">length</span><span class="p">:(</span><span class="n">size</span> <span class="o">*</span> <span class="n">size</span> <span class="o">*</span> <span class="n">size</span> <span class="o">*</span> <span class="k">sizeof</span> <span class="p">(</span><span class="kt">float</span><span class="p">)</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span> <span class="nl">freeWhenDone</span><span class="p">:</span><span class="nb">YES</span><span class="p">];</span>
+<span class="lineno">32</span> <span class="bp">CIFilter</span> <span class="o">*</span><span class="n">colorCube</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIFilter</span> <span class="nl">filterWithName</span><span class="p">:</span><span class="s">@&quot;CIColorCube&quot;</span><span class="p">];</span>
+<span class="lineno">33</span> <span class="p">[</span><span class="n">colorCube</span> <span class="nl">setValue</span><span class="p">:</span><span class="l">@(</span><span class="n">size</span><span class="l">)</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;inputCubeDimension&quot;</span><span class="p">];</span>
+<span class="lineno">34</span> <span class="p">[</span><span class="n">colorCube</span> <span class="nl">setValue</span><span class="p">:</span><span class="n">myImage</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;inputImage&quot;</span><span class="p">];</span>
+<span class="lineno">35</span> <span class="p">[</span><span class="n">colorCube</span> <span class="nl">setValue</span><span class="p">:</span><span class="n">data</span> <span class="nl">forKey</span><span class="p">:</span><span class="s">@&quot;inputCubeData&quot;</span><span class="p">];</span>
+<span class="lineno">36</span> <span class="n">myImage</span> <span class="o">=</span> <span class="n">colorCube</span><span class="p">.</span><span class="n">outputImage</span><span class="p">;</span>
+<span class="lineno">37</span> 
+<span class="lineno">38</span> <span class="kt">void</span> <span class="nf">RGBtoHSV</span><span class="p">(</span> <span class="kt">float</span> <span class="n">r</span><span class="p">,</span> <span class="kt">float</span> <span class="n">g</span><span class="p">,</span> <span class="kt">float</span> <span class="n">b</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="n">h</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="kt">float</span> <span class="o">*</span><span class="n">v</span> <span class="p">){</span>
+<span class="lineno">39</span>  <span class="kt">float</span> <span class="n">min</span><span class="p">,</span> <span class="n">max</span><span class="p">,</span> <span class="n">delta</span><span class="p">;</span>
+<span class="lineno">40</span>  <span class="n">min</span> <span class="o">=</span> <span class="n">MIN</span><span class="p">(</span> <span class="n">r</span><span class="p">,</span> <span class="n">MIN</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="p">);</span>
+<span class="lineno">41</span>  <span class="n">max</span> <span class="o">=</span> <span class="n">MAX</span><span class="p">(</span> <span class="n">r</span><span class="p">,</span> <span class="n">MAX</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span> <span class="p">);</span>
+<span class="lineno">42</span>  <span class="o">*</span><span class="n">v</span> <span class="o">=</span> <span class="n">max</span><span class="p">;</span>                <span class="c1">// v</span>
+<span class="lineno">43</span>  <span class="n">delta</span> <span class="o">=</span> <span class="n">max</span> <span class="o">-</span> <span class="n">min</span><span class="p">;</span>
+<span class="lineno">44</span>  <span class="k">if</span><span class="p">(</span> <span class="n">max</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">)</span>
+<span class="lineno">45</span>      <span class="o">*</span><span class="n">s</span> <span class="o">=</span> <span class="n">delta</span> <span class="o">/</span> <span class="n">max</span><span class="p">;</span>      <span class="c1">// s</span>
+<span class="lineno">46</span>  <span class="k">else</span> <span class="p">{</span>
+<span class="lineno">47</span>  <span class="c1">// r = g = b = 0       // s = 0, v is undefined</span>
+<span class="lineno">48</span>      <span class="o">*</span><span class="n">s</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="lineno">49</span>      <span class="o">*</span><span class="n">h</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="lineno">50</span>      <span class="k">return</span><span class="p">;</span>
+<span class="lineno">51</span>  <span class="p">}</span>
+<span class="lineno">52</span>  <span class="k">if</span><span class="p">(</span> <span class="n">r</span> <span class="o">==</span> <span class="n">max</span> <span class="p">)</span>
+<span class="lineno">53</span>      <span class="o">*</span><span class="n">h</span> <span class="o">=</span> <span class="p">(</span> <span class="n">g</span> <span class="o">-</span> <span class="n">b</span> <span class="p">)</span> <span class="o">/</span> <span class="n">delta</span><span class="p">;</span>        <span class="c1">// between yellow &amp; magenta</span>
+<span class="lineno">54</span>  <span class="k">else</span> <span class="k">if</span><span class="p">(</span> <span class="n">g</span> <span class="o">==</span> <span class="n">max</span> <span class="p">)</span>
+<span class="lineno">55</span>      <span class="o">*</span><span class="n">h</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span> <span class="n">b</span> <span class="o">-</span> <span class="n">r</span> <span class="p">)</span> <span class="o">/</span> <span class="n">delta</span><span class="p">;</span> <span class="c1">// between cyan &amp; yellow</span>
+<span class="lineno">56</span>  <span class="k">else</span>
+<span class="lineno">57</span>      <span class="o">*</span><span class="n">h</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">+</span> <span class="p">(</span> <span class="n">r</span> <span class="o">-</span> <span class="n">g</span> <span class="p">)</span> <span class="o">/</span> <span class="n">delta</span><span class="p">;</span> <span class="c1">// between magenta &amp; cyan</span>
+<span class="lineno">58</span>  <span class="o">*</span><span class="n">h</span> <span class="o">*=</span> <span class="mi">60</span><span class="p">;</span>               <span class="c1">// degrees</span>
+<span class="lineno">59</span>  <span class="k">if</span><span class="p">(</span> <span class="o">*</span><span class="n">h</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="p">)</span>
+<span class="lineno">60</span>      <span class="o">*</span><span class="n">h</span> <span class="o">+=</span> <span class="mi">360</span><span class="p">;</span>
+<span class="lineno">61</span> <span class="p">}</span></code></pre></div>
+
+<p><img src="http://sipdar.github.io/image/2014/03/28/6.png" alt="image"></p>
+
+<p>我们可以根据 <strong>HSV</strong>角度试试删除黄色</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">    float alpha = (hsv[0] &gt; 30 &amp;&amp; hsv[0] &lt; 55) ? 0.0f:1.0f;
 </code></pre></div>
-<h3>脸部遮罩图片</h3>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CIImage *maskImage = nil;
-CIContext *context = [CIContext contextWithOptions:nil];
-CIDetector *detector = [CIDetector detectorOfType:CIDetectorTypeFace context:context options:@{CIDetectorAccuracy:CIDetectorAccuracyHigh}];
-NSArray *features = [detector featuresInImage:myimage];
+<p><img src="http://sipdar.github.io/image/2014/03/28/7.png" alt="image">    </p>
 
-for (CIFaceFeature *faceFeature in features){
-    CGFloat centerX = faceFeature.bounds.origin.x + faceFeature.bounds.size.width / 2.0;
-    CGFloat centerY = faceFeature.bounds.origin.y + faceFeature.bounds.size.height / 2.0;
-    CGFloat radius = MIN(faceFeature.bounds.size.width, faceFeature.bounds.size.height) / 1.5;
-    CIFilter *radialGradient = [CIFilter filterWithName:@&quot;CIRadialGradient&quot; keysAndValues:@&quot;inputRadius0&quot;, @(radius),@&quot;inputRadius1&quot;, @(radius + 1.0f),@&quot;inputColor0&quot;, [CIColor colorWithRed:0.0 green:1.0 blue:0.0 alpha:1.0],@&quot;inputColor1&quot;, [CIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:1.0],kCIInputCenterKey, [CIVector vectorWithX:centerX Y:centerY],nil];
-    CIImage *circleImage = [radialGradient valueForKey:kCIOutputImageKey];
-    if (nil == maskImage)
-        maskImage = circleImage;
-    else
-        maskImage = [[CIFilter filterWithName:@&quot;CISourceOverCompositing&quot; keysAndValues:kCIInputImageKey, circleImage,kCIInputBackgroundImageKey, maskImage,nil] valueForKey:kCIOutputImageKey];
-    }
-}
-</code></pre></div>
-<h3>合成最终的图片</h3>
-<div class="highlight"><pre><code class="language-text" data-lang="text">CIImage *resultImage =[CIFilter filterWithName:@&quot;CIBlendWithMask&quot; keysAndValues:kCIInputImageKey,pixlImage,@&quot;inputMaskImage&quot;,maskImage,@&quot;inputBackgroundImage&quot;,myimage,nil].outputImage;
-</code></pre></div>
-<p><img src="http://sipdar.github.io/image/2014/03/27/3.png" alt="image">    </p>
+<p>删除指定的颜色后，我们可以填充一个背景图片。</p>
 
-  </div>
-  
-  <div class="post">
-    <h1 class="post-title">
-      <a href="/2014/03/26/CoreImage%E5%AE%9E%E6%97%B6%E6%B8%B2%E6%9F%93/">
-        Core Image 实时渲染
-      </a>
-    </h1>
+<p><img src="http://sipdar.github.io/image/2014/03/28/9.png" alt="image"></p>
 
-    <span class="post-date">26 Mar 2014</span>
+<div class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="lineno">1</span> <span class="bp">UIImage</span> <span class="o">*</span><span class="n">image2</span> <span class="o">=</span> <span class="p">[</span><span class="bp">UIImage</span> <span class="nl">imageNamed</span><span class="p">:</span><span class="s">@&quot;5.png&quot;</span><span class="p">];</span>
+<span class="lineno">2</span> <span class="bp">CIImage</span> <span class="o">*</span><span class="n">backgroundCIImage</span> <span class="o">=</span> <span class="p">[</span><span class="bp">CIImage</span> <span class="nl">imageWithCGImage</span><span class="p">:</span><span class="n">image2</span><span class="p">.</span><span class="bp">CGImage</span><span class="p">];</span>
+<span class="lineno">3</span> <span class="n">myImage</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">CIFilter</span> <span class="nl">filterWithName</span><span class="p">:</span><span class="s">@&quot;CISourceOverCompositing&quot;</span> <span class="nl">keysAndValues</span><span class="p">:</span><span class="n">kCIInputImageKey</span><span class="p">,</span><span class="n">myImage</span><span class="p">,</span><span class="n">kCIInputBackgroundImageKey</span><span class="p">,</span><span class="n">backgroundCIImage</span><span class="p">,</span><span class="nb">nil</span><span class="p">]</span> <span class="nl">valueForKey</span><span class="p">:</span><span class="n">kCIOutputImageKey</span><span class="p">];</span>
+<span class="lineno">4</span> <span class="bp">CGRect</span> <span class="n">extent</span> <span class="o">=</span> <span class="p">[</span><span class="n">myImage</span> <span class="n">extent</span><span class="p">];</span>
+<span class="lineno">5</span> <span class="n">CGImageRef</span> <span class="n">cgImage</span> <span class="o">=</span> <span class="p">[</span><span class="n">context</span> <span class="nl">createCGImage</span><span class="p">:</span><span class="n">myImage</span> <span class="nl">fromRect</span><span class="p">:</span><span class="n">extent</span><span class="p">];</span></code></pre></div>
 
-     <p>我们在使用 <strong>AVFoundation</strong> 显示视频的时候，也可以使用 Core Image 进行事实渲染。</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">#import &lt;UIKit/UIKit.h&gt;
-#import &lt;GLKit/GLKit.h&gt;
-#import &lt;AVFoundation/AVFoundation.h&gt;
-#import &lt;CoreImage/CoreImage.h&gt;
-@interface ViewController : GLKViewController &lt;AVCaptureVideoDataOutputSampleBufferDelegate&gt; {
-    AVCaptureSession *session;
-    CIContext *coreImageContext;
-}
-@property (strong, nonatomic) EAGLContext *context;
-@end
+<p><img src="http://sipdar.github.io/image/2014/03/28/8.png" alt="image">                        </p>
 
-@implementation ViewController
-@synthesize context = _context;
-- (void)viewDidLoad{
-    [super viewDidLoad];
-    self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
-    GLKView *view = (GLKView *)self.view;
-    view.frame = CGRectMake(0, 0, 640, 1136);
-    view.context = self.context;
-    view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
-    coreImageContext = [CIContext contextWithEAGLContext:self.context];
-
-    NSError * error;
-    session = [[AVCaptureSession alloc] init];
-    [session beginConfiguration];
-    [session setSessionPreset:AVCaptureSessionPreset640x480];
-    AVCaptureDevice * videoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:videoDevice error:&amp;error];
-    [session addInput:input];
-
-    AVCaptureVideoDataOutput * dataOutput = [[AVCaptureVideoDataOutput alloc] init];
-    [dataOutput setAlwaysDiscardsLateVideoFrames:YES]; 
-    [dataOutput setVideoSettings:[NSDictionary dictionaryWithObject:[NSNumber numberWithInt:kCVPixelFormatType_32BGRA] forKey:(id)kCVPixelBufferPixelFormatTypeKey]];   
-    [dataOutput setSampleBufferDelegate:self queue:dispatch_get_main_queue()];
-
-    [session addOutput:dataOutput];
-    [session commitConfiguration];
-    NSArray *array = [[session.outputs objectAtIndex:0] connections];
-    for (AVCaptureConnection *connection in array){
-        connection.videoOrientation = AVCaptureVideoOrientationPortrait;
-    }
-    [session startRunning];
-}
-
--(void)captureOutput:(AVCaptureOutput *)captureOutput didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
-    CVPixelBufferRef pixelBuffer = (CVPixelBufferRef)CMSampleBufferGetImageBuffer(sampleBuffer);
-    CIImage *image = [CIImage imageWithCVPixelBuffer:pixelBuffer];
-    CGRect rect = [image extent];
-    rect.origin.y = 200;
-    rect.size.width  =  640;
-    rect.size.height  =  (640.0/480.0)*640;
-    CIFilter *filter =[CIFilter filterWithName:@&quot;CISepiaTone&quot;];
-    [filter setValue:image forKey:kCIInputImageKey];
-    [filter setValue:@0.8 forKey:kCIInputIntensityKey];
-    image = filter.outputImage;
-    [coreImageContext drawImage:image inRect:rect fromRect:[image extent] ];
-}
-@end
-</code></pre></div>
   </div>
   
 </div>
