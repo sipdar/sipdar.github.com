@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Swift 
+title: Apple Watch Text Input 
 ---
 
 # Apple Watch 中的文本输入
