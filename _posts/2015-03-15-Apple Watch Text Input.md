@@ -38,8 +38,8 @@ title: Apple Watch Text Input
 
 {% endhighlight %}
 
-![Image](../image/2015/03/15/1.gif)
+![Image](/image/2015/03/15/1.gif)
 
-![Image](../image/2015/03/15/2.png)
+![Image](/image/2015/03/15/2.png)
 
 目前在模拟器上 听写和Emoji 还无法正常的使用，等到真机在测试吧。
